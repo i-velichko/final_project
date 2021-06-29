@@ -12,7 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoImpl extends AbstractDao<User> implements UserDao { //todo делать одну константу файнд BY и несколько маленьких
+public class UserDaoImpl extends AbstractDao<User> implements UserDao {
+    private static final String CHANGE_PASSWORD = "UPDATE users SET password = ? WHERE login = ?"; //todo делать одну константу файнд BY и несколько маленьких
     private UserCreator userCreator = new UserCreator();
     private static final String FIND_ALL_USERS = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git" +
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
@@ -23,7 +24,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao { //todo �
             " WHERE u.id = ?";
     private static final String FIND_USER_BY_LOGIN = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git" +
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
-            "JOIN user_statuses as us ON u.status_id = us.id" +
+            "LEFT JOIN user_statuses as us ON u.status_id = us.id" +//TODO: remove left
             " WHERE u.login = ?";
     private static final String FIND_USER_BY_EMAIL = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git" +
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
@@ -31,8 +32,9 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao { //todo �
             " WHERE u.email = ?";
 
     private static final String ADD_NEW_USER = "INSERT INTO users" +
-            " (first_name, last_name, login, email, git)" +
-            " VALUES (?, ?, ?, ?, ?, ?, ?)";
+            " (first_name, last_name, login, email, role_id, status_id)" +
+            " VALUES (?, ?, ?, ?, ?, ?)";
+    
 
     @Override
     public User findUserByLogin(String login) throws DaoException {
@@ -66,6 +68,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao { //todo �
             }
         } catch (SQLException e) {
             throw new DaoException("Error with find User by email .", e);
+        }finally {
+            close(statement);
         }
         return user;
     }
@@ -85,6 +89,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao { //todo �
         } catch (SQLException e) {
             throw new DaoException("Error with find all Users .", e);
         } finally {
+            close(statement);
         }
         return users;
     }
@@ -128,12 +133,16 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao { //todo �
             statement.setString(2, user.getLastName());
             statement.setString(3, user.getLogin());
             statement.setString(4, user.getEmail());
-            statement.setString(5, user.getGitLink());
+            statement.setInt(5, user.getRole().getId());
+//            statement.setString(5, user.getGitLink());
             statement.setInt(6, user.getStatus().getId());
-            statement.setInt(6, user.getRole().getId());
+
+            statement.executeUpdate();
             return true;
         } catch (SQLException e) {
             throw new DaoException("Error with add new User. ", e);
+        }finally {
+            close(statement);
         }
     }
 
@@ -142,4 +151,17 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao { //todo �
         return false;
     }
 
+    public void changePassword(String login, String password) throws DaoException {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(CHANGE_PASSWORD);
+            statement.setString(1,password);
+            statement.setString(2,login);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Error with changing password. ", e);
+        }finally {
+            close(statement);
+        }
+    }
 }

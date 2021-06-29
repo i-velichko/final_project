@@ -20,8 +20,9 @@ ${user.lastName}
 ${user.email}
 </br>
 
-To start verification go to ASS
+<h3>To start verification fill in all fields and click "GO TO HELL"!</h3>
 </br>
+
 <form name="" action="student" method="post">
     <input type="hidden" name="login" value= "${user.login}">
     GIT: <input type="text" name="git">
@@ -29,7 +30,6 @@ To start verification go to ASS
     Project Name: <input type="text" name="projectName">
     <input type="submit" value="GO TO HELL!">
 </form>
-
 
 </body>
 </html>

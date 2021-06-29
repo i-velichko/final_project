@@ -2,9 +2,9 @@ package org.velichko.finalproject.logic.entity.type;
 
 public enum UserRole {
     ADMIN(1),
-    STUDENT(2),
-    TRAINER(3),
-    EXAMINER(4);
+    STUDENT(4),
+    TRAINER(2),
+    EXAMINER(3);
 
     private final int id;
 
