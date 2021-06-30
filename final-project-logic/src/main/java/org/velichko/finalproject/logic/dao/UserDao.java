@@ -10,5 +10,7 @@ public interface UserDao{
 
     User findUserByEmail(String email) throws DaoException;
 
+    void updateUserGitLink(String login, String gitLink) throws DaoException;
+
 
 }

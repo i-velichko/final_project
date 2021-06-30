@@ -29,7 +29,7 @@ public class ConnectionPool {
     private AtomicBoolean connectionsNumberCheck = new AtomicBoolean(false);
     private Properties properties;
     private final URL PROPERTIES_PATH = getClass().getClassLoader().getResource("connection.properties");
-//    private static final String PROPERTIES_PATH = "src/main/resources/connection.properties";
+
 
     private ConnectionPool() {
         try {

@@ -15,5 +15,9 @@
     <br>
     <input type="submit" value="Login">
 </form>
+<br/>
+<form method="post" action="studentsList">
+    <input type="submit" value="All students list">
+</form>
 </body>
 </html>

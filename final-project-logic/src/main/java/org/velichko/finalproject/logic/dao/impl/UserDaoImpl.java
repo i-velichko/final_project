@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
-    private static final String CHANGE_PASSWORD = "UPDATE users SET password = ? WHERE login = ?"; //todo делать одну константу файнд BY и несколько маленьких
     private UserCreator userCreator = new UserCreator();
     private static final String FIND_ALL_USERS = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git" +
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
@@ -30,11 +29,12 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
             "JOIN user_statuses as us ON u.status_id = us.id" +
             " WHERE u.email = ?";
-
     private static final String ADD_NEW_USER = "INSERT INTO users" +
             " (first_name, last_name, login, email, role_id, status_id)" +
             " VALUES (?, ?, ?, ?, ?, ?)";
-    
+    private static final String CHANGE_PASSWORD = "UPDATE users SET password = ? WHERE login = ?"; //todo делать одну константу файнд BY и несколько маленьких
+    private static final String CHANGE_GIT = "UPDATE users SET git = ? WHERE login = ?";
+
 
     @Override
     public User findUserByLogin(String login) throws DaoException {
@@ -68,7 +68,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             }
         } catch (SQLException e) {
             throw new DaoException("Error with find User by email .", e);
-        }finally {
+        } finally {
             close(statement);
         }
         return user;
@@ -134,14 +134,13 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             statement.setString(3, user.getLogin());
             statement.setString(4, user.getEmail());
             statement.setInt(5, user.getRole().getId());
-//            statement.setString(5, user.getGitLink());
             statement.setInt(6, user.getStatus().getId());
 
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
             throw new DaoException("Error with add new User. ", e);
-        }finally {
+        } finally {
             close(statement);
         }
     }
@@ -151,16 +150,31 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         return false;
     }
 
+    @Override
+    public void updateUserGitLink(String login, String gitLink) throws DaoException {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(CHANGE_GIT);
+            statement.setString(1, gitLink);
+            statement.setString(2, login);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Error with changing git link. ", e);
+        } finally {
+            close(statement);
+        }
+    }
+
     public void changePassword(String login, String password) throws DaoException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(CHANGE_PASSWORD);
-            statement.setString(1,password);
-            statement.setString(2,login);
+            statement.setString(1, password);
+            statement.setString(2, login);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException("Error with changing password. ", e);
-        }finally {
+        } finally {
             close(statement);
         }
     }

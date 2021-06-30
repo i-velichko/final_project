@@ -11,29 +11,22 @@ import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.exception.DaoException;
 
 import java.io.IOException;
+import java.util.List;
 
-@WebServlet(name = "StudentDataServlet", value = "/student")
-public class StudentDataServlet extends HttpServlet {
+@WebServlet(name = "ShowStudentsListServlet", value = "/studentsList")
+public class ShowStudentsListServlet extends HttpServlet {
     public void init() {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
-        String gitLink = request.getParameter("git");
-        String skills = request.getParameter("skills");
-        String projectName = request.getParameter("projectName");
-        String login = request.getParameter("login");
-
         UserDaoImpl userDao = new UserDaoImpl();
         EntityTransaction transaction = new EntityTransaction();
         transaction.begin(userDao);
         try {
-            User user = userDao.findUserByLogin(login);
+            List<User> users = userDao.findAll();
             transaction.commit();
-            user.setGitLink(gitLink);
-            userDao.updateUserGitLink(login, gitLink); //todo ПОЧИНИТЬ!
-            transaction.commit();
-            request.setAttribute("user", user);
-            request.getRequestDispatcher("/pages/student_info.jsp").forward(request, response);
+            request.setAttribute("users", users);
+            request.getRequestDispatcher("/pages/show_all_students.jsp").forward(request, response);
 
         } catch (DaoException | ServletException | IOException e) {
             e.printStackTrace();

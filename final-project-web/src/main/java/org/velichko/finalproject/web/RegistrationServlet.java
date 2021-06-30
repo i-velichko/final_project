@@ -43,10 +43,8 @@ public class RegistrationServlet extends HttpServlet {
             user.setRole(UserRole.STUDENT);
             user.setStatus(UserStatus.ACTIVE);
             userDao.create(user);
-            transaction.commit();
             if (password.equals(confirmPassword)){
                 userDao.changePassword(login, password);
-                transaction.commit();
             }
              //todo log или ошибка и вообще наверное это в трай кеч
             transaction.commit();

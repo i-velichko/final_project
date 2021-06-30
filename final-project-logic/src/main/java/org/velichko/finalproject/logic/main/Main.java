@@ -22,7 +22,7 @@ public class Main {
 //        transaction.begin(userDao);
 //        userDao.create(user);
 //        transaction.commit();
-//        System.out.println(user);
+        System.out.println("dddd");
 
     }
 }
