@@ -1,24 +1,16 @@
 <%--
   Created by IntelliJ IDEA.
   User: Professional
-  Date: 27.06.2021
-  Time: 17:55
+  Date: 01.07.2021
+  Time: 15:40
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Student info</title>
+    <title>Trainer info</title>
 </head>
 <body>
-Information about Student:
-</br>
-${user.firstName}
-</br>
-${user.lastName}
-</br>
-${user.email}
-</br>
-${user.gitLink}
+
 </body>
 </html>

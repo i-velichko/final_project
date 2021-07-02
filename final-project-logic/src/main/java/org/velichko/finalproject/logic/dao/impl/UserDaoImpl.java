@@ -125,7 +125,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public boolean create(User user) throws DaoException { //todo как быть с паролем
+    public boolean create(User user) throws DaoException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(ADD_NEW_USER);
@@ -141,6 +141,26 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         } catch (SQLException e) {
             throw new DaoException("Error with add new User. ", e);
         } finally {
+            close(statement);
+        }
+    }
+
+    public boolean createUserWithPassword(User user, String password) throws DaoException { //todo как быть с паролем
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(ADD_NEW_USER);
+            statement.setString(1, user.getFirstName());
+            statement.setString(2, user.getLastName());
+            statement.setString(3, user.getLogin());
+            statement.setString(4, user.getEmail());
+            statement.setInt(5, user.getRole().getId());
+            statement.setInt(6, user.getStatus().getId());
+
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            throw new DaoException("Error with add new User. ", e);
+        }finally {
             close(statement);
         }
     }

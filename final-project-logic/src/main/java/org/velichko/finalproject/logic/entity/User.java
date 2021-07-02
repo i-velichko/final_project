@@ -4,7 +4,7 @@ import org.velichko.finalproject.logic.entity.type.UserRole;
 import org.velichko.finalproject.logic.entity.type.UserStatus;
 
 public class User extends Entity {
-    private long userId;
+    private long id;
     private String login;
     private String firstName;
     private String lastName;
@@ -16,12 +16,12 @@ public class User extends Entity {
     public User() {
     }
 
-    public long getUserId() {
-        return userId;
+    public long getId() {
+        return id;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getLogin() {
@@ -91,7 +91,7 @@ public class User extends Entity {
 
         User user = (User) o;
 
-        if (getUserId() != user.getUserId()) {
+        if (getId() != user.getId()) {
             return false;
         }
         if (getLogin() != null ? !getLogin().equals(user.getLogin()) : user.getLogin() != null) {
@@ -117,7 +117,7 @@ public class User extends Entity {
 
     @Override
     public int hashCode() {
-        int result = (int) (getUserId() ^ (getUserId() >>> 32));
+        int result = (int) (getId() ^ (getId() >>> 32));
         result = 31 * result + (getLogin() != null ? getLogin().hashCode() : 0);
         result = 31 * result + (getFirstName() != null ? getFirstName().hashCode() : 0);
         result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
@@ -131,7 +131,7 @@ public class User extends Entity {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");
-        sb.append("userId=").append(userId);
+        sb.append("userId=").append(id);
         sb.append(", login='").append(login).append('\'');
         sb.append(", firstName='").append(firstName).append('\'');
         sb.append(", lastName='").append(lastName).append('\'');

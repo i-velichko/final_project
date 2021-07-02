@@ -1,26 +1,28 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="abs_path">${pageContext.request.contextPath}</c:set>
 <html>
 <head>
-    <title>Title</title>
+    <title>All users list</title>
 </head>
 <body bgcolor="silver">
-                <table class="table table-bordered table-hover table-responsive" width="100%">
+
+                <table border="2">
                     <tr>
-                        <th class="">#</th>
-                        <th class="w-50"><fmt:message key="book.info.title"/></th>
-                        <th class=""><fmt:message key="book.info.publish_year"/></th>
-                        <th class=""><fmt:message key="book.info.total_amount"/></th>
-                        <th class=""><fmt:message key="book.info.real_amount"/></th>
-                        <th class="w-10" style="text-align: center"><fmt:message key="list.edit"/></th>
-                        <th class="w-10" style="text-align: center"><fmt:message key="list.delete"/></th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Login</th>
+                        <th>Git Link</th>
+                        <th>Show user info</th>
                     </tr>
-                    <c:forEach var="user" items="${users}" varStatus="loop">
-                        <td>${loop.index+1}</td>
-                        <td>${user}</td>
-                        <td>${user.firstName}</td>
-                        <td>${user.lastName}</td>
-                        <td>${user.gitLink}</td>
+                    <c:forEach items="${users}" var="user">
+                        <tr>
+                        <td>${user.getFirstName()}</td>
+                        <td>${user.getLastName()}</td>
+                        <td>${user.getLogin()}</td>
+                        <td>${user.getGitLink()}</td>
+                        <td><a href="${abs_path}/studentById?userId=${user.getId()}">Show info</a></td>
                         </tr>
                     </c:forEach>
                 </table>

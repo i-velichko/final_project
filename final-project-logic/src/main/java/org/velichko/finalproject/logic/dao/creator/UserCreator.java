@@ -17,7 +17,7 @@ public class UserCreator {
     public User createUser(ResultSet resultSet) throws DaoException {
         User user = new User();
         try {
-            user.setUserId(resultSet.getLong("id"));
+            user.setId(resultSet.getLong("id"));
             user.setLogin(resultSet.getString("login"));
             user.setFirstName(resultSet.getString("first_name"));
             user.setLastName(resultSet.getString("last_name"));

@@ -1,5 +1,6 @@
 package org.velichko.finalproject.web;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,12 +14,22 @@ import org.velichko.finalproject.logic.exception.DaoException;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "ShowStudentsListServlet", value = "/studentsList")
+@WebServlet(name = "showStudentsListServlet", value = "/studentsList")
 public class ShowStudentsListServlet extends HttpServlet {
     public void init() {
     }
 
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
+        process(request, response);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        process(request, response);
+    }
+
+    private void process(HttpServletRequest request, HttpServletResponse response) {
         UserDaoImpl userDao = new UserDaoImpl();
         EntityTransaction transaction = new EntityTransaction();
         transaction.begin(userDao);
@@ -32,8 +43,6 @@ public class ShowStudentsListServlet extends HttpServlet {
             e.printStackTrace();
             transaction.end();
         }
-
-
     }
 
     public void destroy() {

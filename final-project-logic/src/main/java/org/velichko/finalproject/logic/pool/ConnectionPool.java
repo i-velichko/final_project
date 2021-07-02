@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
-    private static final int DEFAULT_POOL_SIZE = 32;
+    private static int DEFAULT_POOL_SIZE;
     private static final long DELAY_UNTIL_CONNECTIONS_NUMBER_CHECK = 1;
     private static final long PERIOD_BETWEEN_CONNECTIONS_NUMBER_CHECK = 1;
     private static AtomicBoolean isCreatedInstance = new AtomicBoolean(false);
@@ -33,7 +33,11 @@ public class ConnectionPool {
 
     private ConnectionPool() {
         try {
-            properties = PropertyLoader.loadPropertiesData(PROPERTIES_PATH);
+
+            if (PROPERTIES_PATH != null) {
+                properties = PropertyLoader.loadPropertiesData(PROPERTIES_PATH);
+            }
+            DEFAULT_POOL_SIZE = Integer.parseInt(properties.getProperty("poolSize"));
             String url = properties.getProperty("URL");
             Class.forName(properties.getProperty("driverClassName"));
             freeConnections = new LinkedBlockingDeque<>(DEFAULT_POOL_SIZE);
