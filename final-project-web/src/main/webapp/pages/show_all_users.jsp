@@ -22,7 +22,7 @@
                         <td>${user.getLastName()}</td>
                         <td>${user.getLogin()}</td>
                         <td>${user.getGitLink()}</td>
-                        <td><a href="${abs_path}/studentById?userId=${user.getId()}">Show info</a></td>
+                        <td><a href="${abs_path}/userById?userId=${user.getId()}">Show info</a></td>
                         </tr>
                     </c:forEach>
                 </table>

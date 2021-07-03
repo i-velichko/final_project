@@ -12,7 +12,7 @@ import org.velichko.finalproject.logic.exception.DaoException;
 
 import java.io.IOException;
 
-@WebServlet(name = "studentInfoByIdServlet", value = "/studentById")
+@WebServlet(name = "studentInfoByIdServlet", value = "/userById")
 public class StudentInfoByIdServlet extends HttpServlet {
     public void init() {
     }

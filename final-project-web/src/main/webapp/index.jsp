@@ -5,6 +5,12 @@
 <html>
 <head>
     <title>JSP - Hello World</title>
+    <style>
+        .colorText {
+            background-color: #ef0606;
+            color: #ffffff;
+        }
+    </style>
 </head>
 <body>
 <h1>Please Login here:
@@ -24,8 +30,9 @@
 <%--<a href="${abs_path}/pages/registration.jsp">Registration</a>--%>
 <%--&lt;%&ndash;<c:redirect url="/pages/registration.jsp"/>&ndash;%&gt; автоматический переход на другую страинцу--%>
 <br/>
-<form method="post" action="studentsList">
-    <input type="submit" value="All students list">
+<form method="post" action="${abs_path}/controller" >
+    <input type="hidden" name="command" value="show_all_users">
+    <input type="submit" class="colorText" value="show all users">
 </form>
 </body>
 </html>
