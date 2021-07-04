@@ -30,8 +30,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             "JOIN user_statuses as us ON u.status_id = us.id" +
             " WHERE u.email = ?";
     private static final String ADD_NEW_USER = "INSERT INTO users" +
-            " (first_name, last_name, login, email, role_id, status_id)" +
-            " VALUES (?, ?, ?, ?, ?, ?)";
+            " (first_name, last_name, login, email, role_id, status_id, password)" +
+            " VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String CHANGE_PASSWORD = "UPDATE users SET password = ? WHERE login = ?"; //todo делать одну константу файнд BY и несколько маленьких
     private static final String CHANGE_GIT = "UPDATE users SET git = ? WHERE login = ?";
 
@@ -126,6 +126,10 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public boolean create(User user) throws DaoException {
+        throw new UnsupportedOperationException("This method unsupported");
+    }
+
+    public boolean createNewUser(User user, String password) throws DaoException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(ADD_NEW_USER);
@@ -135,32 +139,12 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             statement.setString(4, user.getEmail());
             statement.setInt(5, user.getRole().getId());
             statement.setInt(6, user.getStatus().getId());
-
+            statement.setString(6, password);
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
             throw new DaoException("Error with add new User. ", e);
         } finally {
-            close(statement);
-        }
-    }
-
-    public boolean createUserWithPassword(User user, String password) throws DaoException { //todo как быть с паролем
-        PreparedStatement statement = null;
-        try {
-            statement = connection.prepareStatement(ADD_NEW_USER);
-            statement.setString(1, user.getFirstName());
-            statement.setString(2, user.getLastName());
-            statement.setString(3, user.getLogin());
-            statement.setString(4, user.getEmail());
-            statement.setInt(5, user.getRole().getId());
-            statement.setInt(6, user.getStatus().getId());
-
-            statement.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-            throw new DaoException("Error with add new User. ", e);
-        }finally {
             close(statement);
         }
     }

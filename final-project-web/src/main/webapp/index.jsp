@@ -27,8 +27,6 @@
 <form method="post" action="${abs_path}/pages/registration.jsp">
     <input type="submit" value="Registration">
 </form>
-<%--<a href="${abs_path}/pages/registration.jsp">Registration</a>--%>
-<%--&lt;%&ndash;<c:redirect url="/pages/registration.jsp"/>&ndash;%&gt; автоматический переход на другую страинцу--%>
 <br/>
 <form method="post" action="${abs_path}/controller" >
     <input type="hidden" name="command" value="show_all_users">
@@ -36,3 +34,6 @@
 </form>
 </body>
 </html>
+
+<%--<a href="${abs_path}/pages/registration.jsp">Registration</a>--%>
+<%--&lt;%&ndash;<c:redirect url="/pages/registration.jsp"/>&ndash;%&gt; автоматический переход на другую страинцу--%>
