@@ -45,22 +45,22 @@ public class SomeService {
         return user;
     }
 
-    public User findUSerByLogin(String login) {
-        User user = new User();
-        UserDao userDao = new UserDaoImpl();
-        EntityTransaction transaction = new EntityTransaction();
-        transaction.begin((AbstractDao<?>) userDao);
-        try {
-            user = userDao.findUserByLogin(login);
-            transaction.commit();
-        } catch (DaoException e) {
-            transaction.rollback();
-            e.printStackTrace();
-        }finally {
-            transaction.end();
-        }
-        return user;
-    }
+//    public User findUSerByLogin(String login) {
+//        User user = new User();
+//        UserDao userDao = new UserDaoImpl();
+//        EntityTransaction transaction = new EntityTransaction();
+//        transaction.begin((AbstractDao<?>) userDao);
+//        try {
+//            user = userDao.findUserByLogin(login);
+//            transaction.commit();
+//        } catch (DaoException e) {
+//            transaction.rollback();
+//            e.printStackTrace();
+//        }finally {
+//            transaction.end();
+//        }
+//        return user;
+//    }
 
     public User findUSerByEmail(String email) {
         User user = new User();

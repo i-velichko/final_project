@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>Road to Epam</title>
     <style>
         .colorText {
             background-color: #ef0606;
@@ -13,13 +13,15 @@
     </style>
 </head>
 <body>
-<h1>Please Login here:
-</h1>
+<h1><%= "Welcome to Epam. You can login or register here " %></h1>
 <br/>
-<form method="post" action="login">
+<form method="post" action="${abs_path}/controller">
+    <input type="hidden" name="command" value="login">
     Login:<input type="text" name="login">
     <br>
-    Password:<input type="password" name="pass">
+    <div><span>Password:<input type="password" name="password"></span>
+        <span style="color: red">${userNotFound}</span>
+    </div>
     <br>
     <input type="submit" value="Login">
 </form>

@@ -1,3 +1,4 @@
+<%--@elvariable id="user" type="org.velichko.finalproject.logic.entity.User"--%>
 <%--
   Created by IntelliJ IDEA.
   User: Professional

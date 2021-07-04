@@ -18,27 +18,27 @@ public class StudentInfoServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
-        String gitLink = request.getParameter("git");
-        String skills = request.getParameter("skills");
-        String projectName = request.getParameter("projectName");
-        String login = request.getParameter("login");
-
-        UserDaoImpl userDao = new UserDaoImpl();
-        EntityTransaction transaction = new EntityTransaction();
-        transaction.begin(userDao);
-        try {
-            User user = userDao.findUserByLogin(login);
-            transaction.commit();
-            user.setGitLink(gitLink);
-            userDao.updateUserGitLink(login, gitLink);
-            transaction.commit();
-            request.setAttribute("user", user);
-            request.getRequestDispatcher("/pages/student_info.jsp").forward(request, response);
-
-        } catch (DaoException | ServletException | IOException e) {
-            e.printStackTrace();
-            transaction.end();
-        }
+//        String gitLink = request.getParameter("git");
+//        String skills = request.getParameter("skills");
+//        String projectName = request.getParameter("projectName");
+//        String login = request.getParameter("login");
+//
+//        UserDaoImpl userDao = new UserDaoImpl();
+//        EntityTransaction transaction = new EntityTransaction();
+//        transaction.begin(userDao);
+//        try {
+//            User user = userDao.findUserByLogin(login);
+//            transaction.commit();
+//            user.setGitLink(gitLink);
+//            userDao.updateUserGitLink(login, gitLink);
+//            transaction.commit();
+//            request.setAttribute("user", user);
+//            request.getRequestDispatcher("/pages/student_info.jsp").forward(request, response);
+//
+//        } catch (DaoException | ServletException | IOException e) {
+//            e.printStackTrace();
+//            transaction.end();
+//        }
 
 
     }

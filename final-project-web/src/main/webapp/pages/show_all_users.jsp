@@ -16,6 +16,7 @@
                         <th>Git Link</th>
                         <th>Show user info</th>
                     </tr>
+                    <%--@elvariable id="users" type="java.util.List"--%>
                     <c:forEach items="${users}" var="user">
                         <tr>
                         <td>${user.getFirstName()}</td>

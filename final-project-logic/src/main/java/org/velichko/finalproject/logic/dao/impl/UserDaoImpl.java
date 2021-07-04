@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private UserCreator userCreator = new UserCreator();
@@ -37,7 +38,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
 
     @Override
-    public User findUserByLogin(String login) throws DaoException {
+    public Optional<User> findUserByLogin(String login) throws DaoException {
         User user = null;
         PreparedStatement statement = null;
         try {
@@ -52,7 +53,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         } finally {
             close(statement);
         }
-        return user;
+        return Optional.ofNullable(user);
     }
 
     @Override

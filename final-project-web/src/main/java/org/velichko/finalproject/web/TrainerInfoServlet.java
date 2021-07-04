@@ -10,6 +10,7 @@ import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.exception.DaoException;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet(name = "trainerInfoServlet", value = "/trainer")
 public class TrainerInfoServlet {
@@ -24,7 +25,7 @@ public class TrainerInfoServlet {
         EntityTransaction transaction = new EntityTransaction();
         transaction.begin(userDao);
         try {
-            User user = userDao.findUserByLogin(login);
+            Optional<User> user = userDao.findUserByLogin(login);
             transaction.commit();
             request.setAttribute("user", user);
             request.getRequestDispatcher("/pages/trainer_info.jsp").forward(request, response);

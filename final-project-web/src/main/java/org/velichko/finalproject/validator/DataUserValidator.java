@@ -1,20 +1,31 @@
 package org.velichko.finalproject.validator;
 
-public class DataUserValidator {
-    private static final String PASSWORD_VALIDATION_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{3,45}$"; //todo длиннее
-    private static final String LOGIN_VALIDATION_PATTERN = "^[\\w@#$%^&+=]{3,25}$";
-    private static final String EMAIL_VALIDATION_PATTERN = "^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$"; //todo длиннее
+public enum DataUserValidator {
+    EMAIL("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$", "email", "email is incorrect"),
+    LOGIN("^[\\w@#$%^&+=]{7,25}$", "login", "password is incorrect"),
+    PASSWORD("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{12,45}$", "password", "login is incorrect");
 
-    public static boolean isPasswordValid(String password) {
-        return password.matches(PASSWORD_VALIDATION_PATTERN);
+    private String regExp;
+    private String fieldName;
+    private String message;
+
+    DataUserValidator(String regExp, String fieldName, String message) {
+        this.regExp = regExp;
+        this.fieldName = fieldName;
+        this.message = message;
     }
 
-    public static boolean isLoginValid(String login) {
-        return login.matches(LOGIN_VALIDATION_PATTERN);
+    public String getRegExp() {
+        return regExp;
     }
 
-    public static boolean isEmailValid(String email) {
-        return email.matches(EMAIL_VALIDATION_PATTERN);
+    public String getFieldName() {
+        return fieldName;
     }
+
+    public String getMessage() {
+        return message;
+    }
+
 
 }

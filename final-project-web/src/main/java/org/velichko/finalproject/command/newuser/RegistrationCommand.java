@@ -1,6 +1,9 @@
 package org.velichko.finalproject.command.newuser;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.command.Command;
 import org.velichko.finalproject.command.PageConstant;
 import org.velichko.finalproject.command.ParamConstant;
@@ -17,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegistrationCommand implements Command {
+    private static Logger logger = LogManager.getLogger();
+
     @Override
     public Router execute(HttpServletRequest request) {
         UserService service = new UserServiceImpl();
@@ -33,39 +38,39 @@ public class RegistrationCommand implements Command {
         dataCheckService.put(password, false);
         dataCheckService.put(confirmPassword, false);
 
-        if (DataUserValidator.isLoginValid(login)) {
+        if (login.matches(DataUserValidator.LOGIN.getRegExp())) {
             dataCheckService.put(login, true);
             user.setLogin(login);
-        }else {
-            request.setAttribute(ParamConstant.LOGIN_PARAM, "Login is not correct, please, try again!");
+        } else {
+            request.setAttribute(ParamConstant.LOGIN_ERROR_PARAM, DataUserValidator.LOGIN.getMessage());
         }
         user.setFirstName(firstName);
         user.setLastName(lastName);
 
-        if (DataUserValidator.isEmailValid(email)){
+        if (email.matches(DataUserValidator.EMAIL.getRegExp())) {
             dataCheckService.put(email, true);
             user.setEmail(email);
-        }else {
-            request.setAttribute(ParamConstant.EMAIL_PARAM, "Email is not correct, please, try again.");
+        } else {
+            request.setAttribute(ParamConstant.EMAIL_ERROR_PARAM, DataUserValidator.EMAIL.getMessage());
         }
 
         user.setRole(UserRole.STUDENT);
         user.setStatus(UserStatus.ACTIVE);
 
-        if (DataUserValidator.isPasswordValid(password)){
+        if (password.matches(DataUserValidator.PASSWORD.getRegExp())) {
             dataCheckService.put(password, true);
-        }else {
-            request.setAttribute(ParamConstant.PASSWORD_PARAM, "Password is not correct, please, try again. ");
+        } else {
+            request.setAttribute(ParamConstant.PASSWORD_ERROR_PARAM, DataUserValidator.PASSWORD.getMessage());
         }
-        if (password.equals(confirmPassword)){
+        if (password.equals(confirmPassword)) {
             try {
                 service.createNewUser(user, password);
             } catch (ServiceException e) {
-                logger.error("Error while client registration data", e);
-                router.setPagePath(ConfigurationManager.getProperty(ConstantName.JSP_ERROR)); //todo
+                logger.log(Level.ERROR, "Error while client registration data", e);
+//                router.setPagePath(ConfigurationManager.getProperty(ConstantName.JSP_ERROR)); //todo Error page
             }
-        }else {
-            request.setAttribute(ParamConstant.PASSWORD_PARAM, "Passwords are differ");
+        } else {
+            request.setAttribute(ParamConstant.PASSWORD_ERROR_PARAM, DataUserValidator.PASSWORD.getMessage());
         }
 
         //todo редиспатчер на страничку приветствия нового пользователя и там возможно определение его роли
