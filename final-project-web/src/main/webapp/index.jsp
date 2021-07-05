@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="abs_path">${pageContext.request.contextPath}</c:set>
 <!DOCTYPE html>
 <html>
@@ -13,18 +14,27 @@
     </style>
 </head>
 <body>
+<fmt:setLocale value="ru_RU"/>
+<fmt:setBundle basename="translations" />
 <h1><%= "Welcome to Epam. You can login or register here " %></h1>
 <br/>
+
+
 <form method="post" action="${abs_path}/controller">
+    <label><fmt:message key="page.login.login"/>:
     <input type="hidden" name="command" value="login">
-    Login:<input type="text" name="login">
-    <br>
-    <div><span>Password:<input type="password" name="password"></span>
+    <input type="text" name="login">
+    </label><br>
+
+<label><fmt:message key="page.login.password"/> :
+        <span><input type="password" name="password"></span>
         <span style="color: red">${userNotFound}</span>
-    </div>
+</label>
     <br>
     <input type="submit" value="Login">
 </form>
+
+
 <br/>
 <form method="post" action="${abs_path}/pages/registration.jsp">
     <input type="submit" value="Registration">
