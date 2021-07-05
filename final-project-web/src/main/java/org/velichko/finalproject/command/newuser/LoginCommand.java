@@ -35,10 +35,10 @@ public class LoginCommand implements Command {
         EntityTransaction transaction = new EntityTransaction();
         transaction.begin(userDao);
         User user;
-        Optional<User> currentUser = null;
+        Optional<User> currentUser;
         try {
             currentUser = service.findUserByLogin(login);
-            if (!(currentUser.get().getLogin() == null)) {
+            if (currentUser.isPresent()) {
                 user = currentUser.get();
                 request.setAttribute(ParamConstant.USER_PARAM, user);
                 switch (user.getRole()) {
@@ -50,6 +50,7 @@ public class LoginCommand implements Command {
                 request.setAttribute(ParamConstant.USER_NOT_FOUND_PARAM, "User not found. Please, register if you want log in.");
                 router.setPagePath(PageConstant.INDEX_PAGE);
             }
+
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Error with find user by login: " + login);
         }

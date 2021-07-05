@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findUserByLogin(String login) throws ServiceException {
         Optional<User> currentUser;
-        User user = new User();
+        User user = null;
         UserDaoImpl userDao = new UserDaoImpl();
         EntityTransaction transaction = new EntityTransaction();
         transaction.begin(userDao);
