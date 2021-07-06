@@ -28,13 +28,11 @@
 
 <label><fmt:message key="page.login.password"/> :
         <span><input type="password" name="password"></span>
-        <span style="color: red">${userNotFound}</span>
+        <span style="color: #ff0000">${userNotFound}</span>
 </label>
     <br>
     <input type="submit" value="Login">
 </form>
-
-
 <br/>
 <form method="post" action="${abs_path}/pages/registration.jsp">
     <input type="submit" value="Registration">
