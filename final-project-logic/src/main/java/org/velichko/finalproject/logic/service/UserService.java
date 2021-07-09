@@ -13,5 +13,5 @@ public interface UserService {
     boolean delete (UserDaoImpl userDao);
     boolean createNewUser (User user, String password) throws ServiceException;
 
-    Optional<User> findUserByLogin(String login) throws ServiceException;
+    Optional<User> findUserByLoginAndPassword(String login, String password) throws ServiceException;
 }

@@ -20,18 +20,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegistrationCommand implements Command {
-    private static Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
 
     @Override
     public Router execute(HttpServletRequest request) {
+        Router router = new Router();
         UserService service = new UserServiceImpl();
         User user = new User();
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String email = request.getParameter("email");
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
-        String confirmPassword = request.getParameter("confirmPassword");
+        String firstName = request.getParameter(ParamConstant.FIRST_NAME_PARAM);
+        String lastName = request.getParameter(ParamConstant.LAST_NAME_PARAM);
+        String email = request.getParameter(ParamConstant.EMAIL_PARAM);
+        String login = request.getParameter(ParamConstant.LOGIN_PARAM);
+        String password = request.getParameter(ParamConstant.PASSWORD_PARAM);
+        String confirmPassword = request.getParameter(ParamConstant.CONFIRM_PASSWORD_PARAM);
 
         Map<String, Boolean> dataCheckService = new HashMap<>();
         dataCheckService.put(login, false);
@@ -77,7 +78,7 @@ public class RegistrationCommand implements Command {
 
         router.setPagePath(PageConstant.REGISTRATION);
         request.setAttribute(ParamConstant.USER_PARAM, user);
-        router.setPagePath(PageConstant.INDEX_PAGE);
+        router.setPagePath(PageConstant.LOGIN_PAGE);
         return router;
     }
 }

@@ -11,14 +11,13 @@
 <html>
 <head>
     <title>Title</title>
-    <style>
-        .colorText {
-            background-color: #ef0606;
-            color: #ffffff;
-        }
-    </style>
 </head>
 <body>
+<%@include file="../include/header.jsp"%>
+
+<br/>
+<br/>
+
 <h1>Registration
 </h1>
 <br/>

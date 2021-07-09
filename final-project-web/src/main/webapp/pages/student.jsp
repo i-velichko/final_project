@@ -12,6 +12,7 @@
     <title>Student personal area</title>
 </head>
 <body bgcolor="silver">
+<%@include file="../include/header.jsp"%>
 Hi Student:
 </br>
 ${user.firstName}

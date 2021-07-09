@@ -4,6 +4,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.velichko.finalproject.command.ParamConstant;
 import org.velichko.finalproject.logic.dao.EntityTransaction;
 import org.velichko.finalproject.logic.dao.impl.UserDaoImpl;
 import org.velichko.finalproject.logic.entity.User;
@@ -19,13 +20,14 @@ public class TrainerInfoServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
 
-        String login = request.getParameter("login");
+        String login = request.getParameter(ParamConstant.LOGIN_PARAM);
+        String password = request.getParameter(ParamConstant.PASSWORD_PARAM);
 
         UserDaoImpl userDao = new UserDaoImpl();
         EntityTransaction transaction = new EntityTransaction();
         transaction.begin(userDao);
         try {
-            Optional<User> user = userDao.findUserByLogin(login);
+            Optional<User> user = userDao.findUserByLoginAndPassword(login, password);
             transaction.commit();
             request.setAttribute("user", user);
             request.getRequestDispatcher("/pages/trainer_info.jsp").forward(request, response);

@@ -25,7 +25,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String FIND_USER_BY_LOGIN = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git" +
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
             "LEFT JOIN user_statuses as us ON u.status_id = us.id" +//TODO: remove left
-            " WHERE u.login = ?";
+            " WHERE u.login = ? and u.password = ?";
     private static final String FIND_USER_BY_EMAIL = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git" +
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
             "JOIN user_statuses as us ON u.status_id = us.id" +
@@ -38,12 +38,13 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
 
     @Override
-    public Optional<User> findUserByLogin(String login) throws DaoException {
+    public Optional<User> findUserByLoginAndPassword(String login, String password) throws DaoException {
         User user = null;
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(FIND_USER_BY_LOGIN);
             statement.setString(1, login);
+            statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 user = userCreator.createUser(resultSet);

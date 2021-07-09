@@ -11,6 +11,7 @@
     <title>Student info</title>
 </head>
 <body>
+<%@include file="../include/header.jsp"%>
 Information about Student:
 </br>
 ${user.firstName}

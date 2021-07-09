@@ -14,12 +14,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
-    private static Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
+    private static final UserDaoImpl userDao = new UserDaoImpl();
 
     @Override
     public List<User> readAll() throws ServiceException {
         List<User> users;
-        UserDaoImpl userDao = new UserDaoImpl();
         EntityTransaction transaction = new EntityTransaction();
         transaction.begin(userDao);
         try {
@@ -36,7 +36,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean createNewUser(User user, String password) throws ServiceException {
-        UserDaoImpl userDao = new UserDaoImpl();
         EntityTransaction transaction = new EntityTransaction();
         User newUser = new User();
         transaction.begin(userDao);
@@ -54,14 +53,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findUserByLogin(String login) throws ServiceException {
+    public Optional<User> findUserByLoginAndPassword(String login, String password) throws ServiceException {
         Optional<User> currentUser;
         User user = null;
-        UserDaoImpl userDao = new UserDaoImpl();
         EntityTransaction transaction = new EntityTransaction();
         transaction.begin(userDao);
         try {
-            currentUser = userDao.findUserByLogin(login);
+            currentUser = userDao.findUserByLoginAndPassword(login, password);
             transaction.commit();
             if (currentUser.isPresent()) {
                 user = currentUser.get();

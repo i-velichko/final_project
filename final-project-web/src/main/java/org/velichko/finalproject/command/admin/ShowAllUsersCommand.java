@@ -17,8 +17,10 @@ import java.util.List;
 
 public class ShowAllUsersCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
+
     @Override
     public Router execute(HttpServletRequest request) {
+        Router router = new Router();
         UserService service = new UserServiceImpl();
         List<User> users = null;
         try {

@@ -1,17 +1,17 @@
-package org.velichko.finalproject.filter;
-
-import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebFilter;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-
-@WebFilter("/*")   //@WebFilter("/*") это значит что такой фильтр срабатывает для всех запросов
-public class CharsetFilter implements Filter {
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        servletRequest.setCharacterEncoding(StandardCharsets.UTF_8.name());
-        servletResponse.setCharacterEncoding(StandardCharsets.UTF_8.name());
-        filterChain.doFilter(servletRequest, servletResponse);
-    }
-}
+//package org.velichko.finalproject.filter;
+//
+//import jakarta.servlet.*;
+//import jakarta.servlet.annotation.WebFilter;
+//
+//import java.io.IOException;
+//import java.nio.charset.StandardCharsets;
+//
+//@WebFilter("/*")   //@WebFilter("/*") это значит что такой фильтр срабатывает для всех запросов
+//public class CharsetFilter implements Filter {
+//    @Override
+//    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+//        servletRequest.setCharacterEncoding(StandardCharsets.UTF_8.name());
+//        servletResponse.setCharacterEncoding(StandardCharsets.UTF_8.name());
+//        filterChain.doFilter(servletRequest, servletResponse);
+//    }
+//}

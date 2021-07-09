@@ -10,4 +10,9 @@ public class ParamConstant {
     public static final String PASSWORD_ERROR_PARAM = "passwordError";
     public static final String LOGIN_PARAM = "login";
     public static final String USER_NOT_FOUND_PARAM = "userNotFound";
+    public static final String FIRST_NAME_PARAM = "firstName";
+    public static final String LAST_NAME_PARAM = "lastName";
+    public static final String EMAIL_PARAM = "email";
+    public static final String CONFIRM_PASSWORD_PARAM = "confirmPassword";
+    public static final String LOCALE_PARAM = "locale";
 }

@@ -13,7 +13,9 @@
     <title>Trainer Personal Area</title>
 </head>
 <body bgcolor="silver">
+<%@include file="../include/header.jsp"%>
 Hi, trainer!
+
 <br/>
 </br>
 ${user.firstName}
@@ -23,6 +25,10 @@ ${user.lastName}
 <br/>
 ${abs_path}
 <br/>
-<p><a href="${abs_path}/studentsList">Show all students</a></p>
+<br/>
+<form method="post" action="${abs_path}/controller" >
+    <input type="hidden" name="command" value="show_all_users">
+    <input type="submit" class="colorText" value="show all users">
+</form>
 <p><a href="trainerInfo.jsp">Your personal information</a></p>
 </html>
