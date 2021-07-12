@@ -5,6 +5,8 @@ import org.velichko.finalproject.logic.dao.impl.UserDaoImpl;
 import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.exception.DaoException;
 
+import java.util.Locale;
+
 public class Main {
     public static void main(String[] args) throws DaoException {
 //        SomeService someService = new SomeService();
@@ -22,7 +24,8 @@ public class Main {
 //        transaction.begin(userDao);
 //        userDao.create(user);
 //        transaction.commit();
-        System.out.println("dddd");
+
+        System.out.println(Locale.getDefault());
 
     }
 }

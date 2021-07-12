@@ -14,7 +14,7 @@
 
 <%@include file="../include/common_imports.jspf" %>
 
-<div>
+<div id="logout">
     <c:if test="${not empty sessionScope.user}">
         <form action="${abs_path}/controller" method="post">
             <input type="hidden" name="command" value="logout">
@@ -26,8 +26,10 @@
 
 <form action="${abs_path}/controller" method="post">
     <input type="hidden" name="command" value="change_locale">
+    <input type="hidden" name="refererCommand" value="${refererCommand}">
     <input type="submit" class="btn btn-primary" value="${curr_lang}">
 </form>
+
 
 </body>
 </html>

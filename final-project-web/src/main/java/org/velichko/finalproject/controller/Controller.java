@@ -5,7 +5,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.velichko.finalproject.command.Command;
 import org.velichko.finalproject.command.CommandName;
 import org.velichko.finalproject.command.ParamConstant;
 
@@ -13,6 +12,9 @@ import java.io.IOException;
 
 @WebServlet(name = "controller", urlPatterns = "/controller")
 public class Controller extends HttpServlet {
+
+    private CommandName commandName;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
@@ -24,9 +26,9 @@ public class Controller extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Router router;
-        Command command = getCommandName(request).getCommand();
-        router = command.execute(request);
+        CommandName commandName = getCommandName(request);
+        Router router = commandName.getCommand().execute(request);
+        request.setAttribute("refererCommand", commandName.name());
         switch (router.getRouterType()) {
             case FORWARD -> request.getRequestDispatcher(router.getPagePath()).forward(request, response);
             case REDIRECT -> response.sendRedirect(router.getPagePath());

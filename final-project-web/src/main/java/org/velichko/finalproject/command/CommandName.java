@@ -5,6 +5,7 @@ import org.velichko.finalproject.command.common.ChangeLocaleCommand;
 import org.velichko.finalproject.command.common.LoginCommand;
 import org.velichko.finalproject.command.common.LogoutCommand;
 import org.velichko.finalproject.command.newuser.RegistrationCommand;
+import org.velichko.finalproject.command.trainer.ShowTrainerInfoCommand;
 
 public enum CommandName {
 
@@ -12,7 +13,8 @@ public enum CommandName {
     REGISTRATION(new RegistrationCommand()),
     LOGIN(new LoginCommand()),
     CHANGE_LOCALE(new ChangeLocaleCommand()),
-    LOGOUT(new LogoutCommand());
+    LOGOUT(new LogoutCommand()),
+    SHOW_TRAINER_INFO(new ShowTrainerInfoCommand());
 
 
     private Command command;

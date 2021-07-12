@@ -8,8 +8,6 @@ import org.velichko.finalproject.command.Command;
 import org.velichko.finalproject.command.PageConstant;
 import org.velichko.finalproject.command.ParamConstant;
 import org.velichko.finalproject.controller.Router;
-import org.velichko.finalproject.logic.dao.EntityTransaction;
-import org.velichko.finalproject.logic.dao.impl.UserDaoImpl;
 import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.exception.ServiceException;
 import org.velichko.finalproject.logic.service.UserService;
@@ -23,14 +21,29 @@ public class LoginCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
+
+        User user = (User) request.getSession().getAttribute(ParamConstant.USER_PARAM);
+        if (user != null) {
+            request.setAttribute(ParamConstant.USER_PARAM, user);
+            switch (user.getRole()) {
+                case STUDENT -> router.setPagePath(PageConstant.WELCOME_STUDENT);
+                case TRAINER -> router.setPagePath(PageConstant.WELCOME_TRAINER);
+                default -> router.setPagePath(PageConstant.LOGIN_PAGE);
+            }
+
+        } else {
+            getUserViaDB(request, router);
+        }
+
+        return router;
+    }
+
+    private void getUserViaDB(HttpServletRequest request, Router router) {
+        User user;
         String login = request.getParameter(ParamConstant.LOGIN_PARAM);
         String password = request.getParameter(ParamConstant.PASSWORD_PARAM);
 
         UserService service = new UserServiceImpl();
-        UserDaoImpl userDao = new UserDaoImpl();
-        EntityTransaction transaction = new EntityTransaction();
-        transaction.begin(userDao);
-        User user;
         Optional<User> currentUser;
         try {
             currentUser = service.findUserByLoginAndPassword(login, password);
@@ -51,7 +64,6 @@ public class LoginCommand implements Command {
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Error with find user by login: " + login);
         }
-        return router;
     }
 }
 

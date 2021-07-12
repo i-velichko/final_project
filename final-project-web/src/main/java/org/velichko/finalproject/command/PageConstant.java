@@ -8,4 +8,5 @@ public class PageConstant {
     public static final String WELCOME_STUDENT = "pages/student.jsp";
     public static final String WELCOME_TRAINER = "pages/trainer.jsp";
     public static final String REFERER_PARAM = "referer";
+    public static final String TRAINER_INFO = "/pages/trainer_info.jsp";
 }

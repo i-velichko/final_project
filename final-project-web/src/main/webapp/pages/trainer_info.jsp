@@ -12,5 +12,6 @@
 </head>
 <body>
 <%@include file="../include/header.jsp"%>
+Info about trainer must be here
 </body>
 </html>

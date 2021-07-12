@@ -16,13 +16,15 @@ public class ChangeLocaleCommand implements Command {
         HttpSession session = request.getSession();
         String locale = (String) session.getAttribute(ParamConstant.LOCALE_PARAM);
 
-        if (locale == null || "ru-RU".equals(locale)){
+        if (locale == null || "ru-RU".equals(locale)) {
             locale = "en-EN";
-        }else {
+        } else {
             locale = "ru-RU";
         }
 
         session.setAttribute(ParamConstant.LOCALE_PARAM, locale);
+        String refererCommand = request.getParameter("refererCommand");
+
         router.setPagePath(request.getHeader(PageConstant.REFERER_PARAM));
 
         return router;

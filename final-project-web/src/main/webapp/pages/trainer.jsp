@@ -25,10 +25,21 @@ ${user.lastName}
 <br/>
 ${abs_path}
 <br/>
-<br/>
-<form method="post" action="${abs_path}/controller" >
-    <input type="hidden" name="command" value="show_all_users">
-    <input type="submit" class="colorText" value="show all users">
+<form method="post" action="${abs_path}/controller">
+    <input type="hidden" name="command" value= "show_trainer_info">
+    GIT: <input type="text" name="git">
+    Skills: <input type="text" name="skills">
+    Project Name: <input type="text" name="projectName">
+    <input type="submit" value="GO TO HELL!">
 </form>
-<p><a href="trainerInfo.jsp">Your personal information</a></p>
+<br/>
+<a href="${abs_path}/controller?command=show_all_users">
+    <button type="button">Show all users</button>
+</a>
+
+<%--<form method="post" action="${abs_path}/controller" >--%>
+<%--    <input type="hidden" name="command" value="show_all_users">--%>
+<%--    <input type="submit" class="colorText" value="show all users">--%>
+<%--</form>--%>
+<p><a href="trainer_info.jsp">Your personal information</a></p>
 </html>
