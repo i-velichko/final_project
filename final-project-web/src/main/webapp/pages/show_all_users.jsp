@@ -6,7 +6,7 @@
     <title>All users list</title>
 </head>
 <body bgcolor="silver">
-<%@include file="/include/header.jsp"%>
+<%@include file="fragment/header.jsp" %>
 
 <form>
     <table border="2">

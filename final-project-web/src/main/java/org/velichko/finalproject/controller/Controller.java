@@ -6,9 +6,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.velichko.finalproject.command.CommandName;
-import org.velichko.finalproject.command.ParamConstant;
+import org.velichko.finalproject.command.ParamName;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet(name = "controller", urlPatterns = "/controller")
 public class Controller extends HttpServlet {
@@ -26,20 +27,26 @@ public class Controller extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CommandName commandName = getCommandName(request);
-        Router router = commandName.getCommand().execute(request);
-        request.setAttribute("refererCommand", commandName.name());
-        switch (router.getRouterType()) {
-            case FORWARD -> request.getRequestDispatcher(router.getPagePath()).forward(request, response);
-            case REDIRECT -> response.sendRedirect(router.getPagePath());
+        Optional<CommandName> commandName = getCommandName(request);
+        if (commandName.isPresent()) {
+            Router router = commandName.get().getCommand().execute(request);
+            request.setAttribute("refererCommand", commandName.get().name());
+            switch (router.getRouterType()) {
+                case FORWARD -> request.getRequestDispatcher(router.getPagePath()).forward(request, response);
+                case REDIRECT -> response.sendRedirect(router.getPagePath());
+//            default -> response.sendRedirect(router.getPagePath()); //todo переход на еррор пейдж форвард ? или редирект?
+            }
+        }else {
+            //todo ???
         }
+
 
     }
 
-    private CommandName getCommandName(HttpServletRequest request) {
-        String name = request.getParameter(ParamConstant.COMMAND_PARAM);
+    private Optional<CommandName> getCommandName(HttpServletRequest request) {
+        String name = request.getParameter(ParamName.COMMAND_PARAM);
         CommandName commandName;
         commandName = CommandName.valueOf(name.toUpperCase());
-        return commandName; //todo try catch
+        return Optional.of(commandName); //todo try catch
     }
 }

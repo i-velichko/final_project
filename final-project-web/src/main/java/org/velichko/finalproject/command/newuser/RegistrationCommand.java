@@ -5,8 +5,8 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.command.Command;
-import org.velichko.finalproject.command.PageConstant;
-import org.velichko.finalproject.command.ParamConstant;
+import org.velichko.finalproject.command.PageName;
+import org.velichko.finalproject.command.ParamName;
 import org.velichko.finalproject.controller.Router;
 import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.entity.type.UserRole;
@@ -21,18 +21,19 @@ import java.util.Map;
 
 public class RegistrationCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
+    private final UserService service = new UserServiceImpl(); //todo сделать синглтон
+    Router router = new Router();
 
     @Override
     public Router execute(HttpServletRequest request) {
-        Router router = new Router();
-        UserService service = new UserServiceImpl();
+
         User user = new User();
-        String firstName = request.getParameter(ParamConstant.FIRST_NAME_PARAM);
-        String lastName = request.getParameter(ParamConstant.LAST_NAME_PARAM);
-        String email = request.getParameter(ParamConstant.EMAIL_PARAM);
-        String login = request.getParameter(ParamConstant.LOGIN_PARAM);
-        String password = request.getParameter(ParamConstant.PASSWORD_PARAM);
-        String confirmPassword = request.getParameter(ParamConstant.CONFIRM_PASSWORD_PARAM);
+        String firstName = request.getParameter(ParamName.FIRST_NAME_PARAM);
+        String lastName = request.getParameter(ParamName.LAST_NAME_PARAM);
+        String email = request.getParameter(ParamName.EMAIL_PARAM);
+        String login = request.getParameter(ParamName.LOGIN_PARAM);
+        String password = request.getParameter(ParamName.PASSWORD_PARAM);
+        String confirmPassword = request.getParameter(ParamName.CONFIRM_PASSWORD_PARAM);
 
         Map<String, Boolean> dataCheckService = new HashMap<>();
         dataCheckService.put(login, false);
@@ -40,10 +41,11 @@ public class RegistrationCommand implements Command {
         dataCheckService.put(confirmPassword, false);
 
         if (login.matches(DataUserValidator.LOGIN.getRegExp())) {
+            //todo проверка на то есть ли такой в базе, если есть такой то тоже оповестить
             dataCheckService.put(login, true);
             user.setLogin(login);
         } else {
-            request.setAttribute(ParamConstant.LOGIN_ERROR_PARAM, DataUserValidator.LOGIN.getMessage());
+            request.setAttribute(ParamName.LOGIN_ERROR_PARAM, DataUserValidator.LOGIN.getMessage());
         }
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -52,7 +54,7 @@ public class RegistrationCommand implements Command {
             dataCheckService.put(email, true);
             user.setEmail(email);
         } else {
-            request.setAttribute(ParamConstant.EMAIL_ERROR_PARAM, DataUserValidator.EMAIL.getMessage());
+            request.setAttribute(ParamName.EMAIL_ERROR_PARAM, DataUserValidator.EMAIL.getMessage());
         }
 
         user.setRole(UserRole.STUDENT);
@@ -61,7 +63,7 @@ public class RegistrationCommand implements Command {
         if (password.matches(DataUserValidator.PASSWORD.getRegExp())) {
             dataCheckService.put(password, true);
         } else {
-            request.setAttribute(ParamConstant.PASSWORD_ERROR_PARAM, DataUserValidator.PASSWORD.getMessage());
+            request.setAttribute(ParamName.PASSWORD_ERROR_PARAM, DataUserValidator.PASSWORD.getMessage());
         }
         if (password.equals(confirmPassword)) {
             try {
@@ -71,14 +73,14 @@ public class RegistrationCommand implements Command {
 //                router.setPagePath(ConfigurationManager.getProperty(ConstantName.JSP_ERROR)); //todo Error page
             }
         } else {
-            request.setAttribute(ParamConstant.PASSWORD_ERROR_PARAM, DataUserValidator.PASSWORD.getMessage());
+            request.setAttribute(ParamName.PASSWORD_ERROR_PARAM, DataUserValidator.PASSWORD.getMessage());
         }
 
         //todo редиспатчер на страничку приветствия нового пользователя и там возможно определение его роли
 
-        router.setPagePath(PageConstant.REGISTRATION);
-        request.setAttribute(ParamConstant.USER_PARAM, user);
-        router.setPagePath(PageConstant.LOGIN_PAGE);
+        router.setPagePath(PageName.REGISTRATION);
+        request.setAttribute(ParamName.USER_PARAM, user);
+        router.setPagePath(PageName.LOGIN_PAGE); //todo убрать и продумать всю логику неудачной регистрации
         return router;
     }
 }

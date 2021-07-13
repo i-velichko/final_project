@@ -15,8 +15,8 @@
     <title>Student personal area</title>
 </head>
 <body bgcolor="silver">
-<%@include file="../include/header.jsp"%>
-Hi Student:
+<%@include file="fragment/header.jsp"%>
+<fmt:message key="page.student.welcome"/>
 </br>
 ${user.firstName}
 </br>
@@ -25,15 +25,15 @@ ${user.lastName}
 ${user.email}
 </br>
 
-<h3>To start verification fill in all fields and click "GO TO HELL"!</h3>
+<h3><fmt:message key="page.student.to_start"/></h3>
 </br>
 
 <form name="" action="student" method="post">
     <input type="hidden" name="login" value= "${user.login}">
-    GIT: <input type="text" name="git">
-    Skills: <input type="text" name="skills">
-    Project Name: <input type="text" name="projectName">
-    <input type="submit" value="GO TO HELL!">
+    <fmt:message key="page.student.git"/> <input type="text" name="git">
+    <fmt:message key="page.student.skills"/><input type="text" name="skills">
+    <fmt:message key="page.student.project_name"/> <input type="text" name="projectName">
+    <input type="submit" value=<fmt:message key="page.student.go_to_verification"/>>
 </form>
 
 </body>

@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
 
+//todo сделать клозабл
 public class EntityTransaction {
     private static Logger logger = LogManager.getLogger();
     private ProxyConnection connection;
@@ -48,7 +49,7 @@ public class EntityTransaction {
         }
     }
 
-    public void endSingleQuery(AbstractDao<?> dao) {
+    public void endSingleQuery() {
         if (connection != null){
             ConnectionPool.getInstance().releaseConnection(connection);
             connection = null;

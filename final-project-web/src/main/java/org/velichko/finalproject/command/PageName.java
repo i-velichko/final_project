@@ -1,6 +1,10 @@
 package org.velichko.finalproject.command;
 
-public class PageConstant {
+public class PageName {
+
+    private PageName () {
+    }
+
     public static final String INDEX_PAGE = "index.jsp";
     public static final String LOGIN_PAGE = "pages/login.jsp";
     public static final String SHOW_ALL_USERS = "pages/show_all_users.jsp";

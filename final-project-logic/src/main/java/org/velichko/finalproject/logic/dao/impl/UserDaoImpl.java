@@ -141,7 +141,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             statement.setString(4, user.getEmail());
             statement.setInt(5, user.getRole().getId());
             statement.setInt(6, user.getStatus().getId());
-            statement.setString(6, password);
+            statement.setString(7, password);
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {

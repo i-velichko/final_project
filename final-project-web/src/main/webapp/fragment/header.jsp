@@ -18,7 +18,7 @@
     <c:if test="${not empty sessionScope.user}">
         <form action="${abs_path}/controller" method="post">
             <input type="hidden" name="command" value="logout">
-            <input type="submit" class="colorText" value="logout">
+            <input type="submit" class="colorText" value=<fmt:message key="page.header.logout"/>>
         </form>
     </c:if>
 </div>

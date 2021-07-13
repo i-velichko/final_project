@@ -1,19 +1,14 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<c:set var="abs_path">${pageContext.request.contextPath}</c:set>
 <html>
 <head>
     <title>Road to Epam</title>
 
-    <%@include file="/include/header.jsp" %>
+    <%@include file="fragment/header.jsp"%>
 </head>
 
 <body>
 
 
-<h1><%= "Welcome to Epam. You can login or register here " %>
-</h1>
+<h1><fmt:message key="page.login.welcome"/></h1>
 <br/>
 
 
@@ -25,9 +20,9 @@
         <span><input type="password" name="password" id="password" required></span>
         <span style="color: #ff0000">${userNotFound}</span>
     </label><br/>
-    <button type="submit">Login</button>
+    <button type="submit"><fmt:message key="page.login.sign_in"/></button>
     <a href="${abs_path}/pages/registration.jsp">
-        <button type="button">Register</button>
+        <button type="button"><fmt:message key="page.login.register"/></button>
     </a>
 </form>
 </body>

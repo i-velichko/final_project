@@ -11,7 +11,7 @@
     <title>Trainer info</title>
 </head>
 <body>
-<%@include file="../include/header.jsp"%>
+<%@include file="fragment/header.jsp"%>
 Info about trainer must be here
 </body>
 </html>

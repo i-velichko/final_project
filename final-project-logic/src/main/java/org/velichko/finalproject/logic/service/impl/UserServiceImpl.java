@@ -15,21 +15,20 @@ import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger();
-    private static final UserDaoImpl userDao = new UserDaoImpl();
+    private final UserDaoImpl userDao = new UserDaoImpl();
 
     @Override
     public List<User> readAll() throws ServiceException {
         List<User> users;
         EntityTransaction transaction = new EntityTransaction();
-        transaction.begin(userDao);
+        transaction.beginSingleQuery(userDao);
         try {
             users = userDao.findAll();
-            transaction.commit();
         } catch (DaoException e) {
-            transaction.rollback();
+            //todo log
             throw new ServiceException("Error with find all Users .", e);
         } finally {
-            transaction.end();
+            transaction.endSingleQuery();
         }
         return users;
     }
@@ -37,17 +36,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean createNewUser(User user, String password) throws ServiceException {
         EntityTransaction transaction = new EntityTransaction();
-        User newUser = new User();
-        transaction.begin(userDao);
+        transaction.beginSingleQuery(userDao);
         boolean result;
         try {
-            userDao.createNewUser(newUser, password);
-            transaction.commit();
+            userDao.createNewUser(user, password);
             result = true;
         } catch (DaoException e) {
+            //todo log
             throw new ServiceException("Error with add new User. ", e);
         } finally {
-            transaction.end();
+            transaction.endSingleQuery();
         }
         return result;
     }
@@ -57,10 +55,9 @@ public class UserServiceImpl implements UserService {
         Optional<User> currentUser;
         User user = null;
         EntityTransaction transaction = new EntityTransaction();
-        transaction.begin(userDao);
+        transaction.beginSingleQuery(userDao);
         try {
             currentUser = userDao.findUserByLoginAndPassword(login, password);
-            transaction.commit();
             if (currentUser.isPresent()) {
                 user = currentUser.get();
             }
@@ -68,7 +65,7 @@ public class UserServiceImpl implements UserService {
             logger.log(Level.ERROR, "Exception while executing service", e);
             throw new ServiceException("Error with find user by login", e);
         }finally {
-            transaction.end();
+            transaction.endSingleQuery();
         }
         return Optional.ofNullable(user);
     }
