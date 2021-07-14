@@ -13,7 +13,7 @@ import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
 import java.util.Optional;
 
 public class ShowTrainerInfoCommand implements Command {
-    private final UserService service = new UserServiceImpl(); //todo сделать синглтон
+    private final UserService service = new UserServiceImpl();
 
     @Override
     public Router execute(HttpServletRequest request) {
@@ -30,7 +30,6 @@ public class ShowTrainerInfoCommand implements Command {
                 user = currentUser.get();
                 request.setAttribute("user", user);
                 router.setPagePath(PageName.TRAINER_INFO);
-//                request.getRequestDispatcher("/pages/trainer_info.jsp").forward(request);
             }
 
         } catch (ServiceException e) {

@@ -15,9 +15,11 @@ import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
 
 import java.util.List;
 
+import static org.velichko.finalproject.command.PageName.*;
+
 public class ShowAllUsersCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-    private final UserService service = new UserServiceImpl(); //todo сделать синглтон
+    private final UserService service = new UserServiceImpl();
 
     @Override
     public Router execute(HttpServletRequest request) {
@@ -26,10 +28,10 @@ public class ShowAllUsersCommand implements Command {
         try {
             users = service.readAll();
             request.setAttribute(ParamName.USER_LIST_PARAM, users);
-            router.setPagePath(PageName.SHOW_ALL_USERS);
+            router.setPagePath(SHOW_ALL_USERS);
         } catch (ServiceException e) {
-            logger.log(Level.ERROR,"Error while client registration data", e);
-//            router.setPagePath(ConfigurationManager.getProperty(ConstantName.JSP_ERROR)); //todo Error page
+            logger.log(Level.ERROR, "Error while client registration data", e);
+            router.setPagePath(ERROR_PAGE);
         }
         return router;
     }

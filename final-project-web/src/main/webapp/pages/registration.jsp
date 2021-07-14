@@ -3,7 +3,7 @@
     <title>Title</title>
 </head>
 <body>
-<%@include file="fragment/header.jsp"%>
+<%@include file="/fragment/header.jsp"%>
 
 <br/>
 <br/>

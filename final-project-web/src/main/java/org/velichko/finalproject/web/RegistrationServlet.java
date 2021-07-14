@@ -46,10 +46,8 @@
 //            if (password.equals(confirmPassword)){
 //                userDao.changePassword(login, password);
 //            }
-//             //todo log или ошибка и вообще наверное это в трай кеч
 //            transaction.commit();
 //            request.setAttribute("user", user);
-//            //todo редиспатчер на страничку приветствия нового пользователя и там возможно определение его роли
 //            request.getRequestDispatcher("/index.jsp").forward(request, response);
 //        } catch (DaoException e) {
 //            e.printStackTrace();

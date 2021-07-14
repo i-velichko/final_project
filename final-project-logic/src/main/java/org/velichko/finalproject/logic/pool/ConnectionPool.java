@@ -18,17 +18,17 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
-    private static int DEFAULT_POOL_SIZE;
+    private static Logger logger = LogManager.getLogger();
     private static final long DELAY_UNTIL_CONNECTIONS_NUMBER_CHECK = 1;
     private static final long PERIOD_BETWEEN_CONNECTIONS_NUMBER_CHECK = 1;
+    private static int DEFAULT_POOL_SIZE;
     private static AtomicBoolean isCreatedInstance = new AtomicBoolean(false);
-    private static Logger logger = LogManager.getLogger();
+    private final URL PROPERTIES_PATH = getClass().getClassLoader().getResource("connection.properties");
     private BlockingQueue<ProxyConnection> freeConnections;
     private BlockingQueue<ProxyConnection> givenAwayConnections;
     private ReentrantLock connectionPoolLock;
     private AtomicBoolean connectionsNumberCheck = new AtomicBoolean(false);
     private Properties properties;
-    private final URL PROPERTIES_PATH = getClass().getClassLoader().getResource("connection.properties");
 
 
     private ConnectionPool() {
@@ -67,15 +67,15 @@ public class ConnectionPool {
     public Connection getConnection() {
         ProxyConnection connection = null;
         try {
-            if (connectionsNumberCheck.get()){
+            if (connectionsNumberCheck.get()) {
                 try {
                     connectionPoolLock.lock();
-                }finally {
+                } finally {
                     connectionPoolLock.unlock();
                 }
             }
             connection = freeConnections.take();
-            givenAwayConnections.offer(connection);
+            givenAwayConnections.put(connection);
         } catch (InterruptedException e) {
             logger.log(Level.ERROR, "Can not getting connection ", e);
         }
@@ -85,8 +85,15 @@ public class ConnectionPool {
     public boolean releaseConnection(Connection connection) {
         if (connection.getClass() == ProxyConnection.class) {
             givenAwayConnections.remove(connection);
-            freeConnections.offer((ProxyConnection) connection);
+            try {
+                freeConnections.put((ProxyConnection) connection);
+            } catch (InterruptedException e) {
+                logger.log(Level.ERROR, "Cannot put connection", e);
+                Thread.currentThread().interrupt();
+            }
             return true;
+        } else {
+            logger.error("Attention. Attempt to transfer to the Connection Pool rogue connection.");
         }
         return false;
     }
@@ -120,11 +127,11 @@ public class ConnectionPool {
             connectionPoolLock.lock();
             connectionsNumberCheck.set(true);
             TimeUnit.MICROSECONDS.sleep(100);
-             currentConnectionsCount = givenAwayConnections.size() + freeConnections.size();
-        }catch (InterruptedException e){
-            //log todo
+            currentConnectionsCount = givenAwayConnections.size() + freeConnections.size();
+        } catch (InterruptedException e) {
+            logger.log(Level.ERROR, "Cannot count connections");
             Thread.currentThread().interrupt();
-        }finally {
+        } finally {
             connectionsNumberCheck.set(false);
             connectionPoolLock.unlock();
         }

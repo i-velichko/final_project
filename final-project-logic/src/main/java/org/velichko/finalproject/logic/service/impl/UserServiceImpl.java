@@ -15,17 +15,17 @@ import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger();
-    private final UserDaoImpl userDao = new UserDaoImpl();
 
     @Override
     public List<User> readAll() throws ServiceException {
+        UserDaoImpl userDao = new UserDaoImpl();
         List<User> users;
         EntityTransaction transaction = new EntityTransaction();
         transaction.beginSingleQuery(userDao);
         try {
             users = userDao.findAll();
         } catch (DaoException e) {
-            //todo log
+            logger.log(Level.ERROR, "Error with find all Users .", e );
             throw new ServiceException("Error with find all Users .", e);
         } finally {
             transaction.endSingleQuery();
@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean createNewUser(User user, String password) throws ServiceException {
+        UserDaoImpl userDao = new UserDaoImpl();
         EntityTransaction transaction = new EntityTransaction();
         transaction.beginSingleQuery(userDao);
         boolean result;
@@ -42,7 +43,7 @@ public class UserServiceImpl implements UserService {
             userDao.createNewUser(user, password);
             result = true;
         } catch (DaoException e) {
-            //todo log
+            logger.log(Level.ERROR, "Error with add new User. ", e);
             throw new ServiceException("Error with add new User. ", e);
         } finally {
             transaction.endSingleQuery();
@@ -52,6 +53,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findUserByLoginAndPassword(String login, String password) throws ServiceException {
+        UserDaoImpl userDao = new UserDaoImpl();
         Optional<User> currentUser;
         User user = null;
         EntityTransaction transaction = new EntityTransaction();
@@ -64,7 +66,7 @@ public class UserServiceImpl implements UserService {
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Exception while executing service", e);
             throw new ServiceException("Error with find user by login", e);
-        }finally {
+        } finally {
             transaction.endSingleQuery();
         }
         return Optional.ofNullable(user);

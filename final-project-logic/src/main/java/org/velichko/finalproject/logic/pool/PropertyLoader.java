@@ -18,7 +18,7 @@ class PropertyLoader {
             properties.load(url.openStream());
         } catch (IOException e) {
             logger.log(Level.FATAL, "Error with loading properties from file. ", e);
-            throw new ConnectionPoolException("Error with loading properties from file: " + url);
+            throw new ConnectionPoolException("Error with loading properties from file: " + url, e);
 
         }
         return properties;

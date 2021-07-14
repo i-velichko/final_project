@@ -15,4 +15,5 @@ public class ParamName {
     public static final String EMAIL_PARAM = "email";
     public static final String CONFIRM_PASSWORD_PARAM = "confirmPassword";
     public static final String LOCALE_PARAM = "locale";
+    public static final String REFERER_PARAM = "refererCommand";
 }

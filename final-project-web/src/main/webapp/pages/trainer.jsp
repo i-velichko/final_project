@@ -6,7 +6,7 @@
     <title>Trainer Personal Area</title>
 </head>
 <body bgcolor="silver">
-<%@include file="fragment/header.jsp"%>
+<%@include file="/fragment/header.jsp"%>
 <fmt:message key="page.trainer.welcome"/>
 
 </br>

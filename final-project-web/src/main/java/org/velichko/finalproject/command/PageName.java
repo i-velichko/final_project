@@ -11,6 +11,8 @@ public class PageName {
     public static final String REGISTRATION = "pages/registration.jsp";
     public static final String WELCOME_STUDENT = "pages/student.jsp";
     public static final String WELCOME_TRAINER = "pages/trainer.jsp";
-    public static final String REFERER_PARAM = "referer";
+    public static final String REFERER = "referer";
     public static final String TRAINER_INFO = "/pages/trainer_info.jsp";
+
+    public static final String ERROR_PAGE = "/pages/error.jsp";
 }

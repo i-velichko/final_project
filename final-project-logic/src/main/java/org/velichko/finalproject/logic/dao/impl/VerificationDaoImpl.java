@@ -3,6 +3,7 @@ package org.velichko.finalproject.logic.dao.impl;
 import org.velichko.finalproject.logic.dao.AbstractDao;
 import org.velichko.finalproject.logic.dao.VerificationDao;
 import org.velichko.finalproject.logic.entity.Verification;
+import org.velichko.finalproject.logic.exception.DaoException;
 
 import java.sql.Statement;
 import java.util.List;
@@ -59,7 +60,7 @@ public class VerificationDaoImpl extends AbstractDao<Verification> implements Ve
     }
 
     @Override
-    public void close(Statement statement) {
+    public void close(Statement statement) throws DaoException {
         super.close(statement);
     }
 }

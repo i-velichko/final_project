@@ -2,7 +2,7 @@
 <head>
     <title>Road to Epam</title>
 
-    <%@include file="fragment/header.jsp"%>
+    <%@include file="/fragment/header.jsp"%>
 </head>
 
 <body>

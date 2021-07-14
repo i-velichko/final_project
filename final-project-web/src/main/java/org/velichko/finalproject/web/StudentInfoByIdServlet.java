@@ -18,7 +18,7 @@ public class StudentInfoByIdServlet extends HttpServlet {
     }
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) { //todo сделать дугетопосты
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
         String userId = request.getParameter("userId");
 
         UserDaoImpl userDao = new UserDaoImpl();

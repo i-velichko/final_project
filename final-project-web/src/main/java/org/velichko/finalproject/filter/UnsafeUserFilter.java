@@ -18,7 +18,7 @@
 //        if (user != null) {
 //            filterChain.doFilter(servletRequest, servletResponse);
 //        } else {
-//            ((HttpServletResponse)servletResponse).sendRedirect("/registration");//todo Command
+//            ((HttpServletResponse)servletResponse).sendRedirect("/registration");//
 //        }
 //    }
 //}

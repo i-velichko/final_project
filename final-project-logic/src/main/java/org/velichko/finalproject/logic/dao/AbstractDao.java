@@ -1,5 +1,8 @@
 package org.velichko.finalproject.logic.dao;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.logic.entity.Entity;
 import org.velichko.finalproject.logic.exception.DaoException;
 
@@ -9,6 +12,7 @@ import java.sql.Statement;
 import java.util.List;
 
 public abstract class AbstractDao<T extends Entity> {
+    private static final Logger logger = LogManager.getLogger();
     protected Connection connection;
 
     public abstract List<T> findAll() throws DaoException;
@@ -23,13 +27,14 @@ public abstract class AbstractDao<T extends Entity> {
 
     public abstract boolean update(T entity);
 
-    public void close(Statement statement) {
+    public void close(Statement statement) throws DaoException {
         try {
             if (statement != null) {
                 statement.close();
             }
         } catch (SQLException e) {
-            e.printStackTrace();//todo log
+            logger.log(Level.WARN, "Error with statement closing", e);
+            throw new DaoException("Error with statement closing", e);
         }
     }
 

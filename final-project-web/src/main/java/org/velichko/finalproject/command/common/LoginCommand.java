@@ -17,7 +17,7 @@ import java.util.Optional;
 
 public class LoginCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-    private final UserService service = new UserServiceImpl(); //todo сделать синглтон
+    private final UserService service = new UserServiceImpl();
 
     @Override
     public Router execute(HttpServletRequest request) {

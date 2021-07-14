@@ -24,7 +24,7 @@ public class ChangeLocaleCommand implements Command {
 
         session.setAttribute(ParamName.LOCALE_PARAM, locale);
 
-        router.setPagePath(request.getHeader(PageName.REFERER_PARAM));
+        router.setPagePath(request.getHeader(PageName.REFERER));
 
         return router;
     }

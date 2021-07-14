@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<%@include file="../include/common_imports.jspf" %>
+<%@include file="../fragment/common_imports.jspf" %>
 
 <div id="logout">
     <c:if test="${not empty sessionScope.user}">

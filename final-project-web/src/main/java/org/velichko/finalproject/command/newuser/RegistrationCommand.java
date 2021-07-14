@@ -19,21 +19,24 @@ import org.velichko.finalproject.validator.DataUserValidator;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.velichko.finalproject.command.PageName.*;
+import static org.velichko.finalproject.command.ParamName.*;
+
 public class RegistrationCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-    private final UserService service = new UserServiceImpl(); //todo сделать синглтон
+    private final UserService service = new UserServiceImpl();
     Router router = new Router();
 
     @Override
     public Router execute(HttpServletRequest request) {
 
         User user = new User();
-        String firstName = request.getParameter(ParamName.FIRST_NAME_PARAM);
-        String lastName = request.getParameter(ParamName.LAST_NAME_PARAM);
-        String email = request.getParameter(ParamName.EMAIL_PARAM);
-        String login = request.getParameter(ParamName.LOGIN_PARAM);
-        String password = request.getParameter(ParamName.PASSWORD_PARAM);
-        String confirmPassword = request.getParameter(ParamName.CONFIRM_PASSWORD_PARAM);
+        String firstName = request.getParameter(FIRST_NAME_PARAM);
+        String lastName = request.getParameter(LAST_NAME_PARAM);
+        String email = request.getParameter(EMAIL_PARAM);
+        String login = request.getParameter(LOGIN_PARAM);
+        String password = request.getParameter(PASSWORD_PARAM);
+        String confirmPassword = request.getParameter(CONFIRM_PASSWORD_PARAM);
 
         Map<String, Boolean> dataCheckService = new HashMap<>();
         dataCheckService.put(login, false);
@@ -45,7 +48,7 @@ public class RegistrationCommand implements Command {
             dataCheckService.put(login, true);
             user.setLogin(login);
         } else {
-            request.setAttribute(ParamName.LOGIN_ERROR_PARAM, DataUserValidator.LOGIN.getMessage());
+            request.setAttribute(LOGIN_ERROR_PARAM, DataUserValidator.LOGIN.getMessage());
         }
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -54,7 +57,7 @@ public class RegistrationCommand implements Command {
             dataCheckService.put(email, true);
             user.setEmail(email);
         } else {
-            request.setAttribute(ParamName.EMAIL_ERROR_PARAM, DataUserValidator.EMAIL.getMessage());
+            request.setAttribute(EMAIL_ERROR_PARAM, DataUserValidator.EMAIL.getMessage());
         }
 
         user.setRole(UserRole.STUDENT);
@@ -63,24 +66,24 @@ public class RegistrationCommand implements Command {
         if (password.matches(DataUserValidator.PASSWORD.getRegExp())) {
             dataCheckService.put(password, true);
         } else {
-            request.setAttribute(ParamName.PASSWORD_ERROR_PARAM, DataUserValidator.PASSWORD.getMessage());
+            request.setAttribute(PASSWORD_ERROR_PARAM, DataUserValidator.PASSWORD.getMessage());
         }
         if (password.equals(confirmPassword)) {
             try {
                 service.createNewUser(user, password);
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, "Error while client registration data", e);
-//                router.setPagePath(ConfigurationManager.getProperty(ConstantName.JSP_ERROR)); //todo Error page
+                router.setPagePath(ERROR_PAGE);
             }
         } else {
-            request.setAttribute(ParamName.PASSWORD_ERROR_PARAM, DataUserValidator.PASSWORD.getMessage());
+            request.setAttribute(PASSWORD_ERROR_PARAM, DataUserValidator.PASSWORD.getMessage());
         }
 
         //todo редиспатчер на страничку приветствия нового пользователя и там возможно определение его роли
 
-        router.setPagePath(PageName.REGISTRATION);
-        request.setAttribute(ParamName.USER_PARAM, user);
-        router.setPagePath(PageName.LOGIN_PAGE); //todo убрать и продумать всю логику неудачной регистрации
+        router.setPagePath(REGISTRATION);
+        request.setAttribute(USER_PARAM, user);
+        router.setPagePath(LOGIN_PAGE); //todo убрать и продумать всю логику неудачной регистрации
         return router;
     }
 }
