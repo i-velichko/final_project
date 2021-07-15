@@ -36,10 +36,10 @@ public class Controller extends HttpServlet {
         if (commandName.isPresent()) {
             Router router = commandName.get().getCommand().execute(request);
             request.setAttribute(REFERER_PARAM, commandName.get().name());
-            switch (router.getRouterType()) {
-                case FORWARD -> request.getRequestDispatcher(router.getPagePath()).forward(request, response);
-                case REDIRECT -> response.sendRedirect(router.getPagePath());
-            default -> request.getRequestDispatcher(router.getPagePath()).forward(request, response);
+            if (router.getRouterType() == Router.RouterType.REDIRECT) {
+                response.sendRedirect(router.getPagePath());
+            } else {
+                request.getRequestDispatcher(router.getPagePath()).forward(request, response);
             }
         }else {
             response.sendRedirect(ERROR_PAGE);
