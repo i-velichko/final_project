@@ -8,13 +8,13 @@
 <body>
 
 
-<h1><fmt:message key="page.login.welcome"/></h1>
+<h6 style="color: forestgreen">${registrationIsDone}
 <br/>
 
-
+<br/>
 <form method="post" action="${abs_path}/controller?command=login">
     <label for="login"><fmt:message key="page.login.login"/>
-        <input type="text" name="login" id="login" required>
+        <input type="text" pattern="^[\w@#$%^&+=]{3,25}$" name="login" id="login" required>
     </label><br/>
     <label for="password"><fmt:message key="page.login.password"/>
         <span><input type="password" name="password" id="password" required></span>
@@ -25,26 +25,6 @@
         <button type="button"><fmt:message key="page.login.register"/></button>
     </a>
 </form>
+
 </body>
 </html>
-
-<%--<form method="post" action="${abs_path}/controller">--%>
-<%--  <label><fmt:message key="page.login.login"/>:--%>
-<%--    <input type="hidden" name="command" value="login">--%>
-<%--    <input type="text" name="login" id="login" required>--%>
-<%--  </label><br>--%>
-
-<%--  <label><fmt:message key="page.login.password"/> :--%>
-<%--    <span><input type="password" name="password" id="password" required></span>--%>
-<%--    <span style="color: #ff0000">${userNotFound}</span>--%>
-<%--  </label>--%>
-<%--  <br>--%>
-<%--  <input type="submit" value="Login">--%>
-<%--</form>--%>
-<%--<br/>--%>
-<%--<form method="post" action="${abs_path}/pages/registration.jsp">--%>
-<%--  <input type="submit" value="Registration">--%>
-<%--</form>--%>
-<%--<br/>--%>
-<%--</body>--%>
-<%--</html>--%>

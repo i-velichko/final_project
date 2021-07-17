@@ -2,8 +2,9 @@ package org.velichko.finalproject.validator;
 
 public enum DataUserValidator {
     EMAIL("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$", "email", "email is incorrect"),
-    LOGIN("^[\\w@#$%^&+=]{7,25}$", "login", "password is incorrect"),
-    PASSWORD("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{12,45}$", "password", "login is incorrect");
+    LOGIN("^[\\w@#$%^&+=]{7,25}$", "login", "login is incorrect or user with this login already exists "),
+    PASSWORD("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{12,45}$", "password", "password is incorrect"),
+    CHECK_PASSWORD("checkPassword", "passwords are differ");
 
     private String regExp;
     private String fieldName;
@@ -11,6 +12,11 @@ public enum DataUserValidator {
 
     DataUserValidator(String regExp, String fieldName, String message) {
         this.regExp = regExp;
+        this.fieldName = fieldName;
+        this.message = message;
+    }
+
+    DataUserValidator(String fieldName, String message) {
         this.fieldName = fieldName;
         this.message = message;
     }

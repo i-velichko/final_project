@@ -16,4 +16,7 @@ public class ParamName {
     public static final String CONFIRM_PASSWORD_PARAM = "confirmPassword";
     public static final String LOCALE_PARAM = "locale";
     public static final String REFERER_PARAM = "refererCommand";
+    public static final String REGISTRATION_IS_DONE = "registrationIsDone";
+    public static final String RU_LOCALE = "ru-RU";
+    public static final String EN_LOCALE = "en-EN";
 }

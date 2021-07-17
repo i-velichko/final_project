@@ -5,11 +5,13 @@ import org.velichko.finalproject.logic.exception.DaoException;
 
 import java.util.Optional;
 
-public interface UserDao{
+public interface UserDao {
 
     Optional<User> findUserByLoginAndPassword(String login, String password) throws DaoException;
 
-    User findUserByEmail(String email) throws DaoException;
+    Optional<User> findUserByLogin(String login) throws DaoException;
+
+    Optional<User> findUserByEmail(String email) throws DaoException;
 
     void updateUserGitLink(String login, String gitLink) throws DaoException;
 

@@ -5,6 +5,7 @@ import org.velichko.finalproject.logic.dao.UserDao;
 import org.velichko.finalproject.logic.dao.creator.UserCreator;
 import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.exception.DaoException;
+import org.velichko.finalproject.logic.utill.PasswordHashGenerator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,10 +23,14 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
             "JOIN user_statuses as us ON u.status_id = us.id" +
             " WHERE u.id = ?";
-    private static final String FIND_USER_BY_LOGIN = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git" +
+    private static final String FIND_USER_BY_LOGIN_AND_PASSWORD = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git" +
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
             "LEFT JOIN user_statuses as us ON u.status_id = us.id" +//TODO: remove left
             " WHERE u.login = ? and u.password = ?";
+    private static final String FIND_USER_BY_LOGIN = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git" +
+            ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
+            "LEFT JOIN user_statuses as us ON u.status_id = us.id" +//TODO: remove left
+            " WHERE u.login = ?";
     private static final String FIND_USER_BY_EMAIL = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git" +
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
             "JOIN user_statuses as us ON u.status_id = us.id" +
@@ -40,40 +45,68 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     public Optional<User> findUserByLoginAndPassword(String login, String password) throws DaoException {
         User user = null;
-        PreparedStatement statement = null;
-        try {
-            statement = connection.prepareStatement(FIND_USER_BY_LOGIN);
-            statement.setString(1, login);
-            statement.setString(2, password);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                user = userCreator.createUser(resultSet);
+        if (login != null && password != null) {
+            PreparedStatement statement = null;
+            try {
+                statement = connection.prepareStatement(FIND_USER_BY_LOGIN_AND_PASSWORD);
+                statement.setString(1, login);
+                statement.setString(2, PasswordHashGenerator.encodePassword(password));
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    user = userCreator.createUser(resultSet);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("Error with find User by login .", e);
+            } finally {
+                close(statement);
             }
-        } catch (SQLException e) {
-            throw new DaoException("Error with find User by login .", e);
-        } finally {
-            close(statement);
         }
+
         return Optional.ofNullable(user);
     }
 
     @Override
-    public User findUserByEmail(String email) throws DaoException {
+    public Optional<User> findUserByLogin(String login) throws DaoException {
         User user = null;
-        PreparedStatement statement = null;
-        try {
-            statement = connection.prepareStatement(FIND_USER_BY_EMAIL);
-            statement.setString(1, email);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                user = userCreator.createUser(resultSet);
+        if (login != null) {
+            PreparedStatement statement = null;
+            try {
+                statement = connection.prepareStatement(FIND_USER_BY_LOGIN);
+                statement.setString(1, login);
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    user = userCreator.createUser(resultSet);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("Error with find User by login .", e);
+            } finally {
+                close(statement);
             }
-        } catch (SQLException e) {
-            throw new DaoException("Error with find User by email .", e);
-        } finally {
-            close(statement);
         }
-        return user;
+
+        return Optional.ofNullable(user);
+    }
+
+    @Override
+    public Optional<User> findUserByEmail(String email) throws DaoException {
+        User user = null;
+        if (email != null) {
+            PreparedStatement statement = null;
+            try {
+                statement = connection.prepareStatement(FIND_USER_BY_EMAIL);
+                statement.setString(1, email);
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    user = userCreator.createUser(resultSet);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("Error with find User by email .", e);
+            } finally {
+                close(statement);
+            }
+        }
+
+        return Optional.ofNullable(user);
     }
 
 
@@ -132,23 +165,27 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     public boolean createNewUser(User user, String password) throws DaoException {
+
         PreparedStatement statement = null;
-        try {
-            statement = connection.prepareStatement(ADD_NEW_USER);
-            statement.setString(1, user.getFirstName());
-            statement.setString(2, user.getLastName());
-            statement.setString(3, user.getLogin());
-            statement.setString(4, user.getEmail());
-            statement.setInt(5, user.getRole().getId());
-            statement.setInt(6, user.getStatus().getId());
-            statement.setString(7, password);
-            statement.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-            throw new DaoException("Error with add new User. ", e);
-        } finally {
-            close(statement);
+        if (user != null && password != null){
+            try {
+                statement = connection.prepareStatement(ADD_NEW_USER);
+                statement.setString(1, user.getFirstName());
+                statement.setString(2, user.getLastName());
+                statement.setString(3, user.getLogin());
+                statement.setString(4, user.getEmail());
+                statement.setInt(5, user.getRole().getId());
+                statement.setInt(6, user.getStatus().getId());
+                statement.setString(7, PasswordHashGenerator.encodePassword(password));
+                statement.executeUpdate();
+                return true;
+            } catch (SQLException e) {
+                throw new DaoException("Error with add new User. ", e);
+            } finally {
+                close(statement);
+            }
         }
+       return false;
     }
 
     @Override

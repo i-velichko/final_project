@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.command.Command;
-import org.velichko.finalproject.command.PageName;
 import org.velichko.finalproject.command.ParamName;
 import org.velichko.finalproject.controller.Router;
 import org.velichko.finalproject.logic.entity.User;
@@ -14,13 +13,14 @@ import org.velichko.finalproject.logic.entity.type.UserStatus;
 import org.velichko.finalproject.logic.exception.ServiceException;
 import org.velichko.finalproject.logic.service.UserService;
 import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
-import org.velichko.finalproject.validator.DataUserValidator;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.velichko.finalproject.command.PageName.*;
+import static org.velichko.finalproject.command.PageName.LOGIN_PAGE;
+import static org.velichko.finalproject.command.PageName.REGISTRATION;
 import static org.velichko.finalproject.command.ParamName.*;
+import static org.velichko.finalproject.validator.DataUserValidator.*;
 
 public class RegistrationCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
@@ -43,47 +43,74 @@ public class RegistrationCommand implements Command {
         dataCheckService.put(password, false);
         dataCheckService.put(confirmPassword, false);
 
-        if (login.matches(DataUserValidator.LOGIN.getRegExp())) {
-            //todo проверка на то есть ли такой в базе, если есть такой то тоже оповестить
-            dataCheckService.put(login, true);
+        if (login != null && login.matches(LOGIN.getRegExp())) {
+            try {
+                if (service.isLoginUnique(login)) {
+                    dataCheckService.put(login, true);
+                } else {
+                    request.setAttribute(LOGIN_ERROR_PARAM, "Login is not unique");
+                }
+            } catch (ServiceException e) {
+                logger.log(Level.DEBUG, "Login is not unique " + login);
+            }
             user.setLogin(login);
         } else {
-            request.setAttribute(LOGIN_ERROR_PARAM, DataUserValidator.LOGIN.getMessage());
+            request.setAttribute(LOGIN_ERROR_PARAM, LOGIN.getMessage());
         }
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
 
-        if (email.matches(DataUserValidator.EMAIL.getRegExp())) {
-            dataCheckService.put(email, true);
+        if (email != null && email.matches(EMAIL.getRegExp())) {
+            try {
+                if (service.isEmailUnique(email)) {
+                    dataCheckService.put(email, true);
+                } else {
+                    request.setAttribute(EMAIL_ERROR_PARAM, "Email is not unique!");
+                }
+            } catch (ServiceException e) {
+                logger.log(Level.DEBUG, "Email is not unique " + email);
+            }
             user.setEmail(email);
         } else {
-            request.setAttribute(EMAIL_ERROR_PARAM, DataUserValidator.EMAIL.getMessage());
+            request.setAttribute(EMAIL_ERROR_PARAM, EMAIL.getMessage());
+        }
+
+        if (firstName != null) {
+            user.setFirstName(firstName);
+        }
+        if (lastName != null) {
+            user.setLastName(lastName);
         }
 
         user.setRole(UserRole.STUDENT);
         user.setStatus(UserStatus.ACTIVE);
 
-        if (password.matches(DataUserValidator.PASSWORD.getRegExp())) {
-            dataCheckService.put(password, true);
-        } else {
-            request.setAttribute(PASSWORD_ERROR_PARAM, DataUserValidator.PASSWORD.getMessage());
-        }
-        if (password.equals(confirmPassword)) {
-            try {
-                service.createNewUser(user, password);
-            } catch (ServiceException e) {
-                logger.log(Level.ERROR, "Error while client registration data", e);
-                router.setPagePath(ERROR_PAGE);
+        if (password != null && password.matches(PASSWORD.getRegExp())) {
+            if (password.equals(confirmPassword)) {
+                dataCheckService.put(password, true);
+            }else {
+                logger.log(Level.DEBUG, "The password is incorrect or the passwords do not match ");
+                request.setAttribute(PASSWORD_ERROR_PARAM, CHECK_PASSWORD.getMessage());
             }
         } else {
-            request.setAttribute(PASSWORD_ERROR_PARAM, DataUserValidator.PASSWORD.getMessage());
+            request.setAttribute(PASSWORD_ERROR_PARAM, PASSWORD.getMessage());
         }
+
+        if (!dataCheckService.containsValue(false)) {
+            try {
+                service.createNewUser(user, password);
+                request.setAttribute(ParamName.REGISTRATION_IS_DONE, "Registration completed successfully. You can login");
+                router.setPagePath(LOGIN_PAGE);
+                request.setAttribute(USER_PARAM, user);
+            } catch (ServiceException e) {
+                logger.log(Level.ERROR, "Error with create new user.", e);
+            }
+        } else {
+            router.setPagePath(REGISTRATION);
+        }
+
 
         //todo редиспатчер на страничку приветствия нового пользователя и там возможно определение его роли
 
-        router.setPagePath(REGISTRATION);
-        request.setAttribute(USER_PARAM, user);
-        router.setPagePath(LOGIN_PAGE); //todo убрать и продумать всю логику неудачной регистрации
+
         return router;
     }
 }

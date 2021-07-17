@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
         try {
             users = userDao.findAll();
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with find all Users .", e );
+            logger.log(Level.ERROR, "Error with find all Users .", e);
             throw new ServiceException("Error with find all Users .", e);
         } finally {
             transaction.endSingleQuery();
@@ -52,6 +52,46 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean isLoginUnique(String login) throws ServiceException {
+        UserDaoImpl userDao = new UserDaoImpl();
+        EntityTransaction transaction = new EntityTransaction();
+        transaction.beginSingleQuery(userDao);
+        boolean isPresent = false;
+        try {
+            Optional<User> currentUser = userDao.findUserByLogin(login);
+            if (currentUser.isEmpty()) {
+                isPresent = true;
+            }
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with find user by login", e);
+            throw new ServiceException("Error with find user by login", e);
+        } finally {
+            transaction.endSingleQuery();
+        }
+        return isPresent;
+    }
+
+    @Override
+    public boolean isEmailUnique(String email) throws ServiceException {
+        UserDaoImpl userDao = new UserDaoImpl();
+        EntityTransaction transaction = new EntityTransaction();
+        transaction.beginSingleQuery(userDao);
+        boolean isPresent = false;
+        try {
+            Optional<User> currentUser = userDao.findUserByEmail(email);
+            if (currentUser.isEmpty()) {
+                isPresent = true;
+            }
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with find user by email", e);
+            throw new ServiceException("Error with find user by login", e);
+        } finally {
+            transaction.endSingleQuery();
+        }
+        return isPresent;
+    }
+
+    @Override
     public Optional<User> findUserByLoginAndPassword(String login, String password) throws ServiceException {
         UserDaoImpl userDao = new UserDaoImpl();
         Optional<User> currentUser;
@@ -64,8 +104,8 @@ public class UserServiceImpl implements UserService {
                 user = currentUser.get();
             }
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Exception while executing service", e);
-            throw new ServiceException("Error with find user by login", e);
+            logger.log(Level.ERROR, "Error with find user by login and password", e);
+            throw new ServiceException("Error with find user by login and password", e);
         } finally {
             transaction.endSingleQuery();
         }

@@ -18,6 +18,7 @@ import static org.velichko.finalproject.command.ParamName.REFERER_PARAM;
 @WebServlet(name = "controller", urlPatterns = "/controller")
 public class Controller extends HttpServlet {
 
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);

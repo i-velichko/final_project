@@ -12,6 +12,8 @@ public interface UserService {
     boolean updateUser (UserDaoImpl userDao) throws ServiceException; //todo  реализовать или убрать
     boolean delete (UserDaoImpl userDao) throws ServiceException; //todo  реализовать или убрать
     boolean createNewUser (User user, String password) throws ServiceException;
+    boolean isLoginUnique(String login) throws ServiceException;
+    boolean isEmailUnique(String email) throws ServiceException;
 
     Optional<User> findUserByLoginAndPassword(String login, String password) throws ServiceException;
 }

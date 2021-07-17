@@ -15,6 +15,9 @@ import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
 
 import java.util.Optional;
 
+import static org.velichko.finalproject.command.PageName.*;
+import static org.velichko.finalproject.command.ParamName.*;
+
 public class LoginCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final UserService service = new UserServiceImpl();
@@ -23,13 +26,15 @@ public class LoginCommand implements Command {
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
 
-        User user = (User) request.getSession().getAttribute(ParamName.USER_PARAM);
+        User user = (User) request.getSession().getAttribute(USER_PARAM);
         if (user != null) {
-            request.setAttribute(ParamName.USER_PARAM, user);
+            request.setAttribute(USER_PARAM, user);
             switch (user.getRole()) {
-                case STUDENT -> router.setPagePath(PageName.WELCOME_STUDENT);
-                case TRAINER -> router.setPagePath(PageName.WELCOME_TRAINER);
-                default -> router.setPagePath(PageName.LOGIN_PAGE);
+                case STUDENT -> router.setPagePath(WELCOME_STUDENT);
+                case TRAINER -> router.setPagePath(WELCOME_TRAINER);
+                case EXAMINER -> router.setPagePath(WELCOME_EXAMINER);
+                case ADMIN -> router.setPagePath(WELCOME_ADMIN);
+                default -> router.setPagePath(LOGIN_PAGE);
             }
 
         } else {
@@ -41,23 +46,23 @@ public class LoginCommand implements Command {
 
     private void getUserViaDB(HttpServletRequest request, Router router) {
         User user;
-        String login = request.getParameter(ParamName.LOGIN_PARAM);
-        String password = request.getParameter(ParamName.PASSWORD_PARAM);
+        String login = request.getParameter(LOGIN_PARAM);
+        String password = request.getParameter(PASSWORD_PARAM);
         Optional<User> currentUser;
         try {
             currentUser = service.findUserByLoginAndPassword(login, password);
             if (currentUser.isPresent()) {
                 user = currentUser.get();
-                request.getSession().setAttribute(ParamName.USER_PARAM, user);
-                request.setAttribute(ParamName.USER_PARAM, user);
+                request.getSession().setAttribute(USER_PARAM, user);
+                request.setAttribute(USER_PARAM, user);
                 switch (user.getRole()) {
-                    case STUDENT -> router.setPagePath(PageName.WELCOME_STUDENT);
-                    case TRAINER -> router.setPagePath(PageName.WELCOME_TRAINER);
-                    default -> router.setPagePath(PageName.LOGIN_PAGE);
+                    case STUDENT -> router.setPagePath(WELCOME_STUDENT);
+                    case TRAINER -> router.setPagePath(WELCOME_TRAINER);
+                    default -> router.setPagePath(LOGIN_PAGE);
                 }
             } else {
-                request.setAttribute(ParamName.USER_NOT_FOUND_PARAM, "User not found. Please, register if you want log in.");
-                router.setPagePath(PageName.LOGIN_PAGE);
+                request.setAttribute(USER_NOT_FOUND_PARAM, "User not found. Please, register if you want log in."); //todo констант
+                router.setPagePath(LOGIN_PAGE);
             }
 
         } catch (ServiceException e) {
