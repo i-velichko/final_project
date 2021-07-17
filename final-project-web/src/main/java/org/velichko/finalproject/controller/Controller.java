@@ -6,20 +6,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.velichko.finalproject.command.CommandName;
-import org.velichko.finalproject.command.PageName;
-import org.velichko.finalproject.command.ParamName;
+import org.velichko.finalproject.logic.pool.ConnectionPool;
 
 import java.io.IOException;
 import java.util.Optional;
 
-import static org.velichko.finalproject.command.PageName.*;
-import static org.velichko.finalproject.command.ParamName.*;
+import static org.velichko.finalproject.command.PageName.ERROR_PAGE;
+import static org.velichko.finalproject.command.ParamName.COMMAND_PARAM;
 import static org.velichko.finalproject.command.ParamName.REFERER_PARAM;
 
 @WebServlet(name = "controller", urlPatterns = "/controller")
 public class Controller extends HttpServlet {
-
-    private CommandName commandName;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,7 +38,7 @@ public class Controller extends HttpServlet {
             } else {
                 request.getRequestDispatcher(router.getPagePath()).forward(request, response);
             }
-        }else {
+        } else {
             response.sendRedirect(ERROR_PAGE);
         }
 
@@ -53,5 +50,11 @@ public class Controller extends HttpServlet {
         CommandName commandName;
         commandName = CommandName.valueOf(name.toUpperCase());
         return Optional.of(commandName);
+    }
+
+    @Override
+    public void destroy() {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        connectionPool.destroyPool();
     }
 }
