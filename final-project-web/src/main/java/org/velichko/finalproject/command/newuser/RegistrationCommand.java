@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.command.Command;
 import org.velichko.finalproject.command.ParamName;
 import org.velichko.finalproject.controller.Router;
+import org.velichko.finalproject.i18n.I18nManager;
 import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.entity.type.UserRole;
 import org.velichko.finalproject.logic.entity.type.UserStatus;
@@ -16,6 +17,7 @@ import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import static org.velichko.finalproject.command.PageName.LOGIN_PAGE;
 import static org.velichko.finalproject.command.PageName.REGISTRATION;
@@ -25,6 +27,7 @@ import static org.velichko.finalproject.validator.DataUserValidator.*;
 public class RegistrationCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final UserService service = new UserServiceImpl();
+    private final I18nManager i18n = I18nManager.getInstance();
     Router router = new Router();
 
     @Override
@@ -48,7 +51,7 @@ public class RegistrationCommand implements Command {
                 if (service.isLoginUnique(login)) {
                     dataCheckService.put(login, true);
                 } else {
-                    request.setAttribute(LOGIN_ERROR_PARAM, "Login is not unique");
+                    request.setAttribute(LOGIN_ERROR_PARAM, i18n.getMassage("error.login.not.unique", request.getLocale()));
                 }
             } catch (ServiceException e) {
                 logger.log(Level.DEBUG, "Login is not unique " + login);
@@ -86,7 +89,7 @@ public class RegistrationCommand implements Command {
         if (password != null && password.matches(PASSWORD.getRegExp())) {
             if (password.equals(confirmPassword)) {
                 dataCheckService.put(password, true);
-            }else {
+            } else {
                 logger.log(Level.DEBUG, "The password is incorrect or the passwords do not match ");
                 request.setAttribute(PASSWORD_ERROR_PARAM, CHECK_PASSWORD.getMessage());
             }

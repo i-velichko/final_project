@@ -9,16 +9,16 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
 
-class PropertyLoader {
+public class PropertyLoader {
     private static Logger logger = LogManager.getLogger();
 
-    static Properties loadPropertiesData(URL url) throws ConnectionPoolException {
+    public static Properties loadPropertiesData(URL url) throws ConnectionPoolException {
         Properties properties = new Properties();
         try {
             properties.load(url.openStream());
         } catch (IOException e) {
             logger.log(Level.FATAL, "Error with loading properties from file. ", e);
-            throw new ConnectionPoolException("Error with loading properties from file: " + url, e);
+            throw new ConnectionPoolException("Error with loading properties from file: " + url, e);//TODO: fix exception type and runtime
 
         }
         return properties;
