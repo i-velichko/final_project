@@ -14,7 +14,7 @@
 <br/>
 <form method="post" action="${abs_path}/controller?command=login">
     <label for="login"><fmt:message key="page.login.login"/>
-        <input type="text" pattern="^[\w@#$%^&+=]{3,25}$" name="login" id="login" required>
+        <input type="text" pattern="^[\w@#$%^&+=]{7,25}$" name="login" id="login" required>
     </label><br/>
     <label for="password"><fmt:message key="page.login.password"/>
         <span><input type="password" name="password" id="password" required></span>

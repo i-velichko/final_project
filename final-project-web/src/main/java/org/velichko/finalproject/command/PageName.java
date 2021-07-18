@@ -2,6 +2,8 @@ package org.velichko.finalproject.command;
 
 public class PageName {
 
+
+
     private PageName () {
     }
 
@@ -15,6 +17,7 @@ public class PageName {
     public static final String WELCOME_ADMIN = "pages/admin.jsp";
     public static final String REFERER = "referer";
     public static final String TRAINER_INFO = "/pages/trainer_info.jsp";
+    public static final String STUDENT_INFO = "pages/student_info.jsp";
 
     public static final String ERROR_PAGE = "/pages/error.jsp";
 }

@@ -113,6 +113,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> findUserById(Long id) throws ServiceException {
+        UserDaoImpl userDao = new UserDaoImpl();
+        Optional<User> currentUser;
+        User user = null;
+        EntityTransaction transaction = new EntityTransaction();
+        transaction.beginSingleQuery(userDao);
+        try {
+            currentUser = userDao.findEntityById(id);
+            if (currentUser.isPresent()) {
+                user = currentUser.get();
+            }
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with find user by id", e);
+            throw new ServiceException("Error with find user by ID " + id, e);
+        }finally {
+            transaction.endSingleQuery();
+        }
+        return Optional.empty();
+    }
+
+
+    @Override
     public boolean updateUser(UserDaoImpl userDao) {
         return false;
     }

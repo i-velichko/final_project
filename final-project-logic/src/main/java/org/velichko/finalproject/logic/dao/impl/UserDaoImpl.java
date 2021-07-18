@@ -130,7 +130,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public User findEntityById(long id) throws DaoException {
+    public Optional<User> findEntityById(long id) throws DaoException {
         User user = null;
         PreparedStatement statement = null;
         try {
@@ -146,7 +146,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             close(statement);
         }
 
-        return user;
+        return Optional.ofNullable(user);
     }
 
     @Override

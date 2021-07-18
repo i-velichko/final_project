@@ -32,7 +32,7 @@
     </div>
     <div>
          <span>
-             <fmt:message key="page.registration.login"/><input type="text" pattern="^[\w@#$%^&+=]{3,25}$" name="login">
+             <fmt:message key="page.registration.login"/><input type="text" pattern="^[\w@#$%^&+=]{7,25}$" name="login">
          </span>
 
         <span style="color: red">${loginError}</span>

@@ -7,6 +7,7 @@ import org.velichko.finalproject.logic.exception.DaoException;
 
 import java.sql.Statement;
 import java.util.List;
+import java.util.Optional;
 
 public class VerificationDaoImpl extends AbstractDao<Verification> implements VerificationDao {
     @Override
@@ -35,7 +36,7 @@ public class VerificationDaoImpl extends AbstractDao<Verification> implements Ve
     }
 
     @Override
-    public Verification findEntityById(long id) {
+    public Optional<Verification> findEntityById(long id) {
         return null;
     }
 

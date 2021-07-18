@@ -9,36 +9,40 @@
 //import java.io.IOException;
 //import java.util.Set;
 //
-//import static org.velichko.finalproject.command.PageConstant.*;
-//import static org.velichko.finalproject.command.ParamConstant.USER_PARAM;
+//import static org.velichko.finalproject.command.PageName.*;
+//import static org.velichko.finalproject.command.ParamName.USER_PARAM;
 //
 //@WebFilter("/*")
 //public class AuthorizationFilter implements Filter {
-//    private static final Set<String> PUBLIC_PATH = Set.of("/login", "/registration", "index");
-//
+//    private static final Set<String> PUBLIC_PATH = Set.of("/pages/login/jsp", "/pages/registration/jsp", INDEX_PAGE);
 //
 //    @Override
 //    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-//        String uri = ((HttpServletRequest) servletRequest).getRequestURI();
+//        var uri = ((HttpServletRequest) servletRequest).getRequestURI();
 //        if (isPublicPath(uri) || isUserLoggedIn(servletRequest)) {
 //            filterChain.doFilter(servletRequest, servletResponse);
 //        } else {
-//            ((HttpServletResponse) servletResponse).sendRedirect("/login");
+//            reject(servletRequest, servletResponse);
 //        }
 //    }
 //
 //    private boolean isUserLoggedIn(ServletRequest servletRequest) {
-//        Object user = (User) ((HttpServletRequest) servletRequest).getSession().getAttribute(USER_PARAM);
+//        User user = (User) ((HttpServletRequest) servletRequest).getSession().getAttribute(USER_PARAM);
 //        return user != null;
 //    }
 //
 //    private boolean isPublicPath(String uri) {
-//        for (String s : PUBLIC_PATH) {
-//            if (uri.startsWith(s)) {
+//        for (String prefix : PUBLIC_PATH) {
+//            if (uri.startsWith(prefix)) {
 //                return true;
 //            }
 //        }
 //        return false;
+//    }
+//
+//    private void reject(ServletRequest servletRequest, ServletResponse servletResponse) throws IOException {
+//        var prevPage = ((HttpServletRequest) servletRequest).getHeader(REFERER);
+//        ((HttpServletResponse) servletResponse).sendRedirect(prevPage != null ? prevPage : "/pages/login/jsp");
 //    }
 //}
 //

@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class AbstractDao<T extends Entity> {
     private static final Logger logger = LogManager.getLogger();
@@ -17,7 +18,7 @@ public abstract class AbstractDao<T extends Entity> {
 
     public abstract List<T> findAll() throws DaoException;
 
-    public abstract T findEntityById(long id) throws DaoException;
+    public abstract Optional<T> findEntityById(long id) throws DaoException;
 
     public abstract boolean delete(long id);
 

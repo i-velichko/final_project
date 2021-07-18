@@ -7,6 +7,7 @@ import org.velichko.finalproject.logic.exception.DaoException;
 
 import java.sql.Statement;
 import java.util.List;
+import java.util.Optional;
 
 public class QuestionDaoImpl extends AbstractDao<Question> implements QuestionDao {
     @Override
@@ -25,7 +26,7 @@ public class QuestionDaoImpl extends AbstractDao<Question> implements QuestionDa
     }
 
     @Override
-    public Question findEntityById(long id) {
+    public Optional<Question> findEntityById(long id) {
         return null;
     }
 
