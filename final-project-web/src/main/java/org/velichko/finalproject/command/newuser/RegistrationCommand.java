@@ -57,6 +57,15 @@ public class RegistrationCommand implements Command {
         if (method.equals("POST")) {
             try {
                 registrationDataResult = RegistrationDataValidator.checkValues(registrationData, locale);
+
+                if (registrationDataResult.isEmpty()){
+                    User user = new User(firstName, lastName, login, email, UserStatus.ACTIVE, UserRole.STUDENT);
+                    request.setAttribute(USER_PARAM, user);
+                } else {
+                    for (Map.Entry<String, String> next : registrationDataResult.entrySet()) {
+                        request.setAttribute(next.getKey(), next.getValue());
+                    }
+                }
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, "Error with registration data check.", e);
             }
@@ -77,47 +86,7 @@ public class RegistrationCommand implements Command {
                     logger.log(Level.ERROR, "Error with create new user.", e);
                 }
             }
-//
-//
-//            if (login != null && login.matches(LOGIN.getRegExp())) {
-//                try {
-//                    if (service.isLoginUnique(login)) {
-//                        dataCheckService.put(login, true);
-//                    } else {
-//                        request.setAttribute(ParamName.LOGIN_ERROR_PARAM, i18n.getMassage(LOGIN_NOT_UNIQUE_KEY,locale));
-//                    }
-//                } catch (ServiceException e) {
-//                    logger.log(Level.DEBUG, "Login is not unique " + login);
-//                }
-//                user.setLogin(login);
-//            } else {
-//                request.setAttribute(LOGIN_ERROR_PARAM, i18n.getMassage(LOGIN_NOT_CORRECT_KEY, locale));
-//            }
-//
-//
-//
-//            if (email != null && email.matches(EMAIL.getRegExp())) {
-//                try {
-//                    if (service.isEmailUnique(email)) {
-//                        dataCheckService.put(email, true);
-//                    } else {
-//                        request.setAttribute(EMAIL_ERROR_PARAM, i18n.getMassage(EMAIL_NOT_UNIQUE_KEY, locale));
-//                    }
-//                } catch (ServiceException e) {
-//                    logger.log(Level.DEBUG, "Email is not unique " + email);
-//                }
-//                user.setEmail(email);
-//            } else {
-//                request.setAttribute(EMAIL_ERROR_PARAM, i18n.getMassage(EMAIL_NOT_CORRECT_KEY, locale));
-//            }
-//
-//            if (firstName != null) {
-//                user.setFirstName(firstName);
-//            }
-//            if (lastName != null) {
-//                user.setLastName(lastName);
-//            }
-//
+
 //            user.setRole(UserRole.STUDENT);
 //            user.setStatus(UserStatus.ACTIVE);
 //
