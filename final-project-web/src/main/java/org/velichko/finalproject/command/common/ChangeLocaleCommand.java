@@ -20,7 +20,6 @@ public class ChangeLocaleCommand implements Command {
         } else {
             locale = RU_LOCALE;
         }
-
         session.setAttribute(LOCALE_PARAM, locale);
         router.setPagePath(request.getHeader(REFERER));
         return router;

@@ -15,6 +15,7 @@
 //@WebFilter("/*")
 //public class AuthorizationFilter implements Filter {
 //    private static final Set<String> PUBLIC_PATH = Set.of("/pages/login.jsp", "/pages/registration.jsp", INDEX_PAGE);
+////    private static final Set<String> PRIVATE_PATH = Set.of("/pages/login.jsp", "/pages/registration.jsp", INDEX_PAGE);
 //
 //    @Override
 //    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

@@ -16,6 +16,10 @@ public class User extends Entity {
     public User() {
     }
 
+    public User(String firstName, String lastName, String login, String email, UserStatus active, UserRole student) {
+
+    }
+
     public long getId() {
         return id;
     }
