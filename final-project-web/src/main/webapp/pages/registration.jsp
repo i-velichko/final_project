@@ -8,19 +8,14 @@
 <br/>
 <br/>
 
-<h1><fmt:message key="page.registration.write_data"/>
-</h1>
+<h1><fmt:message key="page.registration.write_data"/></h1>
 <br/>
 <form method="post" action="${abs_path}/controller?command=registration">
     <div>
-        <span>
-            <fmt:message key="page.registration.first_name"/><input type="text" name="firstName">
-        </span>
+        <span><fmt:message key="page.registration.first_name"/><input type="text" name="firstName"></span>
     </div>
     <div>
-        <span>
-            <fmt:message key="page.registration.last_name"/><input type="text" name="lastName">
-        </span>
+        <span><fmt:message key="page.registration.last_name"/><input type="text" name="lastName"></span>
     </div>
     <div>
         <span>
@@ -34,7 +29,6 @@
          <span>
              <fmt:message key="page.registration.login"/><input type="text" pattern="^[\w@#$%^&+=]{7,25}$" name="login">
          </span>
-
         <span style="color: red">${loginError}</span>
         <h7 style="color: forestgreen"><fmt:message key="page.registration.login.requirements"/></h7>
     </div>
@@ -46,13 +40,10 @@
         </span>
         <h7 style="color: forestgreen"><fmt:message key="page.registration.password.requirements"/></h7>
     </div>
-    <span>
-            <fmt:message key="page.registration.confirm_password"/><input type="password" name="confirmPassword">
-        </span>
+    <span><fmt:message key="page.registration.confirm_password"/><input type="password" name="confirmPassword"></span>
     <div>
     </div>
     <input type="submit" class="colorText" value=<fmt:message key="page.registration.registration"/>>
 </form>
-
 </body>
 </html>

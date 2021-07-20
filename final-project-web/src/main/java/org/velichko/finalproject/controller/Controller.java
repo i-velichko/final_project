@@ -6,9 +6,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.velichko.finalproject.command.CommandName;
+import org.velichko.finalproject.command.ParamName;
 import org.velichko.finalproject.logic.pool.ConnectionPool;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Optional;
 
 import static org.velichko.finalproject.command.PageName.ERROR_PAGE;
@@ -42,7 +44,8 @@ public class Controller extends HttpServlet {
         } else {
             response.sendRedirect(ERROR_PAGE);
         }
-
+        Locale locale = new Locale("en", "US");
+        response.setLocale(locale);
 
     }
 

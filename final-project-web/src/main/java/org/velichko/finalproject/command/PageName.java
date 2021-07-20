@@ -2,11 +2,6 @@ package org.velichko.finalproject.command;
 
 public class PageName {
 
-
-
-    private PageName () {
-    }
-
     public static final String INDEX_PAGE = "index.jsp";
     public static final String LOGIN_PAGE = "pages/login.jsp";
     public static final String SHOW_ALL_USERS = "pages/show_all_users.jsp";
@@ -20,4 +15,8 @@ public class PageName {
     public static final String STUDENT_INFO = "pages/student_info.jsp";
 
     public static final String ERROR_PAGE = "/pages/error.jsp";
+
+
+    private PageName () {
+    }
 }

@@ -5,8 +5,7 @@ public class ParamName {
     public static final String COMMAND_PARAM = "command";
     public static final String USER_PARAM = "user";
     public static final String PASSWORD_PARAM = "password";
-    public static final String LOGIN_ERROR_PARAM = "loginError";
-    public static final String EMAIL_ERROR_PARAM = "emailError";
+
     public static final String PASSWORD_ERROR_PARAM = "passwordError";
     public static final String LOGIN_PARAM = "login";
     public static final String USER_NOT_FOUND_PARAM = "userNotFound";
@@ -18,5 +17,9 @@ public class ParamName {
     public static final String REFERER_PARAM = "refererCommand";
     public static final String REGISTRATION_IS_DONE = "registrationIsDone";
     public static final String RU_LOCALE = "ru-RU";
-    public static final String EN_LOCALE = "en-EN";
+    public static final String EN_LOCALE = "en-US";
+    public static final String LOGIN_ERROR_PARAM = "loginError";
+    public static final String EMAIL_ERROR_PARAM = "emailError";
+    public static final String LOGIN_NOT_UNIQUE_PARAM = "notUniqueLoginError";
+    public static final String EMAIL_NOT_UNIQUE_PARAM = "notUniqueEmailError";
 }

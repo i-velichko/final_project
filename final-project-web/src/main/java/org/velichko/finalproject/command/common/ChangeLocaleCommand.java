@@ -23,7 +23,6 @@ public class ChangeLocaleCommand implements Command {
 
         session.setAttribute(LOCALE_PARAM, locale);
         router.setPagePath(request.getHeader(REFERER));
-
         return router;
     }
 }
