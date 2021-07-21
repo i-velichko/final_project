@@ -11,25 +11,34 @@
 <h1><fmt:message key="page.registration.write_data"/></h1>
 <br/>
 <form method="post" action="${abs_path}/controller?command=registration">
+
+
     <div>
-        <span><fmt:message key="page.registration.first_name"/><input type="text" name="firstName"></span>
+        <span><fmt:message key="page.registration.first_name"/><input type="text" name="firstName"
+                                                                      value="${correctRegistrationData.firstName}"></span>
+        <span style="color: red">${errorRegistrationData.get(firstNameError)}</span>
+
     </div>
+
     <div>
-        <span><fmt:message key="page.registration.last_name"/><input type="text" name="lastName"></span>
+        <span><fmt:message key="page.registration.last_name"/><input type="text" name="lastName"
+                                                                     value="${correctRegistrationData.lastName}"></span>
     </div>
     <div>
         <span>
             <fmt:message key="page.registration.email"/><input type="email"
                                                                pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
-                                                               name="email">
-            <span style="color: red">${emailError}</span>
+                                                               name="email"
+                                                               value="${correctRegistrationData.email}">
+             <span style="color: red">${errorRegistrationData.emailError}</span>
         </span>
     </div>
     <div>
          <span>
-             <fmt:message key="page.registration.login"/><input type="text" pattern="^[\w@#$%^&+=]{7,25}$" name="login">
+             <fmt:message key="page.registration.login"/><input type="text" pattern="^[\w@#$%^&+=]{7,25}$" name="login"
+                                                                value="${correctRegistrationData.login}">
          </span>
-        <span style="color: red">${loginError}</span>
+        <span style="color: red">${errorRegistrationData.loginError}</span>
         <h7 style="color: forestgreen"><fmt:message key="page.registration.login.requirements"/></h7>
     </div>
     <div>

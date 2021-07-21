@@ -1,10 +1,10 @@
 package org.velichko.finalproject.command.newuser;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.command.Command;
+import org.velichko.finalproject.command.PageName;
 import org.velichko.finalproject.command.ParamName;
 import org.velichko.finalproject.controller.Router;
 import org.velichko.finalproject.i18n.I18nManager;
@@ -21,7 +21,6 @@ import java.util.Map;
 
 import static org.velichko.finalproject.command.MessageNameKey.REGISTRATION_SUCCESSFUL_KEY;
 import static org.velichko.finalproject.command.PageName.LOGIN_PAGE;
-import static org.velichko.finalproject.command.PageName.REGISTRATION;
 import static org.velichko.finalproject.command.ParamName.*;
 
 public class RegistrationCommand implements Command {
@@ -50,72 +49,29 @@ public class RegistrationCommand implements Command {
         registrationData.put(PASSWORD_PARAM, password);
         registrationData.put(CONFIRM_PASSWORD_PARAM, confirmPassword);
 
-
-        Map<String, String> registrationDataResult = null;
-
         String method = request.getMethod();
         if (method.equals("POST")) {
-            try {
-                registrationDataResult = RegistrationDataValidator.checkValues(registrationData, locale);
-
-                if (registrationDataResult.isEmpty()){
-                    User user = new User(firstName, lastName, login, email, UserStatus.ACTIVE, UserRole.STUDENT);
-                    request.setAttribute(USER_PARAM, user);
-                } else {
-                    for (Map.Entry<String, String> next : registrationDataResult.entrySet()) {
-                        request.setAttribute(next.getKey(), next.getValue());
-                    }
-                }
-            } catch (ServiceException e) {
-                logger.log(Level.ERROR, "Error with registration data check.", e);
-            }
-
-            if (registrationDataResult != null) {
-                for (Map.Entry<String, String> next : registrationDataResult.entrySet()) {
-                    request.setAttribute(next.getKey(), next.getValue());
-                }
-                router.setPagePath(REGISTRATION);
+            Map<String, String> registrationDataCheckResult = RegistrationDataValidator.checkValues(registrationData, locale);
+            if (!registrationDataCheckResult.isEmpty()) {
+                request.setAttribute("correctRegistrationData", registrationData);
+                request.setAttribute("errorRegistrationData", registrationDataCheckResult);
+                router.setPagePath(PageName.REGISTRATION);
             } else {
-                User user = new User(firstName, lastName, login, email, UserStatus.ACTIVE, UserRole.STUDENT);
+                User user = new User(firstName, lastName, login, email, UserRole.STUDENT, UserStatus.ACTIVE);
+                System.out.println(user);
                 try {
                     service.createNewUser(user, password);
-                    request.setAttribute(ParamName.REGISTRATION_IS_DONE, i18n.getMassage(REGISTRATION_SUCCESSFUL_KEY, locale));
-                    router.setPagePath(LOGIN_PAGE);
-                    request.setAttribute(USER_PARAM, user);
                 } catch (ServiceException e) {
-                    logger.log(Level.ERROR, "Error with create new user.", e);
+                    e.printStackTrace(); //todo
                 }
+                request.setAttribute(USER_PARAM, user);
+                request.setAttribute(ParamName.REGISTRATION_IS_DONE, i18n.getMassage(REGISTRATION_SUCCESSFUL_KEY, locale));
+                router.setPagePath(LOGIN_PAGE);
             }
-
-//            user.setRole(UserRole.STUDENT);
-//            user.setStatus(UserStatus.ACTIVE);
-//
-//            if (password != null && password.matches(PASSWORD.getRegExp())) {
-//                if (password.equals(confirmPassword)) {
-//                    dataCheckService.put(password, true);
-//                } else {
-//                    logger.log(Level.DEBUG, "The password is incorrect or the passwords do not match ");
-//                    request.setAttribute(PASSWORD_ERROR_PARAM, i18n.getMassage(PASSWORD_NOT_CORRECT_KEY, locale));
-//                }
-//            } else {
-//                request.setAttribute(PASSWORD_ERROR_PARAM, i18n.getMassage(PASSWORD_NOT_CORRECT_KEY, locale));
-//            }
-//
-//            if (!dataCheckService.containsValue(false)) {
-//                try {
-//                    service.createNewUser(user, password);
-//                    request.setAttribute(ParamName.REGISTRATION_IS_DONE, i18n.getMassage(REGISTRATION_SUCCESSFUL_KEY, locale));
-//                    router.setPagePath(LOGIN_PAGE);
-//                    request.setAttribute(USER_PARAM, user);
-//                } catch (ServiceException e) {
-//                    logger.log(Level.ERROR, "Error with create new user.", e);
-//                }
-//            } else {
-//                router.setPagePath(REGISTRATION);
-//            }
         }
-
-        //todo редиспатчер на страничку приветствия нового пользователя и там возможно определение его роли
         return router;
     }
 }
+//todo редиспатчер на страничку приветствия нового пользователя и там возможно определение его роли
+
+

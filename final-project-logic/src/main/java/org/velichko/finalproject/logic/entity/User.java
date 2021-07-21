@@ -16,8 +16,13 @@ public class User extends Entity {
     public User() {
     }
 
-    public User(String firstName, String lastName, String login, String email, UserStatus active, UserRole student) {
-
+    public User(String login, String firstName, String lastName, String email, UserRole role, UserStatus status) {
+        this.login = login;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.status = status;
+        this.role = role;
     }
 
     public long getId() {
