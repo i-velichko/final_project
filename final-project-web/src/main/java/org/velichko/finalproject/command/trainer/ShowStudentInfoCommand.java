@@ -13,19 +13,20 @@ import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
 
 import java.util.Optional;
 
+import static org.velichko.finalproject.command.PageName.ERROR_PAGE;
 import static org.velichko.finalproject.command.PageName.STUDENT_INFO;
 import static org.velichko.finalproject.command.ParamName.USER_PARAM;
 
 public class ShowStudentInfoCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final UserService service = new UserServiceImpl();
+    Router router = new Router();
     @Override
     public Router execute(HttpServletRequest request) {
-        Router router = new Router();
+
         String userId = request.getParameter("userId");
         User user;
         Optional<User> currentUser;
-
         try {
             currentUser = service.findUserById(Long.parseLong(userId));
             if (currentUser.isPresent()) {
@@ -35,6 +36,8 @@ public class ShowStudentInfoCommand implements Command {
             }
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Error with find user by id: " + userId);
+            router.setPagePath(ERROR_PAGE);
+
         }
         return router;
     }

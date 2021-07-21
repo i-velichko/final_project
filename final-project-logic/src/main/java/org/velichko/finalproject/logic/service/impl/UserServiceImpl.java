@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
         }finally {
             transaction.endSingleQuery();
         }
-        return Optional.empty();
+        return Optional.ofNullable(user);
     }
 
 

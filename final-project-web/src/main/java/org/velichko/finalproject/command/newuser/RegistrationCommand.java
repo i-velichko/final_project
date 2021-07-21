@@ -19,6 +19,7 @@ import org.velichko.finalproject.validator.RegistrationDataValidator;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.velichko.finalproject.command.MessageNameKey.REGISTRATION_FAILED_KEY;
 import static org.velichko.finalproject.command.MessageNameKey.REGISTRATION_SUCCESSFUL_KEY;
 import static org.velichko.finalproject.command.PageName.LOGIN_PAGE;
 import static org.velichko.finalproject.command.ParamName.*;
@@ -61,11 +62,12 @@ public class RegistrationCommand implements Command {
                 System.out.println(user);
                 try {
                     service.createNewUser(user, password);
+                    request.setAttribute(USER_PARAM, user);
+                    request.setAttribute(ParamName.REGISTRATION_IS_DONE, i18n.getMassage(REGISTRATION_SUCCESSFUL_KEY, locale));
                 } catch (ServiceException e) {
                     e.printStackTrace(); //todo
+                    request.setAttribute(ParamName.REGISTRATION_FAILED, i18n.getMassage(REGISTRATION_FAILED_KEY, locale) + e.getLocalizedMessage());
                 }
-                request.setAttribute(USER_PARAM, user);
-                request.setAttribute(ParamName.REGISTRATION_IS_DONE, i18n.getMassage(REGISTRATION_SUCCESSFUL_KEY, locale));
                 router.setPagePath(LOGIN_PAGE);
             }
         }

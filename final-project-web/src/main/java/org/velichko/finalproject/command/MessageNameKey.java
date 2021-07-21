@@ -8,6 +8,7 @@ public class MessageNameKey {
     public static final String LOGIN_NOT_CORRECT_KEY = "error.login.not.correct";
     public static final String PASSWORD_NOT_CORRECT_KEY = "error.password.not.correct";
     public static final String REGISTRATION_SUCCESSFUL_KEY = "registration.complete";
+    public static final String REGISTRATION_FAILED_KEY = "registration.failed";
 
     public MessageNameKey() {
     }
