@@ -27,8 +27,6 @@ public class EmailServiceImpl implements EmailService {
         }
         final String user = properties != null ? properties.getProperty(userKey) : null;
         final String password = properties != null ? properties.getProperty(passwordKey) : null;
-//        properties.remove(userKey); //todo ??
-//        properties.remove(passwordKey);
 
         final Session session = Session.getDefaultInstance(properties, new Authenticator() {
             @Override
@@ -43,7 +41,7 @@ public class EmailServiceImpl implements EmailService {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
             final String subject = "Email Confirmation";
             message.setSubject(subject);
-            final String content = "Click to confirm email: <a href='" + address + "'>link</a>";
+            final String content = "Project to verification here <a href='" + address + "'>link</a>";
             final String contentType = "text/html";
             message.setContent(content, contentType);
             Transport.send(message);

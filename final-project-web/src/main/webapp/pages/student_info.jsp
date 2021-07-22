@@ -20,6 +20,10 @@ ${user.lastName}
 </br>
 ${user.email}
 </br>
-${user.gitLink}
+${studentSkills}
+</br>
+${gitLink}
+</br>
+${projectName}
 </body>
 </html>

@@ -28,7 +28,7 @@ ${user.email}
 <h3><fmt:message key="page.student.to_start"/></h3>
 </br>
 
-<form name="" action="student" method="post">
+<form name="" action="${abs_path}/controller?command=start_verification" method="post">
     <input type="hidden" name="login" value= "${user.login}">
     <fmt:message key="page.student.git"/> <input type="text" name="git">
     <fmt:message key="page.student.skills"/><input type="text" name="skills">

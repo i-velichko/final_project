@@ -32,6 +32,7 @@ public class Controller extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         Optional<CommandName> commandName = getCommandName(request);
         if (commandName.isPresent()) {
             Router router = commandName.get().getCommand().execute(request);

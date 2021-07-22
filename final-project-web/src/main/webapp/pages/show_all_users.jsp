@@ -7,7 +7,7 @@
 
 
 <form>
-    <table border="2">
+    <table border="2" class="table table-striped">
         <tr>
             <th>First Name</th>
             <th>Last Name</th>
