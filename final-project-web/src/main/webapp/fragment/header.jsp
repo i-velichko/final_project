@@ -9,10 +9,30 @@
 
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://www.markuptag.com/bootstrap/5/css/bootstrap.min.css">
 </head>
 <body>
 
 <%@include file="../fragment/common_imports.jspf" %>
+
+<div
+        class="p-5 text-center bg-image"
+        style="
+      background-image: url('https://kartinkin.com/uploads/posts/2021-01/1610813097_9-p-aiti-fon-14.jpg');
+      height: 400px;
+    "
+>
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="text-white">
+                <h1 class="mb-3">Road to Epam</h1>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div id="logout">
     <c:if test="${not empty sessionScope.user}">
