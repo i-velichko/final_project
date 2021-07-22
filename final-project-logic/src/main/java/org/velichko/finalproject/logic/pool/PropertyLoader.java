@@ -12,14 +12,13 @@ import java.util.Properties;
 public class PropertyLoader {
     private static Logger logger = LogManager.getLogger();
 
-    public static Properties loadPropertiesData(URL url) throws ConnectionPoolException {
+    public static Properties loadPropertiesData(URL url) {
         Properties properties = new Properties();
         try {
             properties.load(url.openStream());
         } catch (IOException e) {
             logger.log(Level.FATAL, "Error with loading properties from file. ", e);
-            throw new ConnectionPoolException("Error with loading properties from file: " + url, e);//TODO: fix exception type and runtime
-
+            throw new RuntimeException("Error with loading properties from file: " + url, e);
         }
         return properties;
     }

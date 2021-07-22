@@ -1,14 +1,9 @@
 package org.velichko.finalproject.i18n;
 
-import jakarta.servlet.http.HttpServletRequest;
-import org.velichko.finalproject.command.ParamName;
-import org.velichko.finalproject.logic.exception.ConnectionPoolException;
 import org.velichko.finalproject.logic.pool.PropertyLoader;
 
 import java.net.URL;
 import java.util.*;
-
-import static org.velichko.finalproject.command.ParamName.*;
 
 public class I18nManager {
 
@@ -26,16 +21,13 @@ public class I18nManager {
 
     private List<String> getAllLocales() {
         List<String> result = new ArrayList<>();
-        try {
-            URL resource = getClass().getClassLoader().getResource("common.properties");
-            Properties properties = PropertyLoader.loadPropertiesData(resource);
-            String property = properties.getProperty(SUPPORTED_LOCALES);
-            for (String next : property.split(",")) {
-                result.add(next.trim());
-            }
-        } catch (ConnectionPoolException e) {
-            throw new RuntimeException("Cannot load resource bundle locales");
+        URL resource = getClass().getClassLoader().getResource("common.properties");
+        Properties properties = PropertyLoader.loadPropertiesData(resource);
+        String property = properties.getProperty(SUPPORTED_LOCALES);
+        for (String next : property.split(",")) {
+            result.add(next.trim());
         }
+
         return result;
     }
 

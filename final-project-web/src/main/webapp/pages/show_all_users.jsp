@@ -1,12 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="abs_path">${pageContext.request.contextPath}</c:set>
 <html>
 <head>
     <title>All users list</title>
+    <%@include file="/fragment/header.jsp"%>
 </head>
 <body bgcolor="silver">
-<%@include file="/fragment/header.jsp"%>
+
 
 <form>
     <table border="2">
@@ -22,7 +20,16 @@
             <tr>
                 <td>${user.firstName}</td>
                 <td>${user.lastName}</td>
-                <td>${user.login}</td>
+                <td><div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            ${user.login}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </div></td>
                 <td>${user.gitLink}</td>
 <%--                <td><a href="${abs_path}/userById?userId=${user.id}">Show info</a></td>--%>
                 <td><a href="${abs_path}/controller?command=show_student_info&userId=${user.id}">show info</a></td>
@@ -31,6 +38,5 @@
         </c:forEach>
     </table>
 </form>
-<br/>
 </body>
 </html>

@@ -46,7 +46,7 @@ public class ConnectionPool {
                 Connection connection = DriverManager.getConnection(url, properties);
                 freeConnections.offer(new ProxyConnection(connection));
             }
-        } catch (SQLException | ConnectionPoolException | ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             logger.log(Level.FATAL, "Connection pool was not created: " + e.getMessage());
             throw new RuntimeException("Connection pool was not created " + e.getMessage());
         }

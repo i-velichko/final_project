@@ -2,3 +2,5 @@
 /final-project-web/target/
 /.idea/
 /logs/
+/final-project-web/src/main/resources/email/email.properties
+/final-project-logic/src/main/resources/email.properties
