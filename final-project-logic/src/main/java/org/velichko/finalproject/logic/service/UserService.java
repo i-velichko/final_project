@@ -2,6 +2,8 @@ package org.velichko.finalproject.logic.service;
 
 import org.velichko.finalproject.logic.dao.impl.UserDaoImpl;
 import org.velichko.finalproject.logic.entity.User;
+import org.velichko.finalproject.logic.entity.type.UserRole;
+import org.velichko.finalproject.logic.entity.type.UserStatus;
 import org.velichko.finalproject.logic.exception.ServiceException;
 
 import java.util.List;
@@ -17,4 +19,7 @@ public interface UserService {
 
     Optional<User> findUserByLoginAndPassword(String login, String password) throws ServiceException;
     Optional<User> findUserById(Long id) throws ServiceException;
+
+    boolean userRoleController(long id, UserRole role) throws ServiceException;
+    boolean userStatusController(long id, UserStatus status) throws ServiceException;
 }

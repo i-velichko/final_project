@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.velichko.finalproject.command.CommandName;
-import org.velichko.finalproject.command.ParamName;
 import org.velichko.finalproject.logic.pool.ConnectionPool;
 
 import java.io.IOException;
@@ -15,7 +14,7 @@ import java.util.Optional;
 
 import static org.velichko.finalproject.command.PageName.ERROR_PAGE;
 import static org.velichko.finalproject.command.ParamName.COMMAND_PARAM;
-import static org.velichko.finalproject.command.ParamName.REFERER_PARAM;
+import static org.velichko.finalproject.command.ParamName.REFERER_COMMAND;
 
 @WebServlet(name = "controller", urlPatterns = "/controller")
 public class Controller extends HttpServlet {
@@ -36,7 +35,7 @@ public class Controller extends HttpServlet {
         Optional<CommandName> commandName = getCommandName(request);
         if (commandName.isPresent()) {
             Router router = commandName.get().getCommand().execute(request);
-            request.setAttribute(REFERER_PARAM, commandName.get().name());
+            request.setAttribute(REFERER_COMMAND, commandName.get().name());
             if (router.getRouterType() == Router.RouterType.REDIRECT) {
                 response.sendRedirect(router.getPagePath());
             } else {

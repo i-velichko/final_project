@@ -4,6 +4,8 @@ import org.velichko.finalproject.logic.dao.AbstractDao;
 import org.velichko.finalproject.logic.dao.UserDao;
 import org.velichko.finalproject.logic.dao.creator.UserCreator;
 import org.velichko.finalproject.logic.entity.User;
+import org.velichko.finalproject.logic.entity.type.UserRole;
+import org.velichko.finalproject.logic.entity.type.UserStatus;
 import org.velichko.finalproject.logic.exception.DaoException;
 import org.velichko.finalproject.logic.utill.PasswordHashGenerator;
 
@@ -15,6 +17,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
+    private static final String CHANGE_USER_ROLE = "UPDATE users SET role_id = ? WHERE id = ?";
+    private static final String CHANGE_USER_STATUS = "UPDATE users SET status_id = ? WHERE id = ?";
     private UserCreator userCreator = new UserCreator();
     private static final String FIND_ALL_USERS = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git" +
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
@@ -38,8 +42,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String ADD_NEW_USER = "INSERT INTO users" +
             " (first_name, last_name, login, email, role_id, status_id, password)" +
             " VALUES (?, ?, ?, ?, ?, ?, ?)";
-    private static final String CHANGE_PASSWORD = "UPDATE users SET password = ? WHERE login = ?"; //todo делать одну константу файнд BY и несколько маленьких
-    private static final String CHANGE_GIT = "UPDATE users SET git = ? WHERE login = ?";
+    private static final String CHANGE_USER_PASSWORD = "UPDATE users SET password = ? WHERE login = ?"; //todo делать одну константу файнд BY и несколько маленьких
+    private static final String CHANGE_USER_GIT = "UPDATE users SET git = ? WHERE login = ?";
 
 
     @Override
@@ -167,7 +171,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public boolean createNewUser(User user, String password) throws DaoException {
 
         PreparedStatement statement = null;
-        if (user != null && password != null){
+        if (user != null && password != null) {
             try {
                 statement = connection.prepareStatement(ADD_NEW_USER);
                 statement.setString(1, user.getFirstName());
@@ -185,7 +189,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 close(statement);
             }
         }
-       return false;
+        return false;
     }
 
     @Override
@@ -197,7 +201,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public void updateUserGitLink(String login, String gitLink) throws DaoException {
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement(CHANGE_GIT);
+            statement = connection.prepareStatement(CHANGE_USER_GIT);
             statement.setString(1, gitLink);
             statement.setString(2, login);
             statement.executeUpdate();
@@ -208,10 +212,44 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         }
     }
 
+    @Override
+    public boolean changeUserRoleById(long id, UserRole role) throws DaoException {
+        PreparedStatement statement = null;
+        int rowsUpdate;
+        try {
+            statement = connection.prepareStatement(CHANGE_USER_ROLE);
+            statement.setInt(1, role.getId());
+            statement.setLong(2, id);
+            rowsUpdate = statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Error. Impossible get data from data base.", e);
+        } finally {
+            close(statement);
+        }
+
+        return rowsUpdate == 1;
+
+    }
+
+    @Override
+    public boolean changeUserStatusById(long id, UserStatus status) throws DaoException {
+        PreparedStatement statement = null;
+        int rowsUpdate;
+        try {
+            statement = connection.prepareStatement(CHANGE_USER_STATUS);
+            statement.setInt(1, status.getId());
+            statement.setLong(2, id);
+            rowsUpdate = statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Error. Impossible get data from data base.", e);
+        }
+        return rowsUpdate == 1;
+    }
+
     public void changePassword(String login, String password) throws DaoException {
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement(CHANGE_PASSWORD);
+            statement = connection.prepareStatement(CHANGE_USER_PASSWORD);
             statement.setString(1, password);
             statement.setString(2, login);
             statement.executeUpdate();

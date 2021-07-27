@@ -1,5 +1,7 @@
 package org.velichko.finalproject.command;
 
+import org.velichko.finalproject.command.admin.ChangeUserRoleCommand;
+import org.velichko.finalproject.command.admin.ChangeUserStatusCommand;
 import org.velichko.finalproject.command.admin.ShowAllUsersCommand;
 import org.velichko.finalproject.command.common.ChangeLocaleCommand;
 import org.velichko.finalproject.command.common.LoginCommand;
@@ -18,7 +20,9 @@ public enum CommandName {
     LOGOUT(new LogoutCommand()),
     SHOW_TRAINER_INFO(new ShowTrainerInfoCommand()),
     SHOW_STUDENT_INFO(new ShowStudentInfoCommand()),
-    START_VERIFICATION (new StartVerificationCommand());
+    START_VERIFICATION (new StartVerificationCommand()),
+    CHANGE_USER_STATUS (new ChangeUserStatusCommand()),
+    CHANGE_USER_ROLE (new ChangeUserRoleCommand());
 
 
     private Command command;

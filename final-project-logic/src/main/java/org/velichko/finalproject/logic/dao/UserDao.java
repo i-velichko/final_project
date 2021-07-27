@@ -1,6 +1,8 @@
 package org.velichko.finalproject.logic.dao;
 
 import org.velichko.finalproject.logic.entity.User;
+import org.velichko.finalproject.logic.entity.type.UserRole;
+import org.velichko.finalproject.logic.entity.type.UserStatus;
 import org.velichko.finalproject.logic.exception.DaoException;
 
 import java.util.Optional;
@@ -15,5 +17,7 @@ public interface UserDao {
 
     void updateUserGitLink(String login, String gitLink) throws DaoException;
 
+    boolean changeUserRoleById(long id, UserRole role) throws DaoException;
 
+    boolean changeUserStatusById(long id, UserStatus status) throws DaoException;
 }

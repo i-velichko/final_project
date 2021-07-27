@@ -14,7 +14,7 @@ public class ParamName {
     public static final String EMAIL_PARAM = "email";
     public static final String CONFIRM_PASSWORD_PARAM = "confirmPassword";
     public static final String LOCALE_PARAM = "locale";
-    public static final String REFERER_PARAM = "refererCommand";
+    public static final String REFERER_COMMAND = "refererCommand";
     public static final String REGISTRATION_IS_DONE = "registrationIsDone";
     public static final String REGISTRATION_FAILED = "registrationFailed";
     public static final String RU_LOCALE = "ru-RU";
@@ -26,4 +26,5 @@ public class ParamName {
     public static final String GIT_LINK = "gitLink";
     public static final String PROJECT_NAME_PARAM = "projectName";
     public static final String STUDENT_SKILLS_PARAM = "studentSkills";
+    public static final String REFERER = "referer";
 }

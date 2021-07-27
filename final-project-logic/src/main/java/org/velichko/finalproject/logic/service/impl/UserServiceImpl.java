@@ -6,6 +6,8 @@ import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.logic.dao.EntityTransaction;
 import org.velichko.finalproject.logic.dao.impl.UserDaoImpl;
 import org.velichko.finalproject.logic.entity.User;
+import org.velichko.finalproject.logic.entity.type.UserRole;
+import org.velichko.finalproject.logic.entity.type.UserStatus;
 import org.velichko.finalproject.logic.exception.DaoException;
 import org.velichko.finalproject.logic.exception.ServiceException;
 import org.velichko.finalproject.logic.service.UserService;
@@ -127,10 +129,52 @@ public class UserServiceImpl implements UserService {
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error with find user by id", e);
             throw new ServiceException("Error with find user by ID " + id, e);
-        }finally {
+        } finally {
             transaction.endSingleQuery();
         }
         return Optional.ofNullable(user);
+    }
+
+    @Override
+    public boolean userRoleController(long id, UserRole role) throws ServiceException {
+        boolean isChanged = false;
+        UserDaoImpl userDao = new UserDaoImpl();
+        EntityTransaction transaction = new EntityTransaction();
+        transaction.beginSingleQuery(userDao);
+        try {
+            Optional<User> optionalUser = userDao.findEntityById(id);
+            if (optionalUser.isPresent()) {
+                userDao.changeUserRoleById(id, role);
+                isChanged = true;
+            }
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with changed user role", e);
+            throw new ServiceException("Impossible change role for user", e);
+        } finally {
+            transaction.endSingleQuery();
+        }
+        return isChanged;
+    }
+
+    @Override
+    public boolean userStatusController(long id, UserStatus status) throws ServiceException {
+        boolean isChanged = false;
+        UserDaoImpl userDao = new UserDaoImpl();
+        EntityTransaction transaction = new EntityTransaction();
+        transaction.beginSingleQuery(userDao);
+        try {
+            Optional<User> optionalUser = userDao.findEntityById(id);
+            if (optionalUser.isPresent()) {
+                userDao.changeUserStatusById(id, status);
+                isChanged = true;
+            }
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with changed user status", e);
+            throw new ServiceException("Impossible change status for user", e);
+        } finally {
+            transaction.endSingleQuery();
+        }
+        return isChanged;
     }
 
 

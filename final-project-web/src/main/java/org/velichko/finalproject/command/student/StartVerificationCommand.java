@@ -22,9 +22,10 @@ public class StartVerificationCommand implements Command {
 
         if (projectName != null) {
             try {
+                //todo
                 emailService.sendEmail("showman.velichko@gmail.com", "http://localhost:8080/final_project_web_war_exploded/controller?command=start_verification" );
             } catch (ServiceException e) {
-                e.printStackTrace();
+                e.printStackTrace(); //todo
             }
         }
         request.setAttribute(GIT_LINK, gitLink);
@@ -32,6 +33,7 @@ public class StartVerificationCommand implements Command {
         request.setAttribute(STUDENT_SKILLS_PARAM, studentSkills);
 
         router.setPagePath(PageName.STUDENT_INFO);
+//        router.setPagePath(PageName.VERIFICATION_INFO);
         return router;
     }
 }

@@ -2,8 +2,8 @@ package org.velichko.finalproject.logic.entity.type;
 
 public enum UserStatus {
     ACTIVE(1),
-    DELETED(2),
-    BLOCKED(3);
+    BLOCKED(2),
+    DELETED(3);
 
     private final int id;
 
