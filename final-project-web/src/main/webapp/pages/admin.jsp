@@ -11,9 +11,14 @@
     <title>Admin</title>
 </head>
 <body>
-<%@include file="/fragment/admin_header.jsp" %>
+<%@include file="/fragment/header.jsp" %>
 <a href="${abs_path}/controller?command=show_all_users">
-    <button type="button"><fmt:message key="page.trainer.show_students"/></button>
+    <button type="button"><fmt:message key="page.admin.show_users"/></button>
+</a>
+</body>
+<body>
+<a href="${abs_path}/controller?command=show_all_verifications">
+    <button type="button"><fmt:message key="page.admin.show_verifications"/></button>
 </a>
 </body>
 </html>

@@ -27,4 +27,5 @@ public class ParamName {
     public static final String PROJECT_NAME_PARAM = "projectName";
     public static final String STUDENT_SKILLS_PARAM = "studentSkills";
     public static final String REFERER = "referer";
+    public static final String VERIFICATION_LIST_PARAM = "verifications";
 }

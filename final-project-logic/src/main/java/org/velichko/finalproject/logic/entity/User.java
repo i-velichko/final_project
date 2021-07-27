@@ -25,6 +25,11 @@ public class User extends Entity {
         this.role = role;
     }
 
+    public User(String studentName,String surename) {
+        this.firstName = studentName;
+        this.lastName = surename;
+    }
+
     public long getId() {
         return id;
     }

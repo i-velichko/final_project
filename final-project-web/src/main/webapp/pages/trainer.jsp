@@ -17,7 +17,7 @@ ${user.lastName}
 
 <br/>
 <a href="${abs_path}/controller?command=show_all_users">
-    <button type="button"><fmt:message key="page.trainer.show_students"/></button>
+    <button type="button"><fmt:message key="page.admin.show_users"/></button>
 </a>
 </br>
 <p><a href="trainer_info.jsp"><fmt:message key="page.trainer.personal_information"/></a></p>

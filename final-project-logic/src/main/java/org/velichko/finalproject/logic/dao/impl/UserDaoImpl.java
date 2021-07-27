@@ -17,9 +17,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
+    private UserCreator userCreator = new UserCreator();
     private static final String CHANGE_USER_ROLE = "UPDATE users SET role_id = ? WHERE id = ?";
     private static final String CHANGE_USER_STATUS = "UPDATE users SET status_id = ? WHERE id = ?";
-    private UserCreator userCreator = new UserCreator();
     private static final String FIND_ALL_USERS = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git" +
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
             "JOIN user_statuses as us ON u.status_id = us.id";

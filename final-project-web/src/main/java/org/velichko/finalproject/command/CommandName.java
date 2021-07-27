@@ -3,6 +3,7 @@ package org.velichko.finalproject.command;
 import org.velichko.finalproject.command.admin.ChangeUserRoleCommand;
 import org.velichko.finalproject.command.admin.ChangeUserStatusCommand;
 import org.velichko.finalproject.command.admin.ShowAllUsersCommand;
+import org.velichko.finalproject.command.admin.ShowAllVerifications;
 import org.velichko.finalproject.command.common.ChangeLocaleCommand;
 import org.velichko.finalproject.command.common.LoginCommand;
 import org.velichko.finalproject.command.common.LogoutCommand;
@@ -14,6 +15,7 @@ import org.velichko.finalproject.command.trainer.ShowTrainerInfoCommand;
 public enum CommandName {
 
     SHOW_ALL_USERS(new ShowAllUsersCommand()),
+    SHOW_ALL_VERIFICATIONS(new ShowAllVerifications()),
     REGISTRATION(new RegistrationCommand()),
     LOGIN(new LoginCommand()),
     CHANGE_LOCALE(new ChangeLocaleCommand()),
