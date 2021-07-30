@@ -40,8 +40,8 @@
                                 <div class="col-md-6 mb-4">
 
                                     <div class="form-outline">
-                                        <input type="text" pattern="" id="git" class="form-control form-control-lg" required/>
-                                        <label class="form-label" for="git"><fmt:message
+                                        <input type="text" id="gitLink" name="gitLink" class="form-control form-control-lg" required/>
+                                        <label class="form-label" for="gitLink"><fmt:message
                                                 key="page.student.git"/></label>
                                     </div>
 
@@ -49,7 +49,7 @@
                                 <div class="col-md-6 mb-4">
 
                                     <div class="form-outline">
-                                        <input type="text" id="projectName" class="form-control form-control-lg" required/>
+                                        <input type="text" id="projectName" name="title" class="form-control form-control-lg" required/>
                                         <label class="form-label" for="projectName"><fmt:message
                                                 key="page.student.project_name"/></label>
                                     </div>
@@ -60,9 +60,9 @@
                                 <div class="col-md-6 mb-4 pb-2">
                                     <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                                         <option selected>Choose your trainer here</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        <c:forEach items="${trainers}" var="trainer">
+                                            <option value="trainer">${trainer.firstName} ${trainer.lastName}</option>
+                                        </c:forEach>
                                     </select>
                                     <label class="form-label select-label"> Your trainer</label>
                                 </div>

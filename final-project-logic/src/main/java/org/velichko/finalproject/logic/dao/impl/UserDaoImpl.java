@@ -171,6 +171,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         throw new UnsupportedOperationException("This method unsupported");
     }
 
+    @Override
     public boolean createNewUser(User user, String password) throws DaoException {
 
         PreparedStatement statement = null;

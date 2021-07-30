@@ -24,10 +24,11 @@ public class ParamName {
     public static final String LOGIN_NOT_UNIQUE_PARAM = "notUniqueLoginError";
     public static final String EMAIL_NOT_UNIQUE_PARAM = "notUniqueEmailError";
     public static final String GIT_LINK = "gitLink";
-    public static final String PROJECT_NAME_PARAM = "projectName";
+    public static final String PROJECT_TITLE_PARAM = "title";
     public static final String STUDENT_SKILLS_PARAM = "studentSkills";
     public static final String REFERER = "referer";
     public static final String VERIFICATION_LIST_PARAM = "verifications";
     public static final String TRAINER_PARAM = "trainer";
     public static final String STUDENT_PARAM = "student";
+    public static final String TRAINER_LIST_PARAM = "trainers";
 }

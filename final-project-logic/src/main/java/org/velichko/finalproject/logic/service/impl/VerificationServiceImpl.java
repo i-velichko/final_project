@@ -4,6 +4,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.logic.dao.EntityTransaction;
+import org.velichko.finalproject.logic.dao.impl.UserDaoImpl;
 import org.velichko.finalproject.logic.dao.impl.VerificationDaoImpl;
 import org.velichko.finalproject.logic.entity.Verification;
 import org.velichko.finalproject.logic.exception.DaoException;
@@ -30,5 +31,23 @@ public class VerificationServiceImpl implements VerificationService {
             transaction.endSingleQuery();
         }
         return verifications;
+    }
+
+    @Override
+    public boolean createNewVerification(Verification verification, String title) throws ServiceException {
+        VerificationDaoImpl verificationDao = new VerificationDaoImpl();
+        EntityTransaction transaction = new EntityTransaction();
+        transaction.beginSingleQuery(verificationDao);
+        boolean result;
+        try {
+            verificationDao.createNewVerification(verification, title);
+            result = true;
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with create new Verification. ", e);
+            throw new ServiceException("Error with create new Verification. ", e);
+        } finally {
+            transaction.endSingleQuery();
+        }
+        return result;
     }
 }

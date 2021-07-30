@@ -8,6 +8,7 @@ public class PageName {
     public static final String SHOW_ALL_VERIFICATIONS = "pages/show_all_verifications.jsp";
     public static final String REGISTRATION = "pages/registration.jsp";
     public static final String WELCOME_STUDENT = "pages/student.jsp";
+    public static final String REDIRECT_STUDENT = "controller?command=redirect_student";
     public static final String WELCOME_TRAINER = "pages/trainer.jsp";
     public static final String WELCOME_EXAMINER = "pages/examiner.jsp";
     public static final String WELCOME_ADMIN = "pages/admin.jsp";

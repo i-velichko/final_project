@@ -27,8 +27,10 @@ public class LoginCommand implements Command {
         User user = (User) request.getSession().getAttribute(USER_PARAM);
         if (user != null) {
             request.setAttribute(USER_PARAM, user);
+            router.setRouterType(Router.RouterType.REDIRECT);
             switch (user.getRole()) {
-                case STUDENT -> router.setPagePath(WELCOME_STUDENT);
+                case STUDENT ->
+                        router.setPagePath(REDIRECT_STUDENT);
                 case TRAINER -> router.setPagePath(WELCOME_TRAINER);
                 case EXAMINER -> router.setPagePath(WELCOME_EXAMINER);
                 case ADMIN -> router.setPagePath(WELCOME_ADMIN);
@@ -53,8 +55,9 @@ public class LoginCommand implements Command {
                 user = currentUser.get();
                 request.getSession().setAttribute(USER_PARAM, user);
                 request.setAttribute(USER_PARAM, user);
+                router.setRouterType(Router.RouterType.REDIRECT);
                 switch (user.getRole()) {
-                    case STUDENT -> router.setPagePath(WELCOME_STUDENT);
+                    case STUDENT -> router.setPagePath(REDIRECT_STUDENT);
                     case TRAINER -> router.setPagePath(WELCOME_TRAINER);
                     case ADMIN -> router.setPagePath(WELCOME_ADMIN);
                     default -> router.setPagePath(LOGIN_PAGE);

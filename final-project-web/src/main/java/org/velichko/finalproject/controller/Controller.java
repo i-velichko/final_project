@@ -53,8 +53,7 @@ public class Controller extends HttpServlet {
 
     private Optional<CommandName> getCommandName(HttpServletRequest request) {
         String name = request.getParameter(COMMAND_PARAM);
-        CommandName commandName;
-        commandName = CommandName.valueOf(name.toUpperCase());
+        CommandName commandName = CommandName.valueOf(name.toUpperCase());
         return Optional.of(commandName);
     }
 

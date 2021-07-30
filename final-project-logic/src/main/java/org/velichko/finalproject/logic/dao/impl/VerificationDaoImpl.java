@@ -5,16 +5,19 @@ import org.velichko.finalproject.logic.dao.VerificationDao;
 import org.velichko.finalproject.logic.dao.creator.VerificationCreator;
 import org.velichko.finalproject.logic.entity.Verification;
 import org.velichko.finalproject.logic.exception.DaoException;
+import org.velichko.finalproject.logic.utill.PasswordHashGenerator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class VerificationDaoImpl extends AbstractDao<Verification> implements VerificationDao {
+    public static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
     private static final String FIND_ALL_VERIFICATIONS = "SELECT v.id, st.first_name as student_name," +
             " st.last_name as student_surname, v.title, tr.first_name as trainer_name, tr.last_name as trainer_surname," +
             " ex.first_name as examiner_name, ex.last_name as examiner_surname," +
@@ -25,7 +28,33 @@ public class VerificationDaoImpl extends AbstractDao<Verification> implements Ve
             "LEFT JOIN users as st ON v.student_id = st.id " +
             "LEFT JOIN users as tr ON v.trainer_id = tr.id " +
             "LEFT JOIN users as ex ON v.examiner_id = ex.id";
+    private static final String ADD_NEW_VERIFICATION = "INSERT INTO project_verification (title, student_id, trainer_id," +
+            " verification_status_id, application_date) VALUES (?, ?, ?, ?, ?)";
+
     private VerificationCreator verificationCreator = new VerificationCreator();
+
+    @Override
+    public boolean createNewVerification(Verification verification, String title) throws DaoException {
+        PreparedStatement statement = null;
+        if (verification != null && title != null) {
+            try {
+                statement = connection.prepareStatement(ADD_NEW_VERIFICATION);
+                statement.setString(1, verification.getTitle());
+                statement.setLong(2, verification.getStudent().getId());
+                statement.setLong(3, verification.getTrainer().getId());
+                statement.setInt(4, verification.getVerificationStatus().getId());
+                DateTimeFormatter format = DateTimeFormatter.ofPattern(DATE_PATTERN);
+                statement.setString(5, verification.getApplicationDate().format(format));
+                statement.executeUpdate();
+                return true;
+            } catch (SQLException e) {
+                throw new DaoException("Error with create new Verification. ", e);
+            } finally {
+                close(statement);
+            }
+        }
+        return false;
+    }
 
     @Override
     public Verification findVerificationByVerificationStatusId(long id) {

@@ -9,5 +9,5 @@ import java.util.List;
 public interface VerificationService {
     List<Verification> readAll () throws ServiceException;
 
-    boolean createNewVerification(Verification verification, String projectName);
+    boolean createNewVerification(Verification verification, String title) throws ServiceException;
 }
