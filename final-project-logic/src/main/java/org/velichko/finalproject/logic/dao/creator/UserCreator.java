@@ -1,12 +1,12 @@
 package org.velichko.finalproject.logic.dao.creator;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.entity.type.UserRole;
 import org.velichko.finalproject.logic.entity.type.UserStatus;
 import org.velichko.finalproject.logic.exception.DaoException;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,6 +25,7 @@ public class UserCreator {
             user.setGitLink(resultSet.getString("git"));
             user.setStatus(UserStatus.valueOf(resultSet.getString("status")));
             user.setRole(UserRole.valueOf(resultSet.getString("role")));
+            user.setImage(resultSet.getBlob("image"));
 
         } catch (SQLException e) {
             logger.log(Level.ERROR, "Create user error. " + e.getMessage());

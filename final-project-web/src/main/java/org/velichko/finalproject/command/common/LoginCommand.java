@@ -56,6 +56,7 @@ public class LoginCommand implements Command {
                 switch (user.getRole()) {
                     case STUDENT -> router.setPagePath(WELCOME_STUDENT);
                     case TRAINER -> router.setPagePath(WELCOME_TRAINER);
+                    case ADMIN -> router.setPagePath(WELCOME_ADMIN);
                     default -> router.setPagePath(LOGIN_PAGE);
                 }
             } else {

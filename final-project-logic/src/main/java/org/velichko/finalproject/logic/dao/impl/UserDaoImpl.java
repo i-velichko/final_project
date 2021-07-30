@@ -9,6 +9,8 @@ import org.velichko.finalproject.logic.entity.type.UserStatus;
 import org.velichko.finalproject.logic.exception.DaoException;
 import org.velichko.finalproject.logic.utill.PasswordHashGenerator;
 
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,22 +22,22 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private UserCreator userCreator = new UserCreator();
     private static final String CHANGE_USER_ROLE = "UPDATE users SET role_id = ? WHERE id = ?";
     private static final String CHANGE_USER_STATUS = "UPDATE users SET status_id = ? WHERE id = ?";
-    private static final String FIND_ALL_USERS = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git" +
+    private static final String FIND_ALL_USERS = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git, u.image" +
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
             "JOIN user_statuses as us ON u.status_id = us.id";
-    private static final String FIND_USER_BY_ID = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git" +
+    private static final String FIND_USER_BY_ID = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git, u.image" +
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
             "JOIN user_statuses as us ON u.status_id = us.id" +
             " WHERE u.id = ?";
-    private static final String FIND_USER_BY_LOGIN_AND_PASSWORD = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git" +
+    private static final String FIND_USER_BY_LOGIN_AND_PASSWORD = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git, u.image" +
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
             "LEFT JOIN user_statuses as us ON u.status_id = us.id" +//TODO: remove left
             " WHERE u.login = ? and u.password = ?";
-    private static final String FIND_USER_BY_LOGIN = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git" +
+    private static final String FIND_USER_BY_LOGIN = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git, u.image" +
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
             "LEFT JOIN user_statuses as us ON u.status_id = us.id" +//TODO: remove left
             " WHERE u.login = ?";
-    private static final String FIND_USER_BY_EMAIL = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git" +
+    private static final String FIND_USER_BY_EMAIL = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git, u.image" +
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
             "JOIN user_statuses as us ON u.status_id = us.id" +
             " WHERE u.email = ?";
@@ -44,6 +46,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             " VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String CHANGE_USER_PASSWORD = "UPDATE users SET password = ? WHERE login = ?"; //todo делать одну константу файнд BY и несколько маленьких
     private static final String CHANGE_USER_GIT = "UPDATE users SET git = ? WHERE login = ?";
+    private static final String CHANGE_USER_IMAGE = "UPDATE users SET image = ? WHERE login = ?";
 
 
     @Override
@@ -181,6 +184,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 statement.setInt(5, user.getRole().getId());
                 statement.setInt(6, user.getStatus().getId());
                 statement.setString(7, PasswordHashGenerator.encodePassword(password));
+                statement.setBlob(7, user.getImage());
                 statement.executeUpdate();
                 return true;
             } catch (SQLException e) {
@@ -255,6 +259,20 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException("Error with changing password. ", e);
+        } finally {
+            close(statement);
+        }
+    }
+
+    public void changeUserImage(String login, InputStream image) throws DaoException {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(CHANGE_USER_IMAGE);
+            statement.setBlob(1, image);
+            statement.setString(2, login);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Error with changing image. ", e);
         } finally {
             close(statement);
         }

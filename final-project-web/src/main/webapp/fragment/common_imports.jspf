@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="abs_path">${pageContext.request.contextPath}</c:set>
 <link href="${abs_path}/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+<link href="${abs_path}/css/style.css" rel="stylesheet" type="text/css"/>
 <link href="${abs_path}/css/jquery.modal.css" rel="stylesheet" type="text/css"/>
 <link href="${abs_path}/font/css/fontawesome-all.css" rel="stylesheet" type="text/css"/>
 

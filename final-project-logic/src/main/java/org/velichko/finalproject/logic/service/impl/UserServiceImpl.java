@@ -12,6 +12,8 @@ import org.velichko.finalproject.logic.exception.DaoException;
 import org.velichko.finalproject.logic.exception.ServiceException;
 import org.velichko.finalproject.logic.service.UserService;
 
+import java.io.InputStream;
+import java.sql.Blob;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +53,22 @@ public class UserServiceImpl implements UserService {
             transaction.endSingleQuery();
         }
         return result;
+    }
+
+    @Override
+    public boolean changeUserGit(String login, String gitLink) throws ServiceException {
+        UserDaoImpl userDao = new UserDaoImpl();
+        EntityTransaction transaction = new EntityTransaction();
+        transaction.beginSingleQuery(userDao);
+        try {
+            userDao.updateUserGitLink(login, gitLink);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with changed user gitLink", e);
+            throw new ServiceException("Impossible change gitLink for user", e);
+        } finally {
+            transaction.endSingleQuery();
+        }
+        return true;
     }
 
     @Override
@@ -181,6 +199,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean updateUser(UserDaoImpl userDao) {
         return false;
+    }
+
+    @Override
+    public boolean changeUserImage(String login, InputStream image) throws ServiceException {
+        UserDaoImpl userDao = new UserDaoImpl();
+        EntityTransaction transaction = new EntityTransaction();
+        transaction.beginSingleQuery(userDao);
+        try {
+            userDao.changeUserImage(login, image);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with changed user image", e);
+            throw new ServiceException("Impossible change image for user", e);
+        } finally {
+            transaction.endSingleQuery();
+        }
+        return true;
     }
 
     @Override

@@ -6,14 +6,18 @@ import org.velichko.finalproject.logic.entity.type.UserRole;
 import org.velichko.finalproject.logic.entity.type.UserStatus;
 import org.velichko.finalproject.logic.exception.ServiceException;
 
+import java.io.InputStream;
+import java.sql.Blob;
 import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
     List<User> readAll () throws ServiceException;
     boolean updateUser (UserDaoImpl userDao) throws ServiceException; //todo  реализовать или убрать
+    boolean changeUserImage (String login, InputStream image) throws ServiceException;
     boolean delete (UserDaoImpl userDao) throws ServiceException; //todo  реализовать или убрать
     boolean createNewUser (User user, String password) throws ServiceException;
+    boolean changeUserGit (String login, String gitLink) throws ServiceException;
     boolean isLoginUnique(String login) throws ServiceException;
     boolean isEmailUnique(String email) throws ServiceException;
 

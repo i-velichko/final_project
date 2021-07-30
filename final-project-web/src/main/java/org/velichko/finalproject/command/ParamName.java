@@ -28,4 +28,6 @@ public class ParamName {
     public static final String STUDENT_SKILLS_PARAM = "studentSkills";
     public static final String REFERER = "referer";
     public static final String VERIFICATION_LIST_PARAM = "verifications";
+    public static final String TRAINER_PARAM = "trainer";
+    public static final String STUDENT_PARAM = "student";
 }

@@ -1,13 +1,13 @@
 <html>
 <head>
+
     <title>All users list</title>
     <%@include file="/fragment/header.jsp" %>
+
 </head>
 <body>
-
-
 <form>
-    <table border="2" class="table table-striped" style="width:100%">
+    <table class="table table-bordered">
         <tr>
             <th>First Name</th>
             <th>Last Name</th>
@@ -72,5 +72,6 @@
         </c:forEach>
     </table>
 </form>
+
 </body>
 </html>

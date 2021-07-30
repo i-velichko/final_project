@@ -1,6 +1,7 @@
 package org.velichko.finalproject.controller;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import static org.velichko.finalproject.command.PageName.ERROR_PAGE;
 import static org.velichko.finalproject.command.ParamName.COMMAND_PARAM;
 import static org.velichko.finalproject.command.ParamName.REFERER_COMMAND;
 
+@MultipartConfig(fileSizeThreshold = 1024 * 1024)
 @WebServlet(name = "controller", urlPatterns = "/controller")
 public class Controller extends HttpServlet {
 

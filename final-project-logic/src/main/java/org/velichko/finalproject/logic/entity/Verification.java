@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 public class Verification extends Entity {
     private long id;
+    private String title;
     private User student;
     private User trainer;
     private User examiner;
@@ -21,12 +22,24 @@ public class Verification extends Entity {
     public Verification() {
     }
 
+    public Verification(String projectName, User student, User trainer, VerificationStatus draft, LocalDateTime now) {
+        super();
+    }
+
     public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public User getStudent() {

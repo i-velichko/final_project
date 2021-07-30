@@ -27,6 +27,7 @@ public class VerificationCreator {
             verification.setId(resultSet.getInt("id"));
             verification.setStudent(new User(
                     resultSet.getString("student_name"), resultSet.getString("student_surname")));
+            verification.setTitle(resultSet.getString("title"));
             verification.setTrainer(new User(
                     resultSet.getString("trainer_name"), resultSet.getString("trainer_surname")));
             verification.setExaminer(new User(
@@ -49,7 +50,6 @@ public class VerificationCreator {
     private LocalDateTime parseToLocalDateTime(String dateTime, ResultSet resultSet) throws SQLException {
         String application_date = resultSet.getString("application_date");
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime localDateTime = LocalDateTime.parse(application_date, dtf);
-        return localDateTime;
+        return LocalDateTime.parse(application_date, dtf);
     }
 }

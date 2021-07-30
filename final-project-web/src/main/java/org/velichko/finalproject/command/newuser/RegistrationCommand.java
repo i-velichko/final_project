@@ -1,6 +1,9 @@
 package org.velichko.finalproject.command.newuser;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Part;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.command.Command;
@@ -16,6 +19,8 @@ import org.velichko.finalproject.logic.service.UserService;
 import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
 import org.velichko.finalproject.validator.RegistrationDataValidator;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +28,7 @@ import static org.velichko.finalproject.command.MessageNameKey.REGISTRATION_FAIL
 import static org.velichko.finalproject.command.MessageNameKey.REGISTRATION_SUCCESSFUL_KEY;
 import static org.velichko.finalproject.command.PageName.LOGIN_PAGE;
 import static org.velichko.finalproject.command.ParamName.*;
+
 
 public class RegistrationCommand implements Command {
     private static final Logger logger = LogManager.getLogger();

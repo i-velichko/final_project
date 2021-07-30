@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;900&display=swap');
+.block{
+    width: 400px;
+    min-height: 50px;
+    padding: 0 15px;
+    margin: 0 auto;
+    border: 2px solid #ccc;
+    position: relative;
+    text-align: center;
+    font-size: 14px;
+    font-family: 'Segoe UI';
+}
+.block span{
+    display: none;
+    position: absolute; top: 35px; left: -2px;
+    z-index: 1;
+    width: 400px;
+    padding: 15px;
+    text-align: left;
+    background: #FDFDFD;
+    border-bottom:2px solid #ccc;
+    border-left:2px solid #ccc;
+    border-right:2px solid #ccc;
+}
+.block:hover span{
+    display: block;
+    cursor: pointer;
+    height: auto;
+}
+
+.myTooltip {
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    margin: 0 auto;
+    font-size: 17px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all .5s;
+}
+
+.myTooltip:hover {
+    overflow: inherit;
+    text-overflow: inherit;
+    white-space: inherit;
+    height: auto;
+}
+
+

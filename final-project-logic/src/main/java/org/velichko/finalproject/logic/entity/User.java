@@ -3,6 +3,8 @@ package org.velichko.finalproject.logic.entity;
 import org.velichko.finalproject.logic.entity.type.UserRole;
 import org.velichko.finalproject.logic.entity.type.UserStatus;
 
+import java.sql.Blob;
+
 public class User extends Entity {
     private long id;
     private String login;
@@ -12,6 +14,7 @@ public class User extends Entity {
     private String gitLink;
     private UserStatus status;
     private UserRole role;
+    private Blob image;
 
     public User() {
     }
@@ -92,6 +95,14 @@ public class User extends Entity {
 
     public void setRole(UserRole role) {
         this.role = role;
+    }
+
+    public Blob getImage() {
+        return image;
+    }
+
+    public void setImage(Blob image) {
+        this.image = image;
     }
 
     @Override

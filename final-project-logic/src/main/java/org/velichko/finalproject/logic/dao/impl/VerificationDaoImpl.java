@@ -16,7 +16,7 @@ import java.util.Optional;
 
 public class VerificationDaoImpl extends AbstractDao<Verification> implements VerificationDao {
     private static final String FIND_ALL_VERIFICATIONS = "SELECT v.id, st.first_name as student_name," +
-            " st.last_name as student_surname, tr.first_name as trainer_name, tr.last_name as trainer_surname," +
+            " st.last_name as student_surname, v.title, tr.first_name as trainer_name, tr.last_name as trainer_surname," +
             " ex.first_name as examiner_name, ex.last_name as examiner_surname," +
             " v.application_date, v.trainer_verification_date, v.trainer_score, v.trainer_characteristic as characteristic, v.examiner_verification_date," +
             " vs.value as verification_status, fs.value as final_status FROM project_verification as v" +
