@@ -38,13 +38,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean createNewUser(User user, String password) throws ServiceException {
+    public boolean createNewUser(User user, String password, String registrationKey) throws ServiceException {
         UserDaoImpl userDao = new UserDaoImpl();
         EntityTransaction transaction = new EntityTransaction();
         transaction.beginSingleQuery(userDao);
         boolean result;
         try {
-            userDao.createNewUser(user, password);
+            userDao.createNewUser(user, password, registrationKey);
             result = true;
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error with add new User. ", e);
@@ -193,6 +193,25 @@ public class UserServiceImpl implements UserService {
             transaction.endSingleQuery();
         }
         return isChanged;
+    }
+
+    @Override
+    public Optional<User> getUserByRegistrationKey(String registrationKey) throws ServiceException {
+        UserDaoImpl userDao = new UserDaoImpl();
+        EntityTransaction transaction = new EntityTransaction();
+        transaction.beginSingleQuery(userDao);
+        Optional<User> optionalUser;
+        User user;
+        try {
+            optionalUser = userDao.findUserByRegistrationKey(registrationKey);
+            user = optionalUser.orElse(null);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with get user by registration key", e);
+            throw new ServiceException("Impossible get user", e);
+        } finally {
+            transaction.endSingleQuery();
+        }
+        return Optional.ofNullable(user);
     }
 
 

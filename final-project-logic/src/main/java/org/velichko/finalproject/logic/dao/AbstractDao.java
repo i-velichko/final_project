@@ -4,6 +4,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.logic.entity.Entity;
+import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.exception.DaoException;
 
 import java.sql.Connection;
@@ -42,4 +43,6 @@ public abstract class AbstractDao<T extends Entity> {
     void setConnection(Connection connection) {
         this.connection = connection;
     }
+
+    public abstract Optional<User> findUserByRegistrationKey(String registrationKey) throws DaoException;
 }

@@ -1,9 +1,6 @@
 package org.velichko.finalproject.command.newuser;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.Part;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.command.Command;
@@ -17,10 +14,9 @@ import org.velichko.finalproject.logic.entity.type.UserStatus;
 import org.velichko.finalproject.logic.exception.ServiceException;
 import org.velichko.finalproject.logic.service.UserService;
 import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
+import org.velichko.finalproject.logic.utill.RegistrationConfirmatory;
 import org.velichko.finalproject.validator.RegistrationDataValidator;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,14 +58,16 @@ public class RegistrationCommand implements Command {
             if (!registrationDataCheckResult.isEmpty()) {
                 request.setAttribute("correctRegistrationData", registrationData);
                 request.setAttribute("errorRegistrationData", registrationDataCheckResult);
-                router.setPagePath(PageName.REGISTRATION);
+                router.setPagePath(PageName.REGISTRATION_PAGE);
             } else {
-                User user = new User(firstName, lastName, login, email, UserRole.STUDENT, UserStatus.ACTIVE);
+                User user = new User(firstName, lastName, login, email, UserRole.STUDENT, UserStatus.WAIT_CONFIRMATION);
                 System.out.println(user);
                 try {
-                    service.createNewUser(user, password);
-                    request.setAttribute(USER_PARAM, user);
-                    request.setAttribute(ParamName.REGISTRATION_IS_DONE, i18n.getMassage(REGISTRATION_SUCCESSFUL_KEY, locale));
+                    String registrationKey = RegistrationConfirmatory.setRegistrationToken(email, login);
+                    if (service.createNewUser(user, password, registrationKey)) {
+                        request.setAttribute(USER_PARAM, user);
+                        request.setAttribute(ParamName.REGISTRATION_IS_DONE, i18n.getMassage(REGISTRATION_SUCCESSFUL_KEY, locale));
+                    }
                 } catch (ServiceException e) {
                     e.printStackTrace(); //todo
                     request.setAttribute(ParamName.REGISTRATION_FAILED, i18n.getMassage(REGISTRATION_FAILED_KEY, locale) + e.getLocalizedMessage());

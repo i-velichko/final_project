@@ -16,7 +16,7 @@ public interface UserService {
     boolean updateUser (UserDaoImpl userDao) throws ServiceException; //todo  реализовать или убрать
     boolean changeUserImage (String login, InputStream image) throws ServiceException;
     boolean delete (UserDaoImpl userDao) throws ServiceException; //todo  реализовать или убрать
-    boolean createNewUser (User user, String password) throws ServiceException;
+    boolean createNewUser (User user, String password, String registrationKey) throws ServiceException;
     boolean changeUserGit (String login, String gitLink) throws ServiceException;
     boolean isLoginUnique(String login) throws ServiceException;
     boolean isEmailUnique(String email) throws ServiceException;
@@ -26,4 +26,6 @@ public interface UserService {
 
     boolean userRoleController(long id, UserRole role) throws ServiceException;
     boolean userStatusController(long id, UserStatus status) throws ServiceException;
+
+    Optional<User> getUserByRegistrationKey(String confirmationKey) throws ServiceException;
 }

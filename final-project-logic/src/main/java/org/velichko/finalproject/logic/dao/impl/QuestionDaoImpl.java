@@ -3,6 +3,7 @@ package org.velichko.finalproject.logic.dao.impl;
 import org.velichko.finalproject.logic.dao.AbstractDao;
 import org.velichko.finalproject.logic.dao.QuestionDao;
 import org.velichko.finalproject.logic.entity.Question;
+import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.exception.DaoException;
 
 import java.sql.Statement;
@@ -53,5 +54,10 @@ public class QuestionDaoImpl extends AbstractDao<Question> implements QuestionDa
     @Override
     public void close(Statement statement) throws DaoException {
         super.close(statement);
+    }
+
+    @Override
+    public Optional<User> findUserByRegistrationKey(String registrationKey) throws DaoException {
+        return Optional.empty();
     }
 }

@@ -8,6 +8,7 @@ import org.velichko.finalproject.command.common.ChangeLocaleCommand;
 import org.velichko.finalproject.command.common.LoginCommand;
 import org.velichko.finalproject.command.common.LogoutCommand;
 import org.velichko.finalproject.command.newuser.RegistrationCommand;
+import org.velichko.finalproject.command.newuser.RegistrationConfirmationCommand;
 import org.velichko.finalproject.command.student.StartVerificationCommand;
 import org.velichko.finalproject.command.student.WelcomeStudentCommand;
 import org.velichko.finalproject.command.trainer.ShowStudentInfoCommand;
@@ -18,6 +19,7 @@ public enum CommandName {
     SHOW_ALL_USERS(new ShowAllUsersCommand()),
     SHOW_ALL_VERIFICATIONS(new ShowAllVerifications()),
     REGISTRATION(new RegistrationCommand()),
+    REGISTRATION_CONFIRMATION_COMMAND(new RegistrationConfirmationCommand()),
     LOGIN(new LoginCommand()),
     CHANGE_LOCALE(new ChangeLocaleCommand()),
     LOGOUT(new LogoutCommand()),

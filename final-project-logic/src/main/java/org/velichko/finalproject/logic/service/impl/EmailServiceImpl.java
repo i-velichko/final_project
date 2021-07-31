@@ -16,17 +16,20 @@ import java.util.Properties;
 public class EmailServiceImpl implements EmailService {
     private static final Logger logger = LogManager.getLogger();
     private final URL EMAIL_PROPERTIES_PATH = getClass().getClassLoader().getResource("email.properties");
+    private static final String USER_KEY = "mail.smtp.user";
+    private static final String PASSWORD_KEY = "mail.smtp.password";
+    public static final String EMAIL_CONFIRMATION = "Email Confirmation";
+    public static final String CONTENT_TYPE = "text/html";
 
     @Override
-    public boolean sendEmail(String emailTo, String address) throws ServiceException {
+    public boolean sendEmail(String emailTo, String key) throws ServiceException {
         Properties properties = null;
-        final String userKey = "mail.smtp.user";
-        final String passwordKey = "mail.smtp.password";
+        final String content = "Click to confirm email: <a href=http://localhost:8080/final_project_web_war_exploded/controller?command=registration_confirmation_command&confirm=" + key + ">link</a>";
         if (EMAIL_PROPERTIES_PATH != null) {
             properties = PropertyLoader.loadPropertiesData(EMAIL_PROPERTIES_PATH);
         }
-        final String user = properties != null ? properties.getProperty(userKey) : null;
-        final String password = properties != null ? properties.getProperty(passwordKey) : null;
+        final String user = properties != null ? properties.getProperty(USER_KEY) : null;
+        final String password = properties != null ? properties.getProperty(PASSWORD_KEY) : null;
 
         final Session session = Session.getDefaultInstance(properties, new Authenticator() {
             @Override
@@ -34,17 +37,16 @@ public class EmailServiceImpl implements EmailService {
                 return new PasswordAuthentication(user, password);
             }
         });
-
         try {
+            boolean isSent = false;
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(user));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
-            final String subject = "Email Confirmation";
-            message.setSubject(subject);
-            final String content = "Project to verification here <a href='" + address + "'>link</a>";
-            final String contentType = "text/html";
-            message.setContent(content, contentType);
-            Transport.send(message);
+            if (user != null) {
+                message.setFrom(new InternetAddress(user));
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
+                message.setSubject(EMAIL_CONFIRMATION);
+                message.setContent(content, CONTENT_TYPE);
+                Transport.send(message);
+            }
             return true;
         } catch (MessagingException e) {
             logger.log(Level.ERROR, "Error with sending message: ", e);

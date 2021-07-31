@@ -3,6 +3,7 @@ package org.velichko.finalproject.logic.dao.impl;
 import org.velichko.finalproject.logic.dao.AbstractDao;
 import org.velichko.finalproject.logic.dao.VerificationDao;
 import org.velichko.finalproject.logic.dao.creator.VerificationCreator;
+import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.entity.Verification;
 import org.velichko.finalproject.logic.exception.DaoException;
 import org.velichko.finalproject.logic.utill.PasswordHashGenerator;
@@ -123,5 +124,10 @@ public class VerificationDaoImpl extends AbstractDao<Verification> implements Ve
     @Override
     public void close(Statement statement) throws DaoException {
         super.close(statement);
+    }
+
+    @Override
+    public Optional<User> findUserByRegistrationKey(String registrationKey) throws DaoException {
+        return Optional.empty();
     }
 }

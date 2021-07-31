@@ -10,10 +10,10 @@ import org.velichko.finalproject.logic.exception.DaoException;
 import org.velichko.finalproject.logic.utill.PasswordHashGenerator;
 
 import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +29,12 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
             "JOIN user_statuses as us ON u.status_id = us.id" +
             " WHERE u.id = ?";
+
+    private static final String FIND_USER_BY_REGISTRATION_KEY = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git, u.image, " +
+            " r.value as role, us.value as status FROM users as u LEFT JOIN roles as r ON u.role_id = r.id " +
+            "LEFT JOIN user_statuses as us ON u.status_id = us.id " +
+            "WHERE registration_key = ?";
+
     private static final String FIND_USER_BY_LOGIN_AND_PASSWORD = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git, u.image" +
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
             "LEFT JOIN user_statuses as us ON u.status_id = us.id" +//TODO: remove left
@@ -42,8 +48,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             "JOIN user_statuses as us ON u.status_id = us.id" +
             " WHERE u.email = ?";
     private static final String ADD_NEW_USER = "INSERT INTO users" +
-            " (first_name, last_name, login, email, role_id, status_id, password)" +
-            " VALUES (?, ?, ?, ?, ?, ?, ?)";
+            " (first_name, last_name, login, email, role_id, status_id, password, registration_key)" +
+            " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String CHANGE_USER_PASSWORD = "UPDATE users SET password = ? WHERE login = ?"; //todo делать одну константу файнд BY и несколько маленьких
     private static final String CHANGE_USER_GIT = "UPDATE users SET git = ? WHERE login = ?";
     private static final String CHANGE_USER_IMAGE = "UPDATE users SET image = ? WHERE login = ?";
@@ -59,7 +65,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 statement.setString(1, login);
                 statement.setString(2, PasswordHashGenerator.encodePassword(password));
                 ResultSet resultSet = statement.executeQuery();
-                if (resultSet.next()) {
+                while (resultSet.next()) {
                     user = userCreator.createUser(resultSet);
                 }
             } catch (SQLException e) {
@@ -81,7 +87,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 statement = connection.prepareStatement(FIND_USER_BY_LOGIN);
                 statement.setString(1, login);
                 ResultSet resultSet = statement.executeQuery();
-                if (resultSet.next()) {
+                while (resultSet.next()) {
                     user = userCreator.createUser(resultSet);
                 }
             } catch (SQLException e) {
@@ -103,7 +109,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 statement = connection.prepareStatement(FIND_USER_BY_EMAIL);
                 statement.setString(1, email);
                 ResultSet resultSet = statement.executeQuery();
-                if (resultSet.next()) {
+                while (resultSet.next()) {
                     user = userCreator.createUser(resultSet);
                 }
             } catch (SQLException e) {
@@ -144,7 +150,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             statement = connection.prepareStatement(FIND_USER_BY_ID);
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 user = userCreator.createUser(resultSet);
             }
         } catch (SQLException e) {
@@ -157,27 +163,31 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public boolean delete(long id) {
-        return false;
+    public Optional<User> findUserByRegistrationKey(String registrationKey) throws DaoException {
+        PreparedStatement statement = null;
+        User user = null;
+        try {
+            statement = connection.prepareStatement(FIND_USER_BY_REGISTRATION_KEY);
+            statement.setString(1, registrationKey);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                user = userCreator.createUser(resultSet);
+            }
+        } catch (SQLException ex) {
+            throw new DaoException("Error. Impossible get data from data base.", ex);
+        } finally {
+            close(statement);
+        }
+        return Optional.ofNullable(user);
     }
 
     @Override
-    public boolean delete(User entity) {
-        return false;
-    }
-
-    @Override
-    public boolean create(User user) throws DaoException {
-        throw new UnsupportedOperationException("This method unsupported");
-    }
-
-    @Override
-    public boolean createNewUser(User user, String password) throws DaoException {
+    public boolean createNewUser(User user, String password, String registrationKey) throws DaoException {
 
         PreparedStatement statement = null;
         if (user != null && password != null) {
             try {
-                statement = connection.prepareStatement(ADD_NEW_USER);
+                statement = connection.prepareStatement(ADD_NEW_USER, Statement.RETURN_GENERATED_KEYS);
                 statement.setString(1, user.getFirstName());
                 statement.setString(2, user.getLastName());
                 statement.setString(3, user.getLogin());
@@ -185,7 +195,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 statement.setInt(5, user.getRole().getId());
                 statement.setInt(6, user.getStatus().getId());
                 statement.setString(7, PasswordHashGenerator.encodePassword(password));
-                statement.setBlob(7, user.getImage());
+                statement.setString(8, registrationKey);
                 statement.executeUpdate();
                 return true;
             } catch (SQLException e) {
@@ -277,5 +287,20 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         } finally {
             close(statement);
         }
+    }
+
+    @Override
+    public boolean delete(long id) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(User entity) {
+        return false;
+    }
+
+    @Override
+    public boolean create(User user) throws DaoException {
+        throw new UnsupportedOperationException("This method unsupported");
     }
 }
