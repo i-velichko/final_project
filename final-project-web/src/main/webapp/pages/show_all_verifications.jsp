@@ -33,6 +33,7 @@
             </th>
             <th>Examiner Verification Date</th>
             <th>Final status</th>
+            <th>Show verification info</th>
         </tr>
         <c:forEach items="${verifications}" var="verification">
             <tr>
@@ -48,6 +49,7 @@
                 <td><p class="myTooltip">${verification.trainerCharacteristic}</p></td>
                 <td>${verification.examinerVerificationDate}</td>
                 <td>${verification.finalStatus}</td>
+                <td><a href="${abs_path}/controller?command=show_verification_info&verificationId=${verification.id}">show info</a></td>
             </tr>
         </c:forEach>
     </table>

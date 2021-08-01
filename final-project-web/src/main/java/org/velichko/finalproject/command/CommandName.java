@@ -7,6 +7,7 @@ import org.velichko.finalproject.command.admin.ShowAllVerifications;
 import org.velichko.finalproject.command.common.ChangeLocaleCommand;
 import org.velichko.finalproject.command.common.LoginCommand;
 import org.velichko.finalproject.command.common.LogoutCommand;
+import org.velichko.finalproject.command.common.ShowVerificationInfoCommand;
 import org.velichko.finalproject.command.newuser.RegistrationCommand;
 import org.velichko.finalproject.command.newuser.RegistrationConfirmationCommand;
 import org.velichko.finalproject.command.student.StartVerificationCommand;
@@ -25,10 +26,15 @@ public enum CommandName {
     LOGOUT(new LogoutCommand()),
     SHOW_TRAINER_INFO(new ShowTrainerInfoCommand()),
     SHOW_STUDENT_INFO(new ShowStudentInfoCommand()),
+    SHOW_VERIFICATION_INFO(new ShowVerificationInfoCommand()),
     START_VERIFICATION (new StartVerificationCommand()),
     CHANGE_USER_STATUS (new ChangeUserStatusCommand()),
     CHANGE_USER_ROLE (new ChangeUserRoleCommand()),
     REDIRECT_STUDENT (new WelcomeStudentCommand());
+//    REDIRECT_TRAINER (new WelcomeStudentCommand());
+//    REDIRECT_ADMIN (new WelcomeStudentCommand());
+//    REDIRECT_EXAMINER (new WelcomeStudentCommand());
+//    REDIRECT_VERIFICATION (new WelcomeStudentCommand());
 
 
     private Command command;

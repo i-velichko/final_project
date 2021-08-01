@@ -29,8 +29,10 @@ public class VerificationDaoImpl extends AbstractDao<Verification> implements Ve
             "LEFT JOIN users as st ON v.student_id = st.id " +
             "LEFT JOIN users as tr ON v.trainer_id = tr.id " +
             "LEFT JOIN users as ex ON v.examiner_id = ex.id";
+    private static final String FIND_VERIFICATION_BY_ID = FIND_ALL_VERIFICATIONS + " WHERE v.id = ?";
     private static final String ADD_NEW_VERIFICATION = "INSERT INTO project_verification (title, student_id, trainer_id," +
             " verification_status_id, application_date) VALUES (?, ?, ?, ?, ?)";
+
 
     private VerificationCreator verificationCreator = new VerificationCreator();
 
@@ -97,8 +99,23 @@ public class VerificationDaoImpl extends AbstractDao<Verification> implements Ve
     }
 
     @Override
-    public Optional<Verification> findEntityById(long id) {
-        return null;
+    public Optional<Verification> findEntityById(long id) throws DaoException {
+        Verification verification = null;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(FIND_VERIFICATION_BY_ID);
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                verification = verificationCreator.createVerification(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error with find Verification by id .", e);
+        } finally {
+            close(statement);
+        }
+
+        return Optional.ofNullable(verification);
     }
 
     @Override

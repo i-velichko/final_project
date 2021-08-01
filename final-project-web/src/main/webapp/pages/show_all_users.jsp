@@ -65,9 +65,7 @@
                     </div>
                 </td>
                 <td>${user.gitLink}</td>
-                    <%--                <td><a href="${abs_path}/userById?userId=${user.id}">Show info</a></td>--%>
                 <td><a href="${abs_path}/controller?command=show_student_info&userId=${user.id}">show info</a></td>
-                    <%--                <td><a href="${abs_path}/controller?command=show_student_info&userId=${user.id}">${user.id}</a></td>--%>
             </tr>
         </c:forEach>
     </table>

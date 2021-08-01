@@ -6,12 +6,14 @@ import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.logic.dao.EntityTransaction;
 import org.velichko.finalproject.logic.dao.impl.UserDaoImpl;
 import org.velichko.finalproject.logic.dao.impl.VerificationDaoImpl;
+import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.entity.Verification;
 import org.velichko.finalproject.logic.exception.DaoException;
 import org.velichko.finalproject.logic.exception.ServiceException;
 import org.velichko.finalproject.logic.service.VerificationService;
 
 import java.util.List;
+import java.util.Optional;
 
 public class VerificationServiceImpl implements VerificationService {
     private static final Logger logger = LogManager.getLogger();
@@ -49,5 +51,26 @@ public class VerificationServiceImpl implements VerificationService {
             transaction.endSingleQuery();
         }
         return result;
+    }
+
+    @Override
+    public Optional<Verification> findVerificationById(long id) throws ServiceException {
+        VerificationDaoImpl verificationDao = new VerificationDaoImpl();
+        Optional<Verification> optionalVerification;
+        Verification verification = null;
+        EntityTransaction transaction = new EntityTransaction();
+        transaction.beginSingleQuery(verificationDao);
+        try {
+            optionalVerification = verificationDao.findEntityById(id);
+            if (optionalVerification.isPresent()) {
+                verification = optionalVerification.get();
+            }
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with find verification by id", e);
+            throw new ServiceException("Error with find verification by ID " + id, e);
+        } finally {
+            transaction.endSingleQuery();
+        }
+        return Optional.ofNullable(verification);
     }
 }

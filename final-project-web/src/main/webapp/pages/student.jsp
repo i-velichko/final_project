@@ -58,11 +58,12 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-4 pb-2">
-                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="trainerId">
                                         <option selected>Choose your trainer here</option>
                                         <c:forEach items="${trainers}" var="trainer">
-                                            <option value="trainer">${trainer.firstName} ${trainer.lastName}</option>
+                                            <option value="${trainer.id}">${trainer.firstName} ${trainer.lastName}</option>
                                         </c:forEach>
+                                        <input type="hidden" id="trainerInfo" name="trainerInfo"/>
                                     </select>
                                     <label class="form-label select-label"> Your trainer</label>
                                 </div>

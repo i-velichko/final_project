@@ -39,7 +39,7 @@ public class ShowStudentInfoCommand implements Command {
             if (currentUser.isPresent()) {
                 user = currentUser.get();
 
-                byte[] byteImage = user.getImage().getBinaryStream().readAllBytes(); //todo check null
+                byte[] byteImage = user.getImage().getBinaryStream().readAllBytes();
                 if (byteImage != null) {
                     byte[] encodeBase64 = Base64.getEncoder().encode(byteImage);
                     String base64DataString = new String(encodeBase64, StandardCharsets.UTF_8);

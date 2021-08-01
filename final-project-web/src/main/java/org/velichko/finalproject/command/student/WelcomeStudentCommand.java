@@ -28,7 +28,7 @@ public class WelcomeStudentCommand implements Command {
         Router router = new Router();
         User currentUser = (User) request.getSession().getAttribute(USER_PARAM);
         request.setAttribute(USER_PARAM, currentUser);
-        List<User> users = null;
+        List<User> users;
         try {
             users = service.readAll();
             List<User> trainers = users.stream()

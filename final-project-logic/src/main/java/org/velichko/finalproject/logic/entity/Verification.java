@@ -22,8 +22,12 @@ public class Verification extends Entity {
     public Verification() {
     }
 
-    public Verification(String projectName, User student, User trainer, VerificationStatus draft, LocalDateTime now) {
-        super();
+    public Verification(String title, User student, User trainer, VerificationStatus verificationStatus, LocalDateTime applicationDate) {
+        this.title = title;
+        this.student = student;
+        this.trainer = trainer;
+        this.verificationStatus = verificationStatus;
+        this.applicationDate = applicationDate;
     }
 
     public long getId() {

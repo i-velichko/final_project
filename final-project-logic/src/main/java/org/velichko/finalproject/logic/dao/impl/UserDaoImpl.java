@@ -29,7 +29,6 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
             "JOIN user_statuses as us ON u.status_id = us.id" +
             " WHERE u.id = ?";
-
     private static final String FIND_USER_BY_REGISTRATION_KEY = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git, u.image, " +
             " r.value as role, us.value as status FROM users as u LEFT JOIN roles as r ON u.role_id = r.id " +
             "LEFT JOIN user_statuses as us ON u.status_id = us.id " +

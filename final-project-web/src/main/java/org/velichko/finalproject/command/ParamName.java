@@ -33,4 +33,5 @@ public class ParamName {
     public static final String TRAINER_LIST_PARAM = "trainers";
     public static final String CONFIRM_KEY = "confirm";
 
+    public static final String VERIFICATION_PARAM = "verification";
 }

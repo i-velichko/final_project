@@ -37,7 +37,7 @@ public class StartVerificationCommand implements Command {
 
         String gitLink = request.getParameter(GIT_LINK);
         String title = request.getParameter(PROJECT_TITLE_PARAM);
-        User trainer = (User) request.getSession().getAttribute(TRAINER_PARAM);
+        String trainerId = request.getParameter("trainerId");
         User student = (User) request.getSession().getAttribute(USER_PARAM);
         String login = null;
         if (student != null) {
@@ -65,32 +65,24 @@ public class StartVerificationCommand implements Command {
         }
 
         if (title != null) {
-            Verification verification1 = new Verification();
-            verification1.setTitle(title);
-            verification1.setStudent(student);
-            User user = null;
+            User trainer = null;
+            Optional<User> optionalTrainer = Optional.empty();
             try {
-                Optional<User> userById = userService.findUserById(66L);
-                if (userById.isPresent()) {
-                    user = userById.get();
-                }
+                optionalTrainer = userService.findUserById(Long.parseLong(trainerId));
             } catch (ServiceException e) {
-                e.printStackTrace();
+                router.setPagePath(ERROR_PAGE);
             }
-            verification1.setTrainer(user);
-            verification1.setVerificationStatus(VerificationStatus.DRAFT);
-            verification1.setApplicationDate(LocalDateTime.now());
-//            Verification verification = new Verification(title, student, new User(), VerificationStatus.DRAFT, LocalDateTime.now());
+            if (optionalTrainer.isPresent()) {
+                trainer = optionalTrainer.get();
+            }
+            Verification verification = new Verification(title, student, trainer, VerificationStatus.DRAFT, LocalDateTime.now());
             //todo подтверждение тренера о начале защиты
             try {
-                verificationService.createNewVerification(verification1, title);
+                verificationService.createNewVerification(verification, title);
             } catch (ServiceException e) {
                 router.setPagePath(ERROR_PAGE);
             }
         }
-//        request.setAttribute(GIT_LINK, gitLink);
-//        request.setAttribute(PROJECT_NAME_PARAM, title);
-
         router.setPagePath(STUDENT_INFO);
 //        router.setPagePath(PageName.VERIFICATION_INFO);
         return router;
