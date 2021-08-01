@@ -61,6 +61,7 @@
                              Examiner verification date - ${verification.examinerVerificationDate}</p>
                         </li>
 
+
                         <li>
                             <p class="text-uppercase mb-2" data-mdb-toggle="animation"
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-down"
@@ -68,6 +69,11 @@
                             <p class="text-muted mb-4" data-mdb-toggle="animation"
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-up"
                                data-mdb-animation-duration="1000">${verification.trainerScore}</p>
+                            <c:if test="${sessionScope.user.role == 'TRAINER'}">
+                                <p class="text-muted mb-4" data-mdb-toggle="animation"
+                                   data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-up"
+                                   data-mdb-animation-duration="1000">bla bla bla</p>
+                            </c:if>
                         </li>
 
                         <li>

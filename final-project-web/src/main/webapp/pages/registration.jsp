@@ -27,7 +27,7 @@
                                         <div class="form-outline flex-fill mb-0">
                                             <input type="text" id="form3Example1c" name="firstName"
                                                    value="${correctRegistrationData.firstName}" class="form-control"/>
-                                            <span style="color: red">${errorRegistrationData.get(firstNameError)}</span>
+                                            <span style="color: red">${errorRegistrationData.firstNameError}</span>
                                             <label class="form-label" for="form3Example1c"><fmt:message
                                                     key="page.registration.first_name"/></label>
                                         </div>
@@ -38,7 +38,7 @@
                                         <div class="form-outline flex-fill mb-0">
                                             <input type="text" id="form3Example2c" name="lastName"
                                                    value="${correctRegistrationData.lastName}" class="form-control"/>
-                                            <span style="color: red">${errorRegistrationData.get(firstNameError)}</span>
+                                            <span style="color: red">${errorRegistrationData.firstNameError}</span>
                                             <label class="form-label" for="form3Example1c"><fmt:message
                                                     key="page.registration.last_name"/></label>
                                         </div>

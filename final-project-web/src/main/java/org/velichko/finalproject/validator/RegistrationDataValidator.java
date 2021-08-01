@@ -47,7 +47,6 @@ public class RegistrationDataValidator {
                 }
             } catch (ServiceException e) {
                 e.printStackTrace();//todo
-
             }
         } else {
             result.put(EMAIL_ERROR_PARAM, i18n.getMassage(EMAIL_NOT_CORRECT_KEY, locale));

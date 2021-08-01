@@ -73,4 +73,24 @@ public class VerificationServiceImpl implements VerificationService {
         }
         return Optional.ofNullable(verification);
     }
+
+    @Override
+    public boolean isGitLinkUnique(String gitLink) throws ServiceException {
+        UserDaoImpl userDao = new UserDaoImpl();
+        EntityTransaction transaction = new EntityTransaction();
+        transaction.beginSingleQuery(userDao);
+        boolean isPresent = false;
+        try {
+            Optional<User> optionalVerification = userDao.findUserByGitLink(gitLink);
+            if (optionalVerification.isEmpty()) {
+                isPresent = true;
+            }
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with find user project by git link", e);
+            throw new ServiceException("Error with find user project by git link", e);
+        } finally {
+            transaction.endSingleQuery();
+        }
+        return isPresent;
+    }
 }

@@ -53,11 +53,11 @@ public class RegistrationCommand implements Command {
         registrationData.put(CONFIRM_PASSWORD_PARAM, confirmPassword);
 
         String method = request.getMethod();
-        if (method.equals("POST")) {
+        if (method.equals(POST_PARAM)) {
             Map<String, String> registrationDataCheckResult = RegistrationDataValidator.checkValues(registrationData, locale);
             if (!registrationDataCheckResult.isEmpty()) {
-                request.setAttribute("correctRegistrationData", registrationData);
-                request.setAttribute("errorRegistrationData", registrationDataCheckResult);
+                request.setAttribute(CORRECT_REGISTRATION_DATA_PARAM, registrationData);
+                request.setAttribute(ERROR_REGISTRATION_DATA_PARAM, registrationDataCheckResult);
                 router.setPagePath(PageName.REGISTRATION_PAGE);
             } else {
                 User user = new User(firstName, lastName, login, email, UserRole.STUDENT, UserStatus.WAIT_CONFIRMATION);

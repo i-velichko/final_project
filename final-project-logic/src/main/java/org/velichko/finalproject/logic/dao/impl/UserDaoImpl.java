@@ -20,39 +20,24 @@ import java.util.Optional;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private UserCreator userCreator = new UserCreator();
-    private static final String CHANGE_USER_ROLE = "UPDATE users SET role_id = ? WHERE id = ?";
-    private static final String CHANGE_USER_STATUS = "UPDATE users SET status_id = ? WHERE id = ?";
-    private static final String FIND_ALL_USERS = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git, u.image" +
-            ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
-            "JOIN user_statuses as us ON u.status_id = us.id";
-    private static final String FIND_USER_BY_ID = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git, u.image" +
-            ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
-            "JOIN user_statuses as us ON u.status_id = us.id" +
-            " WHERE u.id = ?";
-    private static final String FIND_USER_BY_REGISTRATION_KEY = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git, u.image, " +
-            " r.value as role, us.value as status FROM users as u LEFT JOIN roles as r ON u.role_id = r.id " +
-            "LEFT JOIN user_statuses as us ON u.status_id = us.id " +
-            "WHERE registration_key = ?";
 
-    private static final String FIND_USER_BY_LOGIN_AND_PASSWORD = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git, u.image" +
-            ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
-            "LEFT JOIN user_statuses as us ON u.status_id = us.id" +//TODO: remove left
-            " WHERE u.login = ? and u.password = ?";
-    private static final String FIND_USER_BY_LOGIN = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git, u.image" +
-            ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
-            "LEFT JOIN user_statuses as us ON u.status_id = us.id" +//TODO: remove left
-            " WHERE u.login = ?";
-    private static final String FIND_USER_BY_EMAIL = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git, u.image" +
-            ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
-            "JOIN user_statuses as us ON u.status_id = us.id" +
-            " WHERE u.email = ?";
     private static final String ADD_NEW_USER = "INSERT INTO users" +
             " (first_name, last_name, login, email, role_id, status_id, password, registration_key)" +
             " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    private static final String CHANGE_USER_PASSWORD = "UPDATE users SET password = ? WHERE login = ?"; //todo делать одну константу файнд BY и несколько маленьких
+    private static final String FIND_ALL_USERS = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git, u.image" +
+            ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
+            "JOIN user_statuses as us ON u.status_id = us.id";
+    private static final String FIND_USER_BY_ID = FIND_ALL_USERS + " WHERE u.id = ?";
+    private static final String FIND_USER_BY_REGISTRATION_KEY = FIND_ALL_USERS + " WHERE registration_key = ?";
+    private static final String FIND_USER_BY_LOGIN_AND_PASSWORD = FIND_ALL_USERS + " WHERE u.login = ? and u.password = ?";
+    private static final String FIND_USER_BY_LOGIN = FIND_ALL_USERS + " WHERE u.login = ?";
+    private static final String FIND_USER_BY_EMAIL = FIND_ALL_USERS + " WHERE u.email = ?";
+    private static final String FIND_USER_BY_GIT_LINK = FIND_ALL_USERS + " WHERE u.git = ?";
+    private static final String CHANGE_USER_PASSWORD = "UPDATE users SET password = ? WHERE login = ?";
     private static final String CHANGE_USER_GIT = "UPDATE users SET git = ? WHERE login = ?";
     private static final String CHANGE_USER_IMAGE = "UPDATE users SET image = ? WHERE login = ?";
-
+    private static final String CHANGE_USER_ROLE = "UPDATE users SET role_id = ? WHERE id = ?";
+    private static final String CHANGE_USER_STATUS = "UPDATE users SET status_id = ? WHERE id = ?";
 
     @Override
     public Optional<User> findUserByLoginAndPassword(String login, String password) throws DaoException {
@@ -113,6 +98,28 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 }
             } catch (SQLException e) {
                 throw new DaoException("Error with find User by email .", e);
+            } finally {
+                close(statement);
+            }
+        }
+
+        return Optional.ofNullable(user);
+    }
+
+    @Override
+    public Optional<User> findUserByGitLink(String gitLink) throws DaoException {
+        User user = null;
+        if (gitLink != null) {
+            PreparedStatement statement = null;
+            try {
+                statement = connection.prepareStatement(FIND_USER_BY_GIT_LINK);
+                statement.setString(1, gitLink);
+                ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    user = userCreator.createUser(resultSet);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("Error with find User by git link .", e);
             } finally {
                 close(statement);
             }

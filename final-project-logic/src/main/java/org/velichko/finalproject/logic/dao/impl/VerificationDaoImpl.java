@@ -80,6 +80,11 @@ public class VerificationDaoImpl extends AbstractDao<Verification> implements Ve
     }
 
     @Override
+    public Optional<Verification> findVerificationByGitLink(String gitLink) {
+        return Optional.empty();
+    }
+
+    @Override
     public List<Verification> findAll() throws DaoException {
         List<Verification> verifications = new ArrayList<>();
         PreparedStatement statement = null;

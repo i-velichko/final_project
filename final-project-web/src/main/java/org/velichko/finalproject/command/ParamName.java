@@ -34,4 +34,16 @@ public class ParamName {
     public static final String CONFIRM_KEY = "confirm";
 
     public static final String VERIFICATION_PARAM = "verification";
+    public static final String TRAINER_ID_PARAM = "trainerId";
+    public static final String POST_PARAM = "POST";
+    public static final String GIT_LINK_ERROR_PARAM = "gitLinkError";
+    public static final String PROJECT_TITLE_ERROR_PARAM = "projectTitleError";
+    public static final String CORRECT_REGISTRATION_DATA_PARAM = "correctRegistrationData";
+    public static final String ERROR_REGISTRATION_DATA_PARAM = "errorRegistrationData";
+    public static final String CORRECT_VERIFICATION_DATA_PARAM = "correctVerificationData";
+    public static final String ERROR_VERIFICATION_DATA_PARAM = "errorVerificationData";
+    public static final String IMAGE_PARAM = "image";
+
+    public static final String UPLOAD_IMAGE_ERROR_PARAM = "imageError";
+
 }

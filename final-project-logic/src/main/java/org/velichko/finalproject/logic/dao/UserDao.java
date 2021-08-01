@@ -21,4 +21,6 @@ public interface UserDao {
     boolean changeUserRoleById(long id, UserRole role) throws DaoException;
 
     boolean changeUserStatusById(long id, UserStatus status) throws DaoException;
+
+    Optional<User> findUserByGitLink(String gitLink) throws DaoException;
 }

@@ -5,6 +5,7 @@ import org.velichko.finalproject.logic.entity.Verification;
 import org.velichko.finalproject.logic.exception.DaoException;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface VerificationDao {
 
@@ -17,4 +18,6 @@ public interface VerificationDao {
     Verification findVerificationByStudentId(long id);
 
     List<Verification> findVerificationsByTrainerScore(long id);
+
+    Optional<Verification> findVerificationByGitLink(String gitLink);
 }

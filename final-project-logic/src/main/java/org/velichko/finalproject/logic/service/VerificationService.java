@@ -13,4 +13,6 @@ public interface VerificationService {
     boolean createNewVerification(Verification verification, String title) throws ServiceException;
 
     Optional<Verification> findVerificationById(long id) throws ServiceException;
+
+    boolean isGitLinkUnique(String gitLink) throws ServiceException;
 }

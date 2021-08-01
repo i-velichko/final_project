@@ -8,6 +8,7 @@ import org.apache.logging.log4j.core.util.IOUtils;
 import org.velichko.finalproject.command.Command;
 import org.velichko.finalproject.controller.Router;
 import org.velichko.finalproject.logic.entity.User;
+import org.velichko.finalproject.logic.entity.type.UserRole;
 import org.velichko.finalproject.logic.exception.ServiceException;
 import org.velichko.finalproject.logic.service.UserService;
 import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
@@ -38,6 +39,7 @@ public class ShowStudentInfoCommand implements Command {
             currentUser = service.findUserById(Long.parseLong(userId));
             if (currentUser.isPresent()) {
                 user = currentUser.get();
+                UserRole.TRAINER.name();
 
                 byte[] byteImage = user.getImage().getBinaryStream().readAllBytes();
                 if (byteImage != null) {

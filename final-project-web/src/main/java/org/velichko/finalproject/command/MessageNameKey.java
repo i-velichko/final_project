@@ -9,6 +9,10 @@ public class MessageNameKey {
     public static final String PASSWORD_NOT_CORRECT_KEY = "error.password.not.correct";
     public static final String REGISTRATION_SUCCESSFUL_KEY = "registration.complete";
     public static final String REGISTRATION_FAILED_KEY = "registration.failed";
+    public static final String GIT_LINK_NOT_UNIQUE_KEY = "error.gitLink.not.unique";
+    public static final String GIT_LINK_NOT_CORRECT_KEY = "error.gitLink.not.correct";
+    public static final String PROJECT_TITLE_NOT_CORRECT_KEY = "error.projectTitle.not.correct";
+    public static final String IMAGE_NOT_UPLOAD_KEY = "error.upload.image.failed";
 
     public MessageNameKey() {
     }

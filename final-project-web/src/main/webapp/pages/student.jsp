@@ -40,7 +40,11 @@
                                 <div class="col-md-6 mb-4">
 
                                     <div class="form-outline">
-                                        <input type="text" id="gitLink" name="gitLink" class="form-control form-control-lg" required/>
+                                        <input type="text" id="gitLink" name="gitLink"
+                                               value="${correctVerificationData.gitLink}"
+                                               pattern="(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})"
+                                               class="form-control form-control-lg" required/>
+                                        <span style="color: red">${errorVerificationData.gitLinkError}</span>
                                         <label class="form-label" for="gitLink"><fmt:message
                                                 key="page.student.git"/></label>
                                     </div>
@@ -49,16 +53,24 @@
                                 <div class="col-md-6 mb-4">
 
                                     <div class="form-outline">
-                                        <input type="text" id="projectName" name="title" class="form-control form-control-lg" required/>
+                                        <input type="text" id="projectName" name="title" pattern="^.{1,100}$"
+                                               value="${correctVerificationData.projectTitle}"
+                                               class="form-control form-control-lg" required/>
+                                        <span style="color: red">${errorVerificationData.projectTitleError}</span>
                                         <label class="form-label" for="projectName"><fmt:message
                                                 key="page.student.project_name"/></label>
+                                        <div class="small text-muted mt-2"><fmt:message
+                                                key="page.student.title.requirements"/>
+                                        </div>
+
                                     </div>
 
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-4 pb-2">
-                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="trainerId">
+                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                                            name="trainerId">
                                         <option selected>Choose your trainer here</option>
                                         <c:forEach items="${trainers}" var="trainer">
                                             <option value="${trainer.id}">${trainer.firstName} ${trainer.lastName}</option>
@@ -72,6 +84,7 @@
                             <div class="row">
                                 <div class="col-md-9 pe-5">
                                     <input class="form-control form-control-lg" id="imageId" name="image" type="file"/>
+                                    <span style="color: red">${imageError}</span>
                                     <div class="small text-muted mt-2">Upload your photo.
                                         Max file size 1 MB
                                     </div>
