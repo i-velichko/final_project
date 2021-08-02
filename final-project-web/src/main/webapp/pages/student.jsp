@@ -44,9 +44,9 @@
                                                value="${correctVerificationData.gitLink}"
                                                pattern="(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})"
                                                class="form-control form-control-lg" required/>
-                                        <span style="color: red">${errorVerificationData.gitLinkError}</span>
-                                        <label class="form-label" for="gitLink"><fmt:message
-                                                key="page.student.git"/></label>
+                                        <div style="color: red">${errorVerificationData.gitLinkError}</div>
+                                        <div class="form-label" for="gitLink"><fmt:message
+                                                key="page.student.git"/></div>
                                     </div>
 
                                 </div>
@@ -59,8 +59,8 @@
                                         <span style="color: red">${errorVerificationData.projectTitleError}</span>
                                         <label class="form-label" for="projectName"><fmt:message
                                                 key="page.student.project_name"/></label>
-                                        <div class="small text-muted mt-2"><fmt:message
-                                                key="page.student.title.requirements"/>
+                                        <div><h9 style="color: forestgreen"><fmt:message
+                                                key="page.student.title.requirements"/></h9>
                                         </div>
 
                                     </div>
@@ -72,9 +72,6 @@
                                     <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
                                             name="trainerId">
                                         <option selected>Choose your trainer here</option>
-                                        <c:forEach items="${trainers}" var="trainer">
-                                            <option value="${trainer.id}">${trainer.firstName} ${trainer.lastName}</option>
-                                        </c:forEach>
                                         <input type="hidden" id="trainerInfo" name="trainerInfo"/>
                                     </select>
                                     <label class="form-label select-label"> Your trainer</label>
@@ -84,7 +81,7 @@
                             <div class="row">
                                 <div class="col-md-9 pe-5">
                                     <input class="form-control form-control-lg" id="imageId" name="image" type="file"/>
-                                    <span style="color: red">${imageError}</span>
+                                    <div style="color: red">${imageError}</div>
                                     <div class="small text-muted mt-2">Upload your photo.
                                         Max file size 1 MB
                                     </div>

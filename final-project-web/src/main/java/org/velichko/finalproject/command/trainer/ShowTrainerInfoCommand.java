@@ -12,6 +12,9 @@ import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
 
 import java.util.Optional;
 
+import static org.velichko.finalproject.command.PageName.*;
+import static org.velichko.finalproject.command.ParamName.*;
+
 public class ShowTrainerInfoCommand implements Command {
     private final UserService service = new UserServiceImpl();
 
@@ -21,15 +24,15 @@ public class ShowTrainerInfoCommand implements Command {
         User user = null;
         Optional<User> currentUser;
 
-        String login = request.getParameter(ParamName.LOGIN_PARAM);
-        String password = request.getParameter(ParamName.PASSWORD_PARAM);
+        String login = request.getParameter(LOGIN_PARAM);
+        String password = request.getParameter(PASSWORD_PARAM);
 
         try {
             currentUser = service.findUserByLoginAndPassword(login, password);
             if (currentUser.isPresent()) {
                 user = currentUser.get();
-                request.setAttribute("user", user);
-                router.setPagePath(PageName.TRAINER_INFO);
+                request.setAttribute(USER_PARAM, user);
+                router.setPagePath(TRAINER_INFO);
             }
 
         } catch (ServiceException e) {

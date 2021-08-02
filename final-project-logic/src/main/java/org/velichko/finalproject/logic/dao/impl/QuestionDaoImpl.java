@@ -51,13 +51,5 @@ public class QuestionDaoImpl extends AbstractDao<Question> implements QuestionDa
         return false;
     }
 
-    @Override
-    public void close(Statement statement) throws DaoException {
-        super.close(statement);
-    }
 
-    @Override
-    public Optional<User> findUserByRegistrationKey(String registrationKey) throws DaoException {
-        return Optional.empty();
-    }
 }

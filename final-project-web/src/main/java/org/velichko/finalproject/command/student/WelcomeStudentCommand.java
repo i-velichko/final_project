@@ -13,6 +13,8 @@ import org.velichko.finalproject.logic.exception.ServiceException;
 import org.velichko.finalproject.logic.service.UserService;
 import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -23,6 +25,7 @@ import static org.velichko.finalproject.command.ParamName.*;
 public class WelcomeStudentCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final UserService service = new UserServiceImpl();
+
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
@@ -35,6 +38,7 @@ public class WelcomeStudentCommand implements Command {
                     .filter(user -> user.getRole().equals(UserRole.TRAINER))
                     .collect(Collectors.toList());
             request.setAttribute(TRAINER_LIST_PARAM, trainers);
+
             router.setPagePath(WELCOME_STUDENT);
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Error while client registration data", e); //todo

@@ -12,6 +12,7 @@ import org.velichko.finalproject.command.newuser.RegistrationCommand;
 import org.velichko.finalproject.command.newuser.RegistrationConfirmationCommand;
 import org.velichko.finalproject.command.student.StartVerificationCommand;
 import org.velichko.finalproject.command.student.WelcomeStudentCommand;
+import org.velichko.finalproject.command.trainer.ChangeTrainerScoreCommand;
 import org.velichko.finalproject.command.trainer.ShowStudentInfoCommand;
 import org.velichko.finalproject.command.trainer.ShowTrainerInfoCommand;
 
@@ -27,15 +28,11 @@ public enum CommandName {
     SHOW_TRAINER_INFO(new ShowTrainerInfoCommand()),
     SHOW_STUDENT_INFO(new ShowStudentInfoCommand()),
     SHOW_VERIFICATION_INFO(new ShowVerificationInfoCommand()),
-    START_VERIFICATION (new StartVerificationCommand()),
-    CHANGE_USER_STATUS (new ChangeUserStatusCommand()),
-    CHANGE_USER_ROLE (new ChangeUserRoleCommand()),
-    REDIRECT_STUDENT (new WelcomeStudentCommand());
-//    REDIRECT_TRAINER (new WelcomeStudentCommand());
-//    REDIRECT_ADMIN (new WelcomeStudentCommand());
-//    REDIRECT_EXAMINER (new WelcomeStudentCommand());
-//    REDIRECT_VERIFICATION (new WelcomeStudentCommand());
-
+    START_VERIFICATION(new StartVerificationCommand()),
+    CHANGE_USER_STATUS(new ChangeUserStatusCommand()),
+    CHANGE_USER_ROLE(new ChangeUserRoleCommand()),
+    CHANGE_TRAINER_SCORE(new ChangeTrainerScoreCommand()),
+    REDIRECT_STUDENT(new WelcomeStudentCommand());
 
     private Command command;
 
@@ -46,4 +43,4 @@ public enum CommandName {
     public Command getCommand() {
         return command;
     }
-    }
+}

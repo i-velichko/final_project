@@ -5,6 +5,8 @@ import org.velichko.finalproject.logic.dao.VerificationDao;
 import org.velichko.finalproject.logic.dao.creator.VerificationCreator;
 import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.entity.Verification;
+import org.velichko.finalproject.logic.entity.type.FinalStatus;
+import org.velichko.finalproject.logic.entity.type.VerificationStatus;
 import org.velichko.finalproject.logic.exception.DaoException;
 import org.velichko.finalproject.logic.utill.PasswordHashGenerator;
 
@@ -32,6 +34,10 @@ public class VerificationDaoImpl extends AbstractDao<Verification> implements Ve
     private static final String FIND_VERIFICATION_BY_ID = FIND_ALL_VERIFICATIONS + " WHERE v.id = ?";
     private static final String ADD_NEW_VERIFICATION = "INSERT INTO project_verification (title, student_id, trainer_id," +
             " verification_status_id, application_date) VALUES (?, ?, ?, ?, ?)";
+    private static final String CHANGE_TRAINER_SCORE = "UPDATE project_verification SET trainer_score = ? WHERE id = ?";
+    private static final String CHANGE_TRAINER_CHARACTERISTIC = "UPDATE project_verification SET trainer_characteristic = ? WHERE id = ?";
+    private static final String CHANGE_VERIFICATION_STATUS = "UPDATE project_verification SET verification_status_id = ? WHERE id = ?";
+    private static final String CHANGE_FINAL_VERIFICATION_STATUS = "UPDATE project_verification SET final_status_id = ? WHERE id = ?";
 
 
     private VerificationCreator verificationCreator = new VerificationCreator();
@@ -57,31 +63,6 @@ public class VerificationDaoImpl extends AbstractDao<Verification> implements Ve
             }
         }
         return false;
-    }
-
-    @Override
-    public Verification findVerificationByVerificationStatusId(long id) {
-        return null;
-    }
-
-    @Override
-    public Verification findVerificationByFinalStatusId(long id) {
-        return null;
-    }
-
-    @Override
-    public Verification findVerificationByStudentId(long id) {
-        return null;
-    }
-
-    @Override
-    public List<Verification> findVerificationsByTrainerScore(long id) {
-        return null;
-    }
-
-    @Override
-    public Optional<Verification> findVerificationByGitLink(String gitLink) {
-        return Optional.empty();
     }
 
     @Override
@@ -124,6 +105,74 @@ public class VerificationDaoImpl extends AbstractDao<Verification> implements Ve
     }
 
     @Override
+    public boolean changeTrainerScoreById(long id, double score) throws DaoException {
+        PreparedStatement statement = null;
+        int rowsUpdate;
+        try {
+            statement = connection.prepareStatement(CHANGE_TRAINER_SCORE);
+            statement.setDouble(1, score);
+            statement.setLong(2, id);
+            rowsUpdate = statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Error with changing trainer score. ", e);
+        } finally {
+            close(statement);
+        }
+        return rowsUpdate == 1;
+    }
+
+    @Override
+    public boolean changeTrainerCharacteristicById(long id, String characteristic) throws DaoException {
+        PreparedStatement statement = null;
+        int rowsUpdate;
+        try {
+            statement = connection.prepareStatement(CHANGE_TRAINER_CHARACTERISTIC);
+            statement.setString(1, characteristic);
+            statement.setLong(2, id);
+            rowsUpdate = statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Error with changing trainer characteristic. ", e);
+        } finally {
+            close(statement);
+        }
+        return rowsUpdate == 1;
+    }
+
+    @Override
+    public boolean changeVerificationStatusById(long id, VerificationStatus finalStatus) throws DaoException {
+        PreparedStatement statement = null;
+        int rowsUpdate;
+        try {
+            statement = connection.prepareStatement(CHANGE_VERIFICATION_STATUS);
+            statement.setInt(1, finalStatus.getId());
+            statement.setLong(2, id);
+            rowsUpdate = statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Error with changing verification status. ", e);
+        } finally {
+            close(statement);
+        }
+        return rowsUpdate == 1;
+    }
+
+    @Override
+    public boolean changeFinalVerificationStatusById(long id, FinalStatus finalStatus) throws DaoException {
+        PreparedStatement statement = null;
+        int rowsUpdate;
+        try {
+            statement = connection.prepareStatement(CHANGE_FINAL_VERIFICATION_STATUS);
+            statement.setInt(1, finalStatus.getId());
+            statement.setLong(2, id);
+            rowsUpdate = statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Error with changing final verification status. ", e);
+        } finally {
+            close(statement);
+        }
+        return rowsUpdate == 1;
+    }
+
+    @Override
     public boolean delete(long id) {
         return false;
     }
@@ -144,12 +193,28 @@ public class VerificationDaoImpl extends AbstractDao<Verification> implements Ve
     }
 
     @Override
-    public void close(Statement statement) throws DaoException {
-        super.close(statement);
+    public Verification findVerificationByVerificationStatusId(long id) {
+        return null;
     }
 
     @Override
-    public Optional<User> findUserByRegistrationKey(String registrationKey) throws DaoException {
+    public Verification findVerificationByFinalStatusId(long id) {
+        return null;
+    }
+
+    @Override
+    public Verification findVerificationByStudentId(long id) {
+        return null;
+    }
+
+    @Override
+    public List<Verification> findVerificationsByTrainerScore(long id) {
+        return null;
+    }
+
+    @Override
+    public Optional<Verification> findVerificationByGitLink(String gitLink) {
         return Optional.empty();
     }
+
 }

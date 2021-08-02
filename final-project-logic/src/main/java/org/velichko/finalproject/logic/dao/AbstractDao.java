@@ -44,5 +44,4 @@ public abstract class AbstractDao<T extends Entity> {
         this.connection = connection;
     }
 
-    public abstract Optional<User> findUserByRegistrationKey(String registrationKey) throws DaoException;
 }

@@ -13,7 +13,6 @@ import org.velichko.finalproject.logic.exception.ServiceException;
 import org.velichko.finalproject.logic.service.UserService;
 
 import java.io.InputStream;
-import java.sql.Blob;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,7 +60,7 @@ public class UserServiceImpl implements UserService {
         EntityTransaction transaction = new EntityTransaction();
         transaction.beginSingleQuery(userDao);
         try {
-            userDao.updateUserGitLink(login, gitLink);
+            userDao.changeUserGitLinkByLogin(login, gitLink);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error with changed user gitLink", e);
             throw new ServiceException("Impossible change gitLink for user", e);

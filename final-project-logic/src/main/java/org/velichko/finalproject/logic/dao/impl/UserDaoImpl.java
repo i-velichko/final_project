@@ -214,12 +214,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public boolean update(User entity) {
-        return false;
-    }
-
-    @Override
-    public void updateUserGitLink(String login, String gitLink) throws DaoException {
+    public void changeUserGitLinkByLogin(String login, String gitLink) throws DaoException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(CHANGE_USER_GIT);
@@ -302,6 +297,11 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public boolean delete(User entity) {
+        return false;
+    }
+
+    @Override
+    public boolean update(User entity) {
         return false;
     }
 

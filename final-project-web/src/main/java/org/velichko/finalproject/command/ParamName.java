@@ -46,4 +46,8 @@ public class ParamName {
 
     public static final String UPLOAD_IMAGE_ERROR_PARAM = "imageError";
 
+    public static final String VERIFICATION_ID_PARAM = "verificationId";
+
+    public static final String SCORES_PARAM = "scores";
+    public static final String NEW_SCORE_PARAM = "newScore";
 }

@@ -93,4 +93,25 @@ public class VerificationServiceImpl implements VerificationService {
         }
         return isPresent;
     }
+
+    @Override
+    public boolean changeTrainerScore(Long verificationId, Double newScore) throws ServiceException {
+        boolean isChanged = false;
+        VerificationDaoImpl verificationDao = new VerificationDaoImpl();
+        EntityTransaction transaction = new EntityTransaction();
+        transaction.beginSingleQuery(verificationDao);
+        try {
+            Optional<Verification> optionalVerification = verificationDao.findEntityById(verificationId);
+            if (optionalVerification.isPresent()) {
+                verificationDao.changeTrainerScoreById(verificationId, newScore);
+                isChanged = true;
+            }
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with changed trainer score", e);
+            throw new ServiceException("Impossible changed trainer score", e);
+        } finally {
+            transaction.endSingleQuery();
+        }
+        return isChanged;
+    }
 }

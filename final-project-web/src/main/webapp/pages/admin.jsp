@@ -15,8 +15,6 @@
 <a href="${abs_path}/controller?command=show_all_users">
     <button type="button"><fmt:message key="page.admin.show_users"/></button>
 </a>
-</body>
-<body>
 <a href="${abs_path}/controller?command=show_all_verifications">
     <button type="button"><fmt:message key="page.admin.show_verifications"/></button>
 </a>

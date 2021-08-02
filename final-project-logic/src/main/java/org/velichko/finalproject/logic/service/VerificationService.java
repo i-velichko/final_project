@@ -15,4 +15,6 @@ public interface VerificationService {
     Optional<Verification> findVerificationById(long id) throws ServiceException;
 
     boolean isGitLinkUnique(String gitLink) throws ServiceException;
+
+    boolean changeTrainerScore(Long verificationId, Double newScore) throws ServiceException;
 }

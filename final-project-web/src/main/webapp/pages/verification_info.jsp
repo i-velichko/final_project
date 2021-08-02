@@ -58,7 +58,7 @@
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-up"
                                data-mdb-animation-duration="1000">Application date - ${verification.applicationDate},
                                 Trainer verification date - ${verification.trainerVerificationDate},
-                             Examiner verification date - ${verification.examinerVerificationDate}</p>
+                                Examiner verification date - ${verification.examinerVerificationDate}</p>
                         </li>
 
 
@@ -70,9 +70,20 @@
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-up"
                                data-mdb-animation-duration="1000">${verification.trainerScore}</p>
                             <c:if test="${sessionScope.user.role == 'TRAINER'}">
-                                <p class="text-muted mb-4" data-mdb-toggle="animation"
-                                   data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-up"
-                                   data-mdb-animation-duration="1000">bla bla bla</p>
+                                <p class="text-uppercase mb-2">
+                                <form class="form-inline"
+                                      action="${abs_path}/controller?command=change_trainer_score&verificationId=${verification.id}"
+                                      method="post">
+                                    <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Change Score</label>
+                                    <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="newScore">
+                                        <option selected>scores</option>
+                                        <c:forEach items="${scores}" var="score">
+                                            <option value=${score}>${score}</option>
+                                        </c:forEach>
+                                    </select>
+                                <button type="submit" class="btn btn-secondary">Submit</button>
+                                </form>
+                                </p>
                             </c:if>
                         </li>
 

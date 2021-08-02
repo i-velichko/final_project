@@ -20,5 +20,9 @@ ${user.lastName}
     <button type="button"><fmt:message key="page.admin.show_users"/></button>
 </a>
 </br>
+<a href="${abs_path}/controller?command=show_all_verifications">
+    <button type="button"><fmt:message key="page.admin.show_verifications"/></button>
+</a>
+</br>
 <p><a href="trainer_info.jsp"><fmt:message key="page.trainer.personal_information"/></a></p>
 </html>
