@@ -72,6 +72,9 @@
                                     <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
                                             name="trainerId">
                                         <option selected>Choose your trainer here</option>
+                                        <c:forEach items="${trainers}" var="trainer">
+                                            <option value="${trainer.id}">${trainer.firstName} ${trainer.lastName}</option>
+                                        </c:forEach>
                                         <input type="hidden" id="trainerInfo" name="trainerInfo"/>
                                     </select>
                                     <label class="form-label select-label"> Your trainer</label>

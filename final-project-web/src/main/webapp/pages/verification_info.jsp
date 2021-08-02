@@ -13,6 +13,7 @@
 <body>
 <%@include file="/fragment/header.jsp" %>
 
+
 <div class="container my-5">
 
     <section>
@@ -34,11 +35,11 @@
                         data-mdb-animation-duration="1000">Project verification detail</h5>
                     <p class="text-muted mb-2" data-mdb-toggle="animation"
                        data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-up"
-                       data-mdb-animation-duration="1000">
-                        Student - ${verification.student.firstName} ${verification.student.lastName},
-                        Trainer - ${verification.trainer.firstName} ${verification.trainer.lastName},
-                        Examiner - ${verification.examiner.firstName} ${verification.examiner.lastName},
-                        Verification status - ${verification.verificationStatus} </p>
+                       data-mdb-animation-duration="800">
+                    <div>Student - ${verification.student.firstName} ${verification.student.lastName}</div>
+                    <div>Trainer - ${verification.trainer.firstName} ${verification.trainer.lastName}</div>
+                    <div>Examiner - ${verification.examiner.firstName} ${verification.examiner.lastName}</div>
+                    Verification status - ${verification.verificationStatus} </p>
                     <ul class="list-unstyled font-small mt-5 mb-0">
 
                         <li>
@@ -56,9 +57,30 @@
                                data-mdb-animation-duration="1000"><strong>Dates</strong></p>
                             <p class="text-muted mb-4" data-mdb-toggle="animation"
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-up"
-                               data-mdb-animation-duration="1000">Application date - ${verification.applicationDate},
-                                Trainer verification date - ${verification.trainerVerificationDate},
-                                Examiner verification date - ${verification.examinerVerificationDate}</p>
+                               data-mdb-animation-duration="1000">
+                            <div>Application date - ${verification.applicationDate}</div>
+                            <div> Trainer verification date - ${verification.trainerVerificationDate}</div>
+                            <c:if test="${sessionScope.user.role == 'TRAINER'}">
+                                 <span>
+                                <form action="${abs_path}/controller?command=change_trainer_verification_date&verificationId=${verification.id}" method="post">
+                                    <label for="dateTime"><h6 style="color: #157347">Change date</h6></label>
+                                    <input id="dateTime" type="datetime-local" name="dateTime">
+                                    <input type="submit" value="submit">
+                                </form>
+                            </span>
+                            </c:if>
+                            <div> Examiner verification date - ${verification.examinerVerificationDate}</div>
+                            <c:if test="${sessionScope.user.role == 'EXAMINER'}">
+                                 <span>
+                                <form action="${abs_path}/controller?command=change_examiner_verification_date&verificationId=${verification.id}" method="post">
+                                    <label for="dateTime2"><h6 style="color: #157347">Change date</h6></label>
+                                    <input id="dateTime2" type="datetime-local" name="dateTime">
+                                    <input type="submit" value="submit">
+                                </form>
+                            </span>
+                            </c:if>
+
+                            </p>
                         </li>
 
 
@@ -74,14 +96,15 @@
                                 <form class="form-inline"
                                       action="${abs_path}/controller?command=change_trainer_score&verificationId=${verification.id}"
                                       method="post">
-                                    <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Change Score</label>
-                                    <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="newScore">
+                                    <label class="my-1 mr-2" for="inlineFormCustomSelectPref"><h6 style="color: #157347">Change score</h6></label>
+                                    <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref"
+                                            name="newScore">
                                         <option selected>scores</option>
                                         <c:forEach items="${scores}" var="score">
                                             <option value=${score}>${score}</option>
                                         </c:forEach>
                                     </select>
-                                <button type="submit" class="btn btn-secondary">Submit</button>
+                                <input type="submit" value="submit">
                                 </form>
                                 </p>
                             </c:if>

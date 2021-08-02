@@ -50,4 +50,5 @@ public class ParamName {
 
     public static final String SCORES_PARAM = "scores";
     public static final String NEW_SCORE_PARAM = "newScore";
+    public static final String DATE_TIME_PARAM = "dateTime";
 }

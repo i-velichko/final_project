@@ -7,6 +7,7 @@ import org.velichko.finalproject.logic.entity.type.UserRole;
 import org.velichko.finalproject.logic.entity.type.VerificationStatus;
 import org.velichko.finalproject.logic.exception.DaoException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,11 @@ public interface VerificationDao {
     boolean changeVerificationStatusById(long id, VerificationStatus finalStatus) throws DaoException;
 
     boolean changeFinalVerificationStatusById(long id, FinalStatus status) throws DaoException;
+
+    boolean changeTrainerVerificationDateById(long id, String dateTime) throws DaoException;
+
+    boolean changeExaminerVerificationDateById(long id, String dateTime) throws DaoException;
+
 
     Verification findVerificationByVerificationStatusId(long id);
 

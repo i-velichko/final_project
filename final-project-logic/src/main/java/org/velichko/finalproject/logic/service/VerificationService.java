@@ -17,4 +17,10 @@ public interface VerificationService {
     boolean isGitLinkUnique(String gitLink) throws ServiceException;
 
     boolean changeTrainerScore(Long verificationId, Double newScore) throws ServiceException;
+
+    boolean changeTrainerVerificationDateById(Long verificationId, String dateTime) throws ServiceException;
+
+    boolean changeExaminerVerificationDateById(Long verificationId, String dateTime) throws ServiceException;
+
+
 }

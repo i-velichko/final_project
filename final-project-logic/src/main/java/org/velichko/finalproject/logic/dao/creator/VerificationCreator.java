@@ -17,9 +17,6 @@ import java.time.format.DateTimeFormatter;
 
 public class VerificationCreator {
     private static Logger logger = LogManager.getLogger();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    LocalDate ld = LocalDate.parse("2017-03-13", formatter);
-    LocalDateTime ldt = LocalDateTime.of(ld, LocalDateTime.now().toLocalTime());
 
     public Verification createVerification(ResultSet resultSet) throws DaoException {
         Verification verification = new Verification();
@@ -33,11 +30,11 @@ public class VerificationCreator {
             verification.setExaminer(new User(
                     resultSet.getString("examiner_name"), resultSet.getString("examiner_surname")));
             verification.setVerificationStatus(VerificationStatus.valueOf(resultSet.getString("verification_status")));
-            verification.setApplicationDate(parseToLocalDateTime(resultSet.getString("application_date"), resultSet));
+            verification.setApplicationDate(parseToLocalDateTime(resultSet.getString("application_date")));
             verification.setTrainerScore(resultSet.getDouble("trainer_score"));
             verification.setTrainerCharacteristic((resultSet.getString("characteristic")));
-            verification.setTrainerVerificationDate(parseToLocalDateTime(resultSet.getString("trainer_verification_date"), resultSet));
-            verification.setExaminerVerificationDate(parseToLocalDateTime(resultSet.getString("examiner_verification_date"), resultSet));
+            verification.setTrainerVerificationDate(parseToLocalDateTime(resultSet.getString("trainer_verification_date")));
+            verification.setExaminerVerificationDate(parseToLocalDateTime(resultSet.getString("examiner_verification_date")));
             verification.setFinalStatus(FinalStatus.valueOf(resultSet.getString("final_status")));
 
         } catch (SQLException e) {
@@ -47,9 +44,12 @@ public class VerificationCreator {
         return verification;
     }
 
-    private LocalDateTime parseToLocalDateTime(String dateTime, ResultSet resultSet) throws SQLException {
-        String application_date = resultSet.getString("application_date");
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return LocalDateTime.parse(application_date, dtf);
+    private LocalDateTime parseToLocalDateTime(String dateTime) throws SQLException {
+        LocalDateTime parse = null;
+        if (dateTime != null) {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            parse = LocalDateTime.parse(dateTime, dtf);
+        }
+        return parse;
     }
 }

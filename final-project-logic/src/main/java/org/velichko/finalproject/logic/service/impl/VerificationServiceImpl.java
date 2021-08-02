@@ -114,4 +114,46 @@ public class VerificationServiceImpl implements VerificationService {
         }
         return isChanged;
     }
+
+    @Override
+    public boolean changeTrainerVerificationDateById(Long verificationId, String dateTime) throws ServiceException {
+        boolean isChanged = false;
+        VerificationDaoImpl verificationDao = new VerificationDaoImpl();
+        EntityTransaction transaction = new EntityTransaction();
+        transaction.beginSingleQuery(verificationDao);
+        try {
+            Optional<Verification> optionalVerification = verificationDao.findEntityById(verificationId);
+            if (optionalVerification.isPresent()) {
+                verificationDao.changeTrainerVerificationDateById(verificationId, dateTime);
+                isChanged = true;
+            }
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with changed trainer verification date", e);
+            throw new ServiceException("Impossible changed trainer verification date", e);
+        } finally {
+            transaction.endSingleQuery();
+        }
+        return isChanged;
+    }
+
+    @Override
+    public boolean changeExaminerVerificationDateById(Long verificationId, String dateTime) throws ServiceException {
+        boolean isChanged = false;
+        VerificationDaoImpl verificationDao = new VerificationDaoImpl();
+        EntityTransaction transaction = new EntityTransaction();
+        transaction.beginSingleQuery(verificationDao);
+        try {
+            Optional<Verification> optionalVerification = verificationDao.findEntityById(verificationId);
+            if (optionalVerification.isPresent()) {
+                verificationDao.changeExaminerVerificationDateById(verificationId, dateTime);
+                isChanged = true;
+            }
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with changed examiner verification date", e);
+            throw new ServiceException("Impossible changed examiner verification date", e);
+        } finally {
+            transaction.endSingleQuery();
+        }
+        return isChanged;
+    }
 }

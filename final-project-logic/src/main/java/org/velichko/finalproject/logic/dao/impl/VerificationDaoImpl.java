@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,8 @@ public class VerificationDaoImpl extends AbstractDao<Verification> implements Ve
     private static final String CHANGE_TRAINER_CHARACTERISTIC = "UPDATE project_verification SET trainer_characteristic = ? WHERE id = ?";
     private static final String CHANGE_VERIFICATION_STATUS = "UPDATE project_verification SET verification_status_id = ? WHERE id = ?";
     private static final String CHANGE_FINAL_VERIFICATION_STATUS = "UPDATE project_verification SET final_status_id = ? WHERE id = ?";
+    private static final String CHANGE_TRAINER_VERIFICATION_DATE = "UPDATE project_verification SET trainer_verification_date = ? WHERE id = ?";
+    private static final String CHANGE_EXAMINER_VERIFICATION_DATE = "UPDATE project_verification SET examiner_verification_date = ? WHERE id = ?";
 
 
     private VerificationCreator verificationCreator = new VerificationCreator();
@@ -166,6 +169,40 @@ public class VerificationDaoImpl extends AbstractDao<Verification> implements Ve
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException("Error with changing final verification status. ", e);
+        } finally {
+            close(statement);
+        }
+        return rowsUpdate == 1;
+    }
+
+    @Override
+    public boolean changeTrainerVerificationDateById(long id, String dateTime) throws DaoException {
+        PreparedStatement statement = null;
+        int rowsUpdate;
+        try {
+            statement = connection.prepareStatement(CHANGE_TRAINER_VERIFICATION_DATE);
+            statement.setString(1, dateTime);
+            statement.setLong(2, id);
+            rowsUpdate = statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Error with changing trainer verification date. ", e);
+        } finally {
+            close(statement);
+        }
+        return rowsUpdate == 1;
+    }
+
+    @Override
+    public boolean changeExaminerVerificationDateById(long id, String dateTime) throws DaoException {
+        PreparedStatement statement = null;
+        int rowsUpdate;
+        try {
+            statement = connection.prepareStatement(CHANGE_EXAMINER_VERIFICATION_DATE);
+            statement.setString(1, dateTime);
+            statement.setLong(2, id);
+            rowsUpdate = statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Error with changing examiner verification date. ", e);
         } finally {
             close(statement);
         }
