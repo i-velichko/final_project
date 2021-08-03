@@ -5,8 +5,6 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.command.Command;
-import org.velichko.finalproject.command.PageName;
-import org.velichko.finalproject.command.ParamName;
 import org.velichko.finalproject.controller.Router;
 import org.velichko.finalproject.logic.entity.Verification;
 import org.velichko.finalproject.logic.exception.ServiceException;
@@ -20,15 +18,14 @@ import java.util.Optional;
 import static org.velichko.finalproject.command.PageName.ERROR_PAGE;
 import static org.velichko.finalproject.command.PageName.VERIFICATION_INFO;
 import static org.velichko.finalproject.command.ParamName.*;
-import static org.velichko.finalproject.command.ParamName.VERIFICATION_PARAM;
 
 public class ShowVerificationInfoCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-    private final VerificationService verificationService = new VerificationServiceImpl();
-    Router router = new Router();
+    private final VerificationService verificationService = VerificationServiceImpl.getInstance();
 
     @Override
     public Router execute(HttpServletRequest request) {
+        Router router = new Router();
         String verificationId = request.getParameter(VERIFICATION_ID_PARAM);
         Verification verification = null;
         Optional<Verification> optionalVerification;

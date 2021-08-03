@@ -210,26 +210,6 @@ public class VerificationDaoImpl extends AbstractDao<Verification> implements Ve
     }
 
     @Override
-    public boolean delete(long id) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(Verification entity) {
-        return false;
-    }
-
-    @Override
-    public boolean create(Verification entity) {
-        return false;
-    }
-
-    @Override
-    public boolean update(Verification entity) {
-        return false;
-    }
-
-    @Override
     public Verification findVerificationByVerificationStatusId(long id) {
         return null;
     }
@@ -252,6 +232,26 @@ public class VerificationDaoImpl extends AbstractDao<Verification> implements Ve
     @Override
     public Optional<Verification> findVerificationByGitLink(String gitLink) {
         return Optional.empty();
+    }
+
+    @Override
+    public boolean delete(long id) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(Verification entity) {
+        return false;
+    }
+
+    @Override
+    public boolean create(Verification entity) {
+        return false;
+    }
+
+    @Override
+    public boolean update(Verification entity) {
+        return false;
     }
 
 }

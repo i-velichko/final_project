@@ -6,6 +6,7 @@ import org.velichko.finalproject.command.PageName;
 import org.velichko.finalproject.controller.Router;
 
 public class LogoutCommand implements Command {
+
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();

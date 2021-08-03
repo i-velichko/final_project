@@ -11,6 +11,7 @@ import org.velichko.finalproject.logic.entity.type.UserStatus;
 import org.velichko.finalproject.logic.exception.DaoException;
 import org.velichko.finalproject.logic.exception.ServiceException;
 import org.velichko.finalproject.logic.service.UserService;
+import org.velichko.finalproject.logic.service.VerificationService;
 
 import java.io.InputStream;
 import java.util.List;
@@ -18,6 +19,25 @@ import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger();
+
+
+    private UserServiceImpl() {
+    }
+
+    private static class UserServiceHolder {
+        public static final UserService HOLDER_INSTANCE = new UserServiceImpl();
+    }
+
+    public static UserService getInstance() {
+        return UserServiceHolder.HOLDER_INSTANCE;
+    }
+
+
+
+
+
+
+
 
     @Override
     public List<User> readAll() throws ServiceException {
@@ -153,7 +173,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean userRoleController(long id, UserRole role) throws ServiceException {
+    public boolean changeUserRole(long id, UserRole role) throws ServiceException {
         boolean isChanged = false;
         UserDaoImpl userDao = new UserDaoImpl();
         EntityTransaction transaction = new EntityTransaction();
@@ -174,7 +194,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean userStatusController(long id, UserStatus status) throws ServiceException {
+    public boolean changeUserStatus(long id, UserStatus status) throws ServiceException {
         boolean isChanged = false;
         UserDaoImpl userDao = new UserDaoImpl();
         EntityTransaction transaction = new EntityTransaction();

@@ -14,7 +14,7 @@
 <%@include file="/fragment/header.jsp" %>
 
 
-<div class="container my-5">
+<div class="container">
 
     <section>
 
@@ -62,7 +62,8 @@
                             <div> Trainer verification date - ${verification.trainerVerificationDate}</div>
                             <c:if test="${sessionScope.user.role == 'TRAINER'}">
                                  <span>
-                                <form action="${abs_path}/controller?command=change_trainer_verification_date&verificationId=${verification.id}" method="post">
+                                <form action="${abs_path}/controller?command=change_trainer_verification_date&verificationId=${verification.id}"
+                                      method="post">
                                     <label for="dateTime"><h6 style="color: #157347">Change date</h6></label>
                                     <input id="dateTime" type="datetime-local" name="dateTime">
                                     <input type="submit" value="submit">
@@ -72,7 +73,8 @@
                             <div> Examiner verification date - ${verification.examinerVerificationDate}</div>
                             <c:if test="${sessionScope.user.role == 'EXAMINER'}">
                                  <span>
-                                <form action="${abs_path}/controller?command=change_examiner_verification_date&verificationId=${verification.id}" method="post">
+                                <form action="${abs_path}/controller?command=change_examiner_verification_date&verificationId=${verification.id}"
+                                      method="post">
                                     <label for="dateTime2"><h6 style="color: #157347">Change date</h6></label>
                                     <input id="dateTime2" type="datetime-local" name="dateTime">
                                     <input type="submit" value="submit">
@@ -96,7 +98,8 @@
                                 <form class="form-inline"
                                       action="${abs_path}/controller?command=change_trainer_score&verificationId=${verification.id}"
                                       method="post">
-                                    <label class="my-1 mr-2" for="inlineFormCustomSelectPref"><h6 style="color: #157347">Change score</h6></label>
+                                    <label class="my-1 mr-2" for="inlineFormCustomSelectPref"><h6
+                                            style="color: #157347">Change score</h6></label>
                                     <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref"
                                             name="newScore">
                                         <option selected>scores</option>
@@ -104,7 +107,7 @@
                                             <option value=${score}>${score}</option>
                                         </c:forEach>
                                     </select>
-                                <input type="submit" value="submit">
+                                    <input type="submit" value="submit">
                                 </form>
                                 </p>
                             </c:if>
@@ -117,6 +120,20 @@
                             <p class="text-muted mb-4" data-mdb-toggle="animation"
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-up"
                                data-mdb-animation-duration="1000">${verification.trainerCharacteristic}</p>
+                            <c:if test="${sessionScope.user.role == 'TRAINER'}">
+                                <div class="mb-3">
+                                    <form action="${abs_path}/controller?command=change_trainer_characteristic&verificationId=${verification.id}"
+                                          method="post">
+                                        <label for="exampleFormControlTextarea1" class="form-label">
+                                            <h6 style="color: #157347">Write characteristic
+                                                for this student</h6>
+                                        </label>
+                                        <textarea class="form-control" name="characteristic"
+                                                  id="exampleFormControlTextarea1"
+                                                  rows="3"></textarea>
+                                        <input type="submit" value="submit"></form>
+                                </div>
+                            </c:if>
                         </li>
 
                         <li>
@@ -126,6 +143,25 @@
                             <p class="text-muted mb-4" data-mdb-toggle="animation"
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-up"
                                data-mdb-animation-duration="1000">${verification.finalStatus}</p>
+                            <c:if test="${sessionScope.user.role == 'EXAMINER'}">
+                                <p class="text-uppercase mb-2">
+                                <form class="form-inline"
+                                      action="${abs_path}/controller?command=change_final_status&verificationId=${verification.id}"
+                                      method="post">
+                                    <label class="my-1 mr-2" for="inlineFormCustomSelectPref"><h6
+                                            style="color: #157347">Change final status</h6></label>
+                                    <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref2"
+                                            name="newFinalStatus">
+                                        <option selected>scores</option>
+                                            <option value=EXCELLENT>EXCELLENT</option>
+                                            <option value=GOOD>GOOD</option>
+                                            <option value=MAYBE>MAYBE</option>
+                                            <option value=NO_HIRE>NO HIRE</option>
+                                    </select>
+                                    <input type="submit" value="submit">
+                                </form>
+                                </p>
+                            </c:if>
                         </li>
 
                     </ul>

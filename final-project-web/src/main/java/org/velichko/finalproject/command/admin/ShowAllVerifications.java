@@ -19,15 +19,14 @@ import static org.velichko.finalproject.command.ParamName.VERIFICATION_LIST_PARA
 
 public class ShowAllVerifications implements Command {
     private static final Logger logger = LogManager.getLogger();
-    private final VerificationService service = new VerificationServiceImpl();
-
+    private final VerificationService service = VerificationServiceImpl.getInstance();
 
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
         List<Verification> verifications = null;
         try {
-            verifications = service.readAll();
+            verifications = service.findAllVerifications();
             request.setAttribute(VERIFICATION_LIST_PARAM, verifications);
             router.setPagePath(SHOW_ALL_VERIFICATIONS);
         } catch (ServiceException e) {

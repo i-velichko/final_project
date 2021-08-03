@@ -28,15 +28,14 @@ import static org.velichko.finalproject.command.ParamName.*;
 
 public class RegistrationCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-    private final UserService service = new UserServiceImpl();
+    private final UserService userService = UserServiceImpl.getInstance();
     private final I18nManager i18n = I18nManager.getInstance();
-    Router router = new Router();
 
     @Override
     public Router execute(HttpServletRequest request) {
+        Router router = new Router();
 
         String locale = (String) request.getSession().getAttribute(LOCALE_PARAM);
-
         String firstName = request.getParameter(FIRST_NAME_PARAM);
         String lastName = request.getParameter(LAST_NAME_PARAM);
         String email = request.getParameter(EMAIL_PARAM);
@@ -64,7 +63,7 @@ public class RegistrationCommand implements Command {
                 System.out.println(user);
                 try {
                     String registrationKey = RegistrationConfirmatory.setRegistrationToken(email, login);
-                    if (service.createNewUser(user, password, registrationKey)) {
+                    if (userService.createNewUser(user, password, registrationKey)) {
                         request.setAttribute(USER_PARAM, user);
                         request.setAttribute(ParamName.REGISTRATION_IS_DONE, i18n.getMassage(REGISTRATION_SUCCESSFUL_KEY, locale));
                     }

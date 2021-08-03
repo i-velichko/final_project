@@ -1,17 +1,12 @@
 package org.velichko.finalproject.validator;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.Part;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.i18n.I18nManager;
-import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.exception.ServiceException;
 import org.velichko.finalproject.logic.service.VerificationService;
 import org.velichko.finalproject.logic.service.impl.VerificationServiceImpl;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +15,7 @@ import static org.velichko.finalproject.command.ParamName.*;
 
 public class VerificationDataValidator {
     private static final Logger logger = LogManager.getLogger();
-    private static final VerificationService verificationService = new VerificationServiceImpl();
+    private static final VerificationService verificationService = VerificationServiceImpl.getInstance();
     private static final I18nManager i18n = I18nManager.getInstance();
     private static final String URL_REGEXP = "(https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})";
     private static final String PROJECT_TITLE_REGEXP = "^.{1,100}$";

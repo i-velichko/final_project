@@ -24,8 +24,8 @@ public interface UserService {
     Optional<User> findUserByLoginAndPassword(String login, String password) throws ServiceException;
     Optional<User> findUserById(Long id) throws ServiceException;
 
-    boolean userRoleController(long id, UserRole role) throws ServiceException;
-    boolean userStatusController(long id, UserStatus status) throws ServiceException;
+    boolean changeUserRole(long id, UserRole role) throws ServiceException;
+    boolean changeUserStatus(long id, UserStatus status) throws ServiceException;
 
     Optional<User> getUserByRegistrationKey(String confirmationKey) throws ServiceException;
 }

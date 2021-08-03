@@ -4,8 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.util.IOUtils;
 import org.velichko.finalproject.command.Command;
+import org.velichko.finalproject.command.ParamName;
 import org.velichko.finalproject.controller.Router;
 import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.entity.type.UserRole;
@@ -14,7 +14,6 @@ import org.velichko.finalproject.logic.service.UserService;
 import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Base64;
@@ -22,21 +21,21 @@ import java.util.Optional;
 
 import static org.velichko.finalproject.command.PageName.ERROR_PAGE;
 import static org.velichko.finalproject.command.PageName.STUDENT_INFO;
+import static org.velichko.finalproject.command.ParamName.*;
 import static org.velichko.finalproject.command.ParamName.USER_PARAM;
 
 public class ShowStudentInfoCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-    private final UserService service = new UserServiceImpl();
-    Router router = new Router();
+    private final UserService userService = UserServiceImpl.getInstance();
 
     @Override
     public Router execute(HttpServletRequest request) {
-
-        String userId = request.getParameter("userId");
+        Router router = new Router();
+        String userId = request.getParameter(USER_ID_PARAM);
         User user;
         Optional<User> currentUser;
         try {
-            currentUser = service.findUserById(Long.parseLong(userId));
+            currentUser = userService.findUserById(Long.parseLong(userId));
             if (currentUser.isPresent()) {
                 user = currentUser.get();
                 UserRole.TRAINER.name();

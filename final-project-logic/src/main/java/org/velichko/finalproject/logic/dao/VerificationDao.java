@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public interface VerificationDao {
 
-    public boolean createNewVerification(Verification user, String projectName) throws DaoException;
+    boolean createNewVerification(Verification user, String projectName) throws DaoException;
 
     boolean changeTrainerScoreById(long id, double score) throws DaoException;
 

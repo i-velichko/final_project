@@ -8,7 +8,7 @@ import org.velichko.finalproject.logic.exception.DaoException;
 import java.util.Optional;
 
 public interface UserDao {
-    public boolean createNewUser(User user, String password, String registrationKey) throws DaoException;
+    boolean createNewUser(User user, String password, String registrationKey) throws DaoException;
 
     Optional<User> findUserByLoginAndPassword(String login, String password) throws DaoException;
 

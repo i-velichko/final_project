@@ -51,4 +51,9 @@ public class ParamName {
     public static final String SCORES_PARAM = "scores";
     public static final String NEW_SCORE_PARAM = "newScore";
     public static final String DATE_TIME_PARAM = "dateTime";
+    public static final String CHARACTERISTIC_PARAM = "characteristic";
+    public static final String USER_ID_PARAM = "userId";
+    public static final String NEW_STATUS_PARAM = "new_status";
+    public static final String NEW_FINAL_STATUS_PARAM = "newFinalStatus";
+    public static final String NEW_ROLE = "newRole";
 }

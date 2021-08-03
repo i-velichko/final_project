@@ -14,13 +14,13 @@ import static org.velichko.finalproject.command.ParamName.*;
 
 public class ChangeTrainerVerificationDateCommand implements Command {
     private final Logger logger = LogManager.getLogger();
-    Router router = new Router();
+    private final VerificationService verificationService = VerificationServiceImpl.getInstance();
 
     @Override
     public Router execute(HttpServletRequest request) {
+        Router router = new Router();
         Long verificationId = Long.parseLong(request.getParameter(VERIFICATION_ID_PARAM));
         String dateTime = request.getParameter(DATE_TIME_PARAM);
-        VerificationService verificationService = new VerificationServiceImpl();
         try {
             verificationService.changeTrainerVerificationDateById(verificationId, dateTime);
         } catch (ServiceException e) {

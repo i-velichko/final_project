@@ -12,24 +12,27 @@ import org.velichko.finalproject.logic.exception.ServiceException;
 import org.velichko.finalproject.logic.service.UserService;
 import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
 
+import static org.velichko.finalproject.command.ParamName.*;
+
 public class ChangeUserRoleCommand implements Command {
-    private static Logger logger = LogManager.getLogger();
-    private Router router = new Router();
+    private static final Logger logger = LogManager.getLogger();
+    private final UserService userService = UserServiceImpl.getInstance();
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String userId = request.getParameter("userId");
-        String newRole = request.getParameter("new_role");
+        Router router = new Router();
+        String userId = request.getParameter(USER_ID_PARAM);
+        String newRole = request.getParameter(NEW_ROLE);
         UserRole role = UserRole.valueOf(newRole);
-        UserService userService = new UserServiceImpl();
+
         try {
-            userService.userRoleController(Long.parseLong(userId), role);
+            userService.changeUserRole(Long.parseLong(userId), role);
         } catch (ServiceException e) {
             logger.log(Level.DEBUG, "Error. Impossible change role by this " + userId + " user");
 //                    todo error to admin page
         }
         router.setRouterType(Router.RouterType.REDIRECT);
-        router.setPagePath(request.getHeader(ParamName.REFERER));
+        router.setPagePath(request.getHeader(REFERER));
         return router;
     }
 }

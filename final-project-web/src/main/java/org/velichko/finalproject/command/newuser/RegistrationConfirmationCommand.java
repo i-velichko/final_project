@@ -15,16 +15,17 @@ import java.util.Optional;
 import static org.velichko.finalproject.command.PageName.*;
 
 public class RegistrationConfirmationCommand implements Command {
-    private Router router = new Router();
+    private final UserService userService = UserServiceImpl.getInstance();
+
     @Override
     public Router execute(HttpServletRequest request) {
+        Router router = new Router();
         String confirmationKey = request.getParameter(ParamName.CONFIRM_KEY);
-        UserService userService = new UserServiceImpl();
         try {
             Optional<User> userOptional = userService.getUserByRegistrationKey(confirmationKey);
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
-                userService.userStatusController(user.getId(), UserStatus.ACTIVE);
+                userService.changeUserStatus(user.getId(), UserStatus.ACTIVE);
                 router.setPagePath(LOGIN_PAGE);
             } else {
                 router.setPagePath(REGISTRATION_PAGE);

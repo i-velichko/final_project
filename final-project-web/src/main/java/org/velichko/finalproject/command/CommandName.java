@@ -9,19 +9,19 @@ import org.velichko.finalproject.command.common.LoginCommand;
 import org.velichko.finalproject.command.common.LogoutCommand;
 import org.velichko.finalproject.command.common.ShowVerificationInfoCommand;
 import org.velichko.finalproject.command.examiner.ChangeExaminerVerificationDateCommand;
+import org.velichko.finalproject.command.examiner.ChangeFinalStatusCommand;
+import org.velichko.finalproject.command.examiner.ShowAllApprovedProjectsCommand;
 import org.velichko.finalproject.command.newuser.RegistrationCommand;
 import org.velichko.finalproject.command.newuser.RegistrationConfirmationCommand;
 import org.velichko.finalproject.command.student.StartVerificationCommand;
 import org.velichko.finalproject.command.student.WelcomeStudentCommand;
-import org.velichko.finalproject.command.trainer.ChangeTrainerScoreCommand;
-import org.velichko.finalproject.command.trainer.ChangeTrainerVerificationDateCommand;
-import org.velichko.finalproject.command.trainer.ShowStudentInfoCommand;
-import org.velichko.finalproject.command.trainer.ShowTrainerInfoCommand;
+import org.velichko.finalproject.command.trainer.*;
 
 public enum CommandName {
 
     SHOW_ALL_USERS(new ShowAllUsersCommand()),
     SHOW_ALL_VERIFICATIONS(new ShowAllVerifications()),
+    SHOW_ALL_APPROVED_PROJECTS(new ShowAllApprovedProjectsCommand()),
     REGISTRATION(new RegistrationCommand()),
     REGISTRATION_CONFIRMATION_COMMAND(new RegistrationConfirmationCommand()),
     LOGIN(new LoginCommand()),
@@ -32,10 +32,12 @@ public enum CommandName {
     SHOW_VERIFICATION_INFO(new ShowVerificationInfoCommand()),
     START_VERIFICATION(new StartVerificationCommand()),
     CHANGE_USER_STATUS(new ChangeUserStatusCommand()),
+    CHANGE_FINAL_STATUS(new ChangeFinalStatusCommand()),
     CHANGE_USER_ROLE(new ChangeUserRoleCommand()),
     CHANGE_TRAINER_SCORE(new ChangeTrainerScoreCommand()),
     CHANGE_TRAINER_VERIFICATION_DATE(new ChangeTrainerVerificationDateCommand()),
     CHANGE_EXAMINER_VERIFICATION_DATE(new ChangeExaminerVerificationDateCommand()),
+    CHANGE_TRAINER_CHARACTERISTIC(new ChangeTrainerCharacteristicCommand()),
     REDIRECT_STUDENT(new WelcomeStudentCommand());
 
     private Command command;

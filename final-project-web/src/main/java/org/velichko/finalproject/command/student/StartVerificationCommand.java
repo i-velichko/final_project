@@ -31,14 +31,14 @@ import static org.velichko.finalproject.command.ParamName.*;
 
 public class StartVerificationCommand implements Command {
     private static final String SEND_EMAIL_ADDRESS = "http://localhost:8080/final_project_web_war_exploded/controller?command=start_verification";
-    private final UserService userService = new UserServiceImpl();
-    private final VerificationService verificationService = new VerificationServiceImpl();
+    private final UserService userService = UserServiceImpl.getInstance();
+    private final VerificationService verificationService = VerificationServiceImpl.getInstance();
     private final I18nManager i18n = I18nManager.getInstance();
-    EmailService emailService = new EmailServiceImpl();
-    Router router = new Router();
+    private final EmailService emailService = EmailServiceImpl.getInstance();
 
     @Override
     public Router execute(HttpServletRequest request) {
+        Router router = new Router();
         String locale = (String) request.getSession().getAttribute(LOCALE_PARAM);
 
         String gitLink = request.getParameter(GIT_LINK);
@@ -94,6 +94,7 @@ public class StartVerificationCommand implements Command {
                     userService.changeUserGit(login, gitLink);
                     if (trainerEmail != null) {
                         emailService.sendEmail(trainerEmail, SEND_EMAIL_ADDRESS);
+                        //todo status wait for trainer
                     }
                 } catch (ServiceException e) {
                     router.setPagePath(ERROR_PAGE);

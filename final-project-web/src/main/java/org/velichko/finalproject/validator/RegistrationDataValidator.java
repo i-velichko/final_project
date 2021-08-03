@@ -16,7 +16,7 @@ import static org.velichko.finalproject.validator.DataUserValidator.*;
 
 public class RegistrationDataValidator {
     private static final Logger logger = LogManager.getLogger();
-    private static final UserService service = new UserServiceImpl();
+    private static final UserService service = UserServiceImpl.getInstance();
     private static final I18nManager i18n = I18nManager.getInstance();
 
 

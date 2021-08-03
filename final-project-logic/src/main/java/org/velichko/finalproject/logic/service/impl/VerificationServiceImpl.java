@@ -8,8 +8,11 @@ import org.velichko.finalproject.logic.dao.impl.UserDaoImpl;
 import org.velichko.finalproject.logic.dao.impl.VerificationDaoImpl;
 import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.entity.Verification;
+import org.velichko.finalproject.logic.entity.type.FinalStatus;
+import org.velichko.finalproject.logic.entity.type.VerificationStatus;
 import org.velichko.finalproject.logic.exception.DaoException;
 import org.velichko.finalproject.logic.exception.ServiceException;
+import org.velichko.finalproject.logic.pool.ConnectionPool;
 import org.velichko.finalproject.logic.service.VerificationService;
 
 import java.util.List;
@@ -18,8 +21,20 @@ import java.util.Optional;
 public class VerificationServiceImpl implements VerificationService {
     private static final Logger logger = LogManager.getLogger();
 
+    private VerificationServiceImpl() {
+    }
+
+    private static class VerificationServiceHolder {
+        public static final VerificationService HOLDER_INSTANCE = new VerificationServiceImpl();
+    }
+
+    public static VerificationService getInstance() {
+        return VerificationServiceHolder.HOLDER_INSTANCE;
+    }
+
+
     @Override
-    public List<Verification> readAll() throws ServiceException {
+    public List<Verification> findAllVerifications() throws ServiceException {
         VerificationDaoImpl verificationDao = new VerificationDaoImpl();
         List<Verification> verifications;
         EntityTransaction transaction = new EntityTransaction();
@@ -155,5 +170,52 @@ public class VerificationServiceImpl implements VerificationService {
             transaction.endSingleQuery();
         }
         return isChanged;
+    }
+
+    @Override
+    public boolean changeTrainerCharacteristicById(long id, String characteristic) throws ServiceException {
+        boolean isChanged = false;
+        VerificationDaoImpl verificationDao = new VerificationDaoImpl();
+        EntityTransaction transaction = new EntityTransaction();
+        transaction.beginSingleQuery(verificationDao);
+        try {
+            Optional<Verification> optionalVerification = verificationDao.findEntityById(id);
+            if (optionalVerification.isPresent()) {
+                verificationDao.changeTrainerCharacteristicById(id, characteristic);
+                isChanged = true;
+            }
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with changed examiner verification date", e);
+            throw new ServiceException("Impossible change trainer characteristic", e);
+        } finally {
+            transaction.endSingleQuery();
+        }
+        return isChanged;
+    }
+
+    @Override
+    public boolean changeFinalVerificationStatusById(long id, FinalStatus finalStatus) throws ServiceException {
+        boolean isChanged = false;
+        VerificationDaoImpl verificationDao = new VerificationDaoImpl();
+        EntityTransaction transaction = new EntityTransaction();
+        transaction.beginSingleQuery(verificationDao);
+        try {
+            Optional<Verification> optionalVerification = verificationDao.findEntityById(id);
+            if (optionalVerification.isPresent()) {
+                verificationDao.changeFinalVerificationStatusById(id, finalStatus);
+                isChanged = true;
+            }
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with changed final status", e);
+            throw new ServiceException("Impossible change final status", e);
+        } finally {
+            transaction.endSingleQuery();
+        }
+        return isChanged;
+    }
+
+    @Override
+    public List<Verification> findAllApprovedVerifications(VerificationStatus status) {
+        return null;
     }
 }

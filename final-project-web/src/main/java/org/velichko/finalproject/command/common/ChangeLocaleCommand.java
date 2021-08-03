@@ -9,6 +9,7 @@ import static org.velichko.finalproject.command.PageName.REFERER;
 import static org.velichko.finalproject.command.ParamName.*;
 
 public class ChangeLocaleCommand implements Command {
+
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();

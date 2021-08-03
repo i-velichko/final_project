@@ -18,19 +18,17 @@ import static org.velichko.finalproject.command.ParamName.*;
 
 public class LoginCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-    private final UserService service = new UserServiceImpl();
+    private final UserService userService = UserServiceImpl.getInstance();
 
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
-
         User user = (User) request.getSession().getAttribute(USER_PARAM);
         if (user != null) {
             request.setAttribute(USER_PARAM, user);
             router.setRouterType(Router.RouterType.REDIRECT);
             switch (user.getRole()) {
-                case STUDENT ->
-                        router.setPagePath(REDIRECT_STUDENT);
+                case STUDENT -> router.setPagePath(REDIRECT_STUDENT);
                 case TRAINER -> router.setPagePath(WELCOME_TRAINER);
                 case EXAMINER -> router.setPagePath(WELCOME_EXAMINER);
                 case ADMIN -> router.setPagePath(WELCOME_ADMIN);
@@ -50,7 +48,7 @@ public class LoginCommand implements Command {
         String password = request.getParameter(PASSWORD_PARAM);
         Optional<User> currentUser;
         try {
-            currentUser = service.findUserByLoginAndPassword(login, password);
+            currentUser = userService.findUserByLoginAndPassword(login, password);
             if (currentUser.isPresent()) {
                 user = currentUser.get();
                 request.getSession().setAttribute(USER_PARAM, user);
