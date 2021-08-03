@@ -21,18 +21,6 @@ public class EmailServiceImpl implements EmailService {
     public static final String EMAIL_CONFIRMATION = "Email Confirmation";
     public static final String CONTENT_TYPE = "text/html";
 
-
-    private EmailServiceImpl() {
-    }
-
-    private static class EmailServiceHolder {
-        public static final EmailService HOLDER_INSTANCE = new EmailServiceImpl();
-    }
-
-    public static EmailService getInstance() {
-        return EmailServiceHolder.HOLDER_INSTANCE;
-    }
-
     @Override
     public boolean sendEmail(String emailTo, String key) throws ServiceException {
         Properties properties = null;

@@ -55,5 +55,5 @@ public class ParamName {
     public static final String USER_ID_PARAM = "userId";
     public static final String NEW_STATUS_PARAM = "new_status";
     public static final String NEW_FINAL_STATUS_PARAM = "newFinalStatus";
-    public static final String NEW_ROLE = "newRole";
+    public static final String NEW_ROLE = "new_role";
 }

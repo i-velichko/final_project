@@ -10,7 +10,7 @@ public class I18nManager {
     private static final String SUPPORTED_LOCALES = "supported.locales";
     private Map<String, ResourceBundle> bundleMap = new HashMap<>();
 
-    private I18nManager() {
+    public I18nManager() {
         List<String> localeList = getAllLocales();
 
         for (String locale : localeList) {
@@ -37,13 +37,13 @@ public class I18nManager {
         }
         return bundleMap.get(locale).getString(key);
     }
-
-    public static I18nManager getInstance() {
-        return I18nManager.I18nManagerHolder.HOLDER_INSTANCE;
-    }
-
-    private static class I18nManagerHolder {
-        public static final I18nManager HOLDER_INSTANCE = new I18nManager();
-    }
+//
+//    public static I18nManager getInstance() {
+//        return I18nManager.I18nManagerHolder.HOLDER_INSTANCE;
+//    }
+//
+//    private static class I18nManagerHolder {
+//        public static final I18nManager HOLDER_INSTANCE = new I18nManager();
+//    }
 
 }

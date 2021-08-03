@@ -15,12 +15,11 @@ import static org.velichko.finalproject.command.ParamName.*;
 import static org.velichko.finalproject.validator.DataUserValidator.*;
 
 public class RegistrationDataValidator {
-    private static final Logger logger = LogManager.getLogger();
-    private static final UserService service = UserServiceImpl.getInstance();
-    private static final I18nManager i18n = I18nManager.getInstance();
+    private final Logger logger = LogManager.getLogger();
+    private final UserService service = UserServiceImpl.getInstance();
+    private final I18nManager i18n = new I18nManager(); //TODO fix new
 
-
-    public static Map<String, String> checkValues(Map<String, String> registrationData, String locale) {
+    public Map<String, String> checkValues(Map<String, String> registrationData, String locale) {
 
         Map<String, String> result = new HashMap<>();
 
@@ -64,5 +63,14 @@ public class RegistrationDataValidator {
         }
 
         return result;
+    }
+
+
+    private static class RegistrationDataValidatorHolder {
+        public static final RegistrationDataValidator HOLDER_INSTANCE = new RegistrationDataValidator();
+    }
+
+    public static RegistrationDataValidator getInstance() {
+        return RegistrationDataValidator.RegistrationDataValidatorHolder.HOLDER_INSTANCE;
     }
 }

@@ -18,7 +18,11 @@ import static org.velichko.finalproject.command.ParamName.*;
 
 public class LoginCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-    private final UserService userService = UserServiceImpl.getInstance();
+    private final UserService userService;
+
+    public LoginCommand(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public Router execute(HttpServletRequest request) {

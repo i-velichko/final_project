@@ -20,7 +20,7 @@ public class ChangeTrainerScoreCommand implements Command {
     private final Logger logger = LogManager.getLogger();
     private final VerificationService verificationService = VerificationServiceImpl.getInstance();
     private final UserService userService = UserServiceImpl.getInstance();
-    private final EmailService emailService = EmailServiceImpl.getInstance();
+    private final EmailService emailService = new EmailServiceImpl(); //TODO fix new
 
 
     @Override

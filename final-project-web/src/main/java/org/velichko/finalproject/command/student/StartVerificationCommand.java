@@ -31,10 +31,17 @@ import static org.velichko.finalproject.command.ParamName.*;
 
 public class StartVerificationCommand implements Command {
     private static final String SEND_EMAIL_ADDRESS = "http://localhost:8080/final_project_web_war_exploded/controller?command=start_verification";
-    private final UserService userService = UserServiceImpl.getInstance();
-    private final VerificationService verificationService = VerificationServiceImpl.getInstance();
-    private final I18nManager i18n = I18nManager.getInstance();
-    private final EmailService emailService = EmailServiceImpl.getInstance();
+    private final UserService userService;
+    private final VerificationService verificationService;
+    private final I18nManager i18n;
+    private final EmailService emailService;
+
+    public StartVerificationCommand(UserService userService, VerificationService verificationService, I18nManager i18n, EmailService emailService) {
+        this.userService = userService;
+        this.verificationService = verificationService;
+        this.i18n = i18n;
+        this.emailService = emailService;
+    }
 
     @Override
     public Router execute(HttpServletRequest request) {

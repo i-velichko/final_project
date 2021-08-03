@@ -16,21 +16,26 @@ import org.velichko.finalproject.command.newuser.RegistrationConfirmationCommand
 import org.velichko.finalproject.command.student.StartVerificationCommand;
 import org.velichko.finalproject.command.student.WelcomeStudentCommand;
 import org.velichko.finalproject.command.trainer.*;
+import org.velichko.finalproject.core.AppContextImpl;
 
 public enum CommandName {
+
+
+    REGISTRATION(AppContextImpl.getInstance().getService(RegistrationCommand.class)),
+    START_VERIFICATION(AppContextImpl.getInstance().getService(StartVerificationCommand.class)),
+    LOGIN(AppContextImpl.getInstance().getService(LoginCommand.class)),
+
 
     SHOW_ALL_USERS(new ShowAllUsersCommand()),
     SHOW_ALL_VERIFICATIONS(new ShowAllVerifications()),
     SHOW_ALL_APPROVED_PROJECTS(new ShowAllApprovedProjectsCommand()),
-    REGISTRATION(new RegistrationCommand()),
     REGISTRATION_CONFIRMATION_COMMAND(new RegistrationConfirmationCommand()),
-    LOGIN(new LoginCommand()),
     CHANGE_LOCALE(new ChangeLocaleCommand()),
     LOGOUT(new LogoutCommand()),
     SHOW_TRAINER_INFO(new ShowTrainerInfoCommand()),
     SHOW_STUDENT_INFO(new ShowStudentInfoCommand()),
     SHOW_VERIFICATION_INFO(new ShowVerificationInfoCommand()),
-    START_VERIFICATION(new StartVerificationCommand()),
+
     CHANGE_USER_STATUS(new ChangeUserStatusCommand()),
     CHANGE_FINAL_STATUS(new ChangeFinalStatusCommand()),
     CHANGE_USER_ROLE(new ChangeUserRoleCommand()),

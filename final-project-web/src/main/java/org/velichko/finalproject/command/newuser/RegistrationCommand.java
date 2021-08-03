@@ -27,9 +27,22 @@ import static org.velichko.finalproject.command.ParamName.*;
 
 
 public class RegistrationCommand implements Command {
-    private static final Logger logger = LogManager.getLogger();
-    private final UserService userService = UserServiceImpl.getInstance();
-    private final I18nManager i18n = I18nManager.getInstance();
+    private final Logger logger = LogManager.getLogger();
+    private final UserService userService;
+    private final RegistrationConfirmatory confirmatoryService;
+    private final RegistrationDataValidator registrationDataValidator;
+    private final I18nManager i18n;
+
+
+    public RegistrationCommand(UserService userService,
+                               RegistrationConfirmatory confirmatoryService,
+                               RegistrationDataValidator registrationDataValidator,
+                               I18nManager i18n) {
+        this.userService = userService;
+        this.confirmatoryService = confirmatoryService;
+        this.registrationDataValidator = registrationDataValidator;
+        this.i18n = i18n;
+    }
 
     @Override
     public Router execute(HttpServletRequest request) {
@@ -53,7 +66,7 @@ public class RegistrationCommand implements Command {
 
         String method = request.getMethod();
         if (method.equals(POST_PARAM)) {
-            Map<String, String> registrationDataCheckResult = RegistrationDataValidator.checkValues(registrationData, locale);
+            Map<String, String> registrationDataCheckResult = registrationDataValidator.checkValues(registrationData, locale);
             if (!registrationDataCheckResult.isEmpty()) {
                 request.setAttribute(CORRECT_REGISTRATION_DATA_PARAM, registrationData);
                 request.setAttribute(ERROR_REGISTRATION_DATA_PARAM, registrationDataCheckResult);
@@ -62,7 +75,7 @@ public class RegistrationCommand implements Command {
                 User user = new User(firstName, lastName, login, email, UserRole.STUDENT, UserStatus.WAIT_CONFIRMATION);
                 System.out.println(user);
                 try {
-                    String registrationKey = RegistrationConfirmatory.setRegistrationToken(email, login);
+                    String registrationKey = confirmatoryService.setRegistrationToken(email, login);
                     if (userService.createNewUser(user, password, registrationKey)) {
                         request.setAttribute(USER_PARAM, user);
                         request.setAttribute(ParamName.REGISTRATION_IS_DONE, i18n.getMassage(REGISTRATION_SUCCESSFUL_KEY, locale));
