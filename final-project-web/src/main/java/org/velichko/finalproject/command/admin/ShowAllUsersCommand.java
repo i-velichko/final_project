@@ -19,7 +19,11 @@ import static org.velichko.finalproject.command.PageName.SHOW_ALL_USERS;
 
 public class ShowAllUsersCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-    private final UserService userService = UserServiceImpl.getInstance();
+    private final UserService userService;
+
+    public ShowAllUsersCommand(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public Router execute(HttpServletRequest request) {

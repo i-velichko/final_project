@@ -7,7 +7,6 @@ import org.velichko.finalproject.logic.service.impl.EmailServiceImpl;
 import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
 
 public class RegistrationConfirmatory {
-//        private final EmailService emailService = EmailServiceImpl.getInstance();
     private final EmailService emailService;
 
     public RegistrationConfirmatory(EmailService emailService) {

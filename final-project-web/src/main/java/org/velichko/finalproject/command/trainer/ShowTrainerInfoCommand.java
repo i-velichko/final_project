@@ -14,7 +14,11 @@ import static org.velichko.finalproject.command.PageName.TRAINER_INFO;
 import static org.velichko.finalproject.command.ParamName.*;
 
 public class ShowTrainerInfoCommand implements Command {
-    private final UserService userService = UserServiceImpl.getInstance();
+    private final UserService userService;
+
+    public ShowTrainerInfoCommand(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public Router execute(HttpServletRequest request) {

@@ -21,7 +21,11 @@ import static org.velichko.finalproject.command.ParamName.*;
 
 public class ShowVerificationInfoCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-    private final VerificationService verificationService = VerificationServiceImpl.getInstance();
+    private final VerificationService verificationService;
+
+    public ShowVerificationInfoCommand(VerificationService verificationService) {
+        this.verificationService = verificationService;
+    }
 
     @Override
     public Router execute(HttpServletRequest request) {

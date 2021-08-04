@@ -15,7 +15,11 @@ import static org.velichko.finalproject.command.ParamName.*;
 
 public class ChangeFinalStatusCommand implements Command {
     private final Logger logger = LogManager.getLogger();
-    private final VerificationService verificationService = VerificationServiceImpl.getInstance();
+    private final VerificationService verificationService;
+
+    public ChangeFinalStatusCommand(VerificationService verificationService) {
+        this.verificationService = verificationService;
+    }
 
     @Override
     public Router execute(HttpServletRequest request) {

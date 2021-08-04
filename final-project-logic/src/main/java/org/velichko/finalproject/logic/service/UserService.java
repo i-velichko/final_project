@@ -15,11 +15,11 @@ public interface UserService {
     List<User> readAll () throws ServiceException;
     boolean updateUser (UserDaoImpl userDao) throws ServiceException; //todo  реализовать или убрать
     boolean changeUserImage (String login, InputStream image) throws ServiceException;
-    boolean delete (UserDaoImpl userDao) throws ServiceException; //todo  реализовать или убрать
     boolean createNewUser (User user, String password, String registrationKey) throws ServiceException;
     boolean changeUserGit (String login, String gitLink) throws ServiceException;
     boolean isLoginUnique(String login) throws ServiceException;
     boolean isEmailUnique(String email) throws ServiceException;
+     boolean isGitLinkUnique(String gitLink) throws ServiceException;
 
     Optional<User> findUserByLoginAndPassword(String login, String password) throws ServiceException;
     Optional<User> findUserById(Long id) throws ServiceException;

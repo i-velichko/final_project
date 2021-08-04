@@ -31,6 +31,7 @@ public class RegistrationCommandTest {
 
     @Test
     public void execute() {
+
         Router execute = toTest.execute(null);
         //TODO
     }

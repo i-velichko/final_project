@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.i18n.I18nManager;
 import org.velichko.finalproject.logic.exception.ServiceException;
 import org.velichko.finalproject.logic.service.UserService;
-import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,11 +13,17 @@ import static org.velichko.finalproject.command.MessageNameKey.*;
 import static org.velichko.finalproject.command.ParamName.*;
 import static org.velichko.finalproject.validator.DataUserValidator.*;
 
-public class RegistrationDataValidator {
+public class RegistrationDataValidator implements BaseDataValidator {
     private final Logger logger = LogManager.getLogger();
-    private final UserService service = UserServiceImpl.getInstance();
-    private final I18nManager i18n = new I18nManager(); //TODO fix new
+    private final UserService service;
+    private final I18nManager i18n;
 
+    public RegistrationDataValidator(UserService service, I18nManager i18n) {
+        this.service = service;
+        this.i18n = i18n;
+    }
+
+    @Override
     public Map<String, String> checkValues(Map<String, String> registrationData, String locale) {
 
         Map<String, String> result = new HashMap<>();
@@ -65,12 +70,4 @@ public class RegistrationDataValidator {
         return result;
     }
 
-
-    private static class RegistrationDataValidatorHolder {
-        public static final RegistrationDataValidator HOLDER_INSTANCE = new RegistrationDataValidator();
-    }
-
-    public static RegistrationDataValidator getInstance() {
-        return RegistrationDataValidator.RegistrationDataValidatorHolder.HOLDER_INSTANCE;
-    }
 }

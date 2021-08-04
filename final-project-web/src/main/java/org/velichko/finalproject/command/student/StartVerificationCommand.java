@@ -14,10 +14,7 @@ import org.velichko.finalproject.logic.exception.ServiceException;
 import org.velichko.finalproject.logic.service.EmailService;
 import org.velichko.finalproject.logic.service.UserService;
 import org.velichko.finalproject.logic.service.VerificationService;
-import org.velichko.finalproject.logic.service.impl.EmailServiceImpl;
-import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
-import org.velichko.finalproject.logic.service.impl.VerificationServiceImpl;
-import org.velichko.finalproject.validator.VerificationDataValidator;
+import org.velichko.finalproject.validator.BaseDataValidator;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,12 +32,15 @@ public class StartVerificationCommand implements Command {
     private final VerificationService verificationService;
     private final I18nManager i18n;
     private final EmailService emailService;
+    private final BaseDataValidator verificationDataValidator;
 
-    public StartVerificationCommand(UserService userService, VerificationService verificationService, I18nManager i18n, EmailService emailService) {
+    public StartVerificationCommand(UserService userService, VerificationService verificationService,
+                                    I18nManager i18n, EmailService emailService, BaseDataValidator verificationDataValidator) {
         this.userService = userService;
         this.verificationService = verificationService;
         this.i18n = i18n;
         this.emailService = emailService;
+        this.verificationDataValidator = verificationDataValidator;
     }
 
     @Override
@@ -90,7 +90,7 @@ public class StartVerificationCommand implements Command {
                 request.setAttribute(UPLOAD_IMAGE_ERROR_PARAM, i18n.getMassage(MessageNameKey.IMAGE_NOT_UPLOAD_KEY, locale));
             }
 
-            Map<String, String> verificationDataCheckResult = VerificationDataValidator.checkValues(startVerificationData, locale);
+            Map<String, String> verificationDataCheckResult = verificationDataValidator.checkValues(startVerificationData, locale);
 
             if (!verificationDataCheckResult.isEmpty()) {
                 request.setAttribute(CORRECT_VERIFICATION_DATA_PARAM, startVerificationData);

@@ -30,7 +30,6 @@ public class ConnectionPool {
     private AtomicBoolean connectionsNumberCheck = new AtomicBoolean(false);
     private Properties properties;
 
-
     private ConnectionPool() {
         try {
 

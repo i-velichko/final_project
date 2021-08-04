@@ -15,6 +15,7 @@ import org.velichko.finalproject.logic.exception.ServiceException;
 import org.velichko.finalproject.logic.service.UserService;
 import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
 import org.velichko.finalproject.logic.utill.RegistrationConfirmatory;
+import org.velichko.finalproject.validator.BaseDataValidator;
 import org.velichko.finalproject.validator.RegistrationDataValidator;
 
 import java.util.HashMap;
@@ -30,13 +31,13 @@ public class RegistrationCommand implements Command {
     private final Logger logger = LogManager.getLogger();
     private final UserService userService;
     private final RegistrationConfirmatory confirmatoryService;
-    private final RegistrationDataValidator registrationDataValidator;
+    private final BaseDataValidator registrationDataValidator;
     private final I18nManager i18n;
 
 
     public RegistrationCommand(UserService userService,
                                RegistrationConfirmatory confirmatoryService,
-                               RegistrationDataValidator registrationDataValidator,
+                               BaseDataValidator registrationDataValidator,
                                I18nManager i18n) {
         this.userService = userService;
         this.confirmatoryService = confirmatoryService;

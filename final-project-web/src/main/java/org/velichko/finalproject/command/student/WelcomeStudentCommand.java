@@ -22,7 +22,11 @@ import static org.velichko.finalproject.command.ParamName.USER_PARAM;
 
 public class WelcomeStudentCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-    private final UserService service = UserServiceImpl.getInstance();
+    private final UserService service;
+
+    public WelcomeStudentCommand(UserService service) {
+        this.service = service;
+    }
 
     @Override
     public Router execute(HttpServletRequest request) {

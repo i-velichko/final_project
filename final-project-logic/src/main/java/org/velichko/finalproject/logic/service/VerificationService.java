@@ -1,6 +1,5 @@
 package org.velichko.finalproject.logic.service;
 
-import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.entity.Verification;
 import org.velichko.finalproject.logic.entity.type.FinalStatus;
 import org.velichko.finalproject.logic.entity.type.VerificationStatus;
@@ -15,8 +14,6 @@ public interface VerificationService {
     boolean createNewVerification(Verification verification, String title) throws ServiceException;
 
     Optional<Verification> findVerificationById(long id) throws ServiceException;
-
-    boolean isGitLinkUnique(String gitLink) throws ServiceException;
 
     boolean changeTrainerScore(Long verificationId, Double newScore) throws ServiceException;
 

@@ -4,8 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.i18n.I18nManager;
 import org.velichko.finalproject.logic.exception.ServiceException;
-import org.velichko.finalproject.logic.service.VerificationService;
-import org.velichko.finalproject.logic.service.impl.VerificationServiceImpl;
+import org.velichko.finalproject.logic.service.UserService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,21 +12,27 @@ import java.util.Map;
 import static org.velichko.finalproject.command.MessageNameKey.*;
 import static org.velichko.finalproject.command.ParamName.*;
 
-public class VerificationDataValidator {
+public class VerificationDataValidator implements BaseDataValidator {
     private static final Logger logger = LogManager.getLogger();
-    private static final VerificationService verificationService = VerificationServiceImpl.getInstance();
-    private static final I18nManager i18n = new I18nManager(); //TODO fix new
+    private final UserService userservice;
+    private final I18nManager i18n;
     private static final String URL_REGEXP = "(https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})";
     private static final String PROJECT_TITLE_REGEXP = "^.{1,100}$";
 
-    public static Map<String, String> checkValues(Map<String, String> verificationData, String locale) {
+    public VerificationDataValidator(UserService userservice, I18nManager i18n) {
+        this.userservice = userservice;
+        this.i18n = i18n;
+    }
+
+    @Override
+    public Map<String, String> checkValues(Map<String, String> verificationData, String locale) {
         Map<String, String> result = new HashMap<>();
         String gitLink = verificationData.get(GIT_LINK);
         String projectTitle = verificationData.get(PROJECT_TITLE_PARAM);
 
         if (gitLink != null && gitLink.matches(URL_REGEXP)) {
             try {
-                if (!verificationService.isGitLinkUnique(gitLink)) {
+                if (!userservice.isGitLinkUnique(gitLink)) {
                     result.put(GIT_LINK_ERROR_PARAM, i18n.getMassage(GIT_LINK_NOT_UNIQUE_KEY, locale));
                 }
             } catch (ServiceException e) {

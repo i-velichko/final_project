@@ -3,7 +3,7 @@ package org.velichko.finalproject.command;
 import org.velichko.finalproject.command.admin.ChangeUserRoleCommand;
 import org.velichko.finalproject.command.admin.ChangeUserStatusCommand;
 import org.velichko.finalproject.command.admin.ShowAllUsersCommand;
-import org.velichko.finalproject.command.admin.ShowAllVerifications;
+import org.velichko.finalproject.command.admin.ShowAllVerificationsCommand;
 import org.velichko.finalproject.command.common.ChangeLocaleCommand;
 import org.velichko.finalproject.command.common.LoginCommand;
 import org.velichko.finalproject.command.common.LogoutCommand;
@@ -20,30 +20,26 @@ import org.velichko.finalproject.core.AppContextImpl;
 
 public enum CommandName {
 
-
+    CHANGE_LOCALE(new ChangeLocaleCommand()),
+    LOGOUT(new LogoutCommand()),
     REGISTRATION(AppContextImpl.getInstance().getService(RegistrationCommand.class)),
     START_VERIFICATION(AppContextImpl.getInstance().getService(StartVerificationCommand.class)),
     LOGIN(AppContextImpl.getInstance().getService(LoginCommand.class)),
-
-
-    SHOW_ALL_USERS(new ShowAllUsersCommand()),
-    SHOW_ALL_VERIFICATIONS(new ShowAllVerifications()),
-    SHOW_ALL_APPROVED_PROJECTS(new ShowAllApprovedProjectsCommand()),
-    REGISTRATION_CONFIRMATION_COMMAND(new RegistrationConfirmationCommand()),
-    CHANGE_LOCALE(new ChangeLocaleCommand()),
-    LOGOUT(new LogoutCommand()),
-    SHOW_TRAINER_INFO(new ShowTrainerInfoCommand()),
-    SHOW_STUDENT_INFO(new ShowStudentInfoCommand()),
-    SHOW_VERIFICATION_INFO(new ShowVerificationInfoCommand()),
-
-    CHANGE_USER_STATUS(new ChangeUserStatusCommand()),
-    CHANGE_FINAL_STATUS(new ChangeFinalStatusCommand()),
-    CHANGE_USER_ROLE(new ChangeUserRoleCommand()),
-    CHANGE_TRAINER_SCORE(new ChangeTrainerScoreCommand()),
-    CHANGE_TRAINER_VERIFICATION_DATE(new ChangeTrainerVerificationDateCommand()),
-    CHANGE_EXAMINER_VERIFICATION_DATE(new ChangeExaminerVerificationDateCommand()),
-    CHANGE_TRAINER_CHARACTERISTIC(new ChangeTrainerCharacteristicCommand()),
-    REDIRECT_STUDENT(new WelcomeStudentCommand());
+    CHANGE_USER_ROLE(AppContextImpl.getInstance().getService(ChangeUserRoleCommand.class)),
+    CHANGE_USER_STATUS(AppContextImpl.getInstance().getService(ChangeUserStatusCommand.class)),
+    SHOW_ALL_USERS(AppContextImpl.getInstance().getService(ShowAllUsersCommand.class)),
+    SHOW_ALL_VERIFICATIONS(AppContextImpl.getInstance().getService(ShowAllVerificationsCommand.class)),
+    SHOW_ALL_APPROVED_PROJECTS(AppContextImpl.getInstance().getService(ShowAllApprovedProjectsCommand.class)),
+    REGISTRATION_CONFIRMATION_COMMAND(AppContextImpl.getInstance().getService(RegistrationConfirmationCommand.class)),
+    SHOW_TRAINER_INFO(AppContextImpl.getInstance().getService(ShowTrainerInfoCommand.class)),
+    SHOW_STUDENT_INFO(AppContextImpl.getInstance().getService(ShowStudentInfoCommand.class)),
+    SHOW_VERIFICATION_INFO(AppContextImpl.getInstance().getService(ShowVerificationInfoCommand.class)),
+    CHANGE_FINAL_STATUS(AppContextImpl.getInstance().getService(ChangeFinalStatusCommand.class)),
+    CHANGE_TRAINER_SCORE(AppContextImpl.getInstance().getService(ChangeTrainerScoreCommand.class)),
+    CHANGE_TRAINER_VERIFICATION_DATE(AppContextImpl.getInstance().getService(ChangeTrainerVerificationDateCommand.class)),
+    CHANGE_EXAMINER_VERIFICATION_DATE(AppContextImpl.getInstance().getService(ChangeExaminerVerificationDateCommand.class)),
+    CHANGE_TRAINER_CHARACTERISTIC(AppContextImpl.getInstance().getService(ChangeTrainerCharacteristicCommand.class)),
+    REDIRECT_STUDENT(AppContextImpl.getInstance().getService(WelcomeStudentCommand.class));
 
     private Command command;
 

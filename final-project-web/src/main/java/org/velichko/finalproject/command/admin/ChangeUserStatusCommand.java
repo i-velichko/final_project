@@ -15,7 +15,12 @@ import static org.velichko.finalproject.command.ParamName.*;
 
 public class ChangeUserStatusCommand implements Command {
     private final Logger logger = LogManager.getLogger();
-    private final UserService userService = UserServiceImpl.getInstance();
+    private final UserService userService;
+
+
+    public ChangeUserStatusCommand(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public Router execute(HttpServletRequest request) {

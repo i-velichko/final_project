@@ -10,7 +10,11 @@ import org.velichko.finalproject.logic.service.impl.VerificationServiceImpl;
 
 public class ShowAllApprovedProjectsCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-    private final VerificationService verificationService = VerificationServiceImpl.getInstance();
+    private final VerificationService verificationService;
+
+    public ShowAllApprovedProjectsCommand(VerificationService verificationService) {
+        this.verificationService = verificationService;
+    }
 
     @Override
     public Router execute(HttpServletRequest request) {

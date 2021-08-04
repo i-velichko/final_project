@@ -1,9 +1,24 @@
 package org.velichko.finalproject.core;
 
+import com.oracle.wls.shaded.org.apache.regexp.RE;
+import org.velichko.finalproject.command.admin.ChangeUserRoleCommand;
+import org.velichko.finalproject.command.admin.ShowAllUsersCommand;
+import org.velichko.finalproject.command.admin.ShowAllVerificationsCommand;
 import org.velichko.finalproject.command.common.LoginCommand;
+import org.velichko.finalproject.command.common.ShowVerificationInfoCommand;
+import org.velichko.finalproject.command.examiner.ChangeExaminerVerificationDateCommand;
+import org.velichko.finalproject.command.examiner.ChangeFinalStatusCommand;
+import org.velichko.finalproject.command.examiner.ShowAllApprovedProjectsCommand;
 import org.velichko.finalproject.command.newuser.RegistrationCommand;
+import org.velichko.finalproject.command.newuser.RegistrationConfirmationCommand;
 import org.velichko.finalproject.command.student.StartVerificationCommand;
+import org.velichko.finalproject.command.student.WelcomeStudentCommand;
+import org.velichko.finalproject.command.trainer.*;
 import org.velichko.finalproject.i18n.I18nManager;
+import org.velichko.finalproject.logic.dao.UserDao;
+import org.velichko.finalproject.logic.dao.VerificationDao;
+import org.velichko.finalproject.logic.dao.impl.UserDaoImpl;
+import org.velichko.finalproject.logic.dao.impl.VerificationDaoImpl;
 import org.velichko.finalproject.logic.service.EmailService;
 import org.velichko.finalproject.logic.service.UserService;
 import org.velichko.finalproject.logic.service.VerificationService;
@@ -11,7 +26,9 @@ import org.velichko.finalproject.logic.service.impl.EmailServiceImpl;
 import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
 import org.velichko.finalproject.logic.service.impl.VerificationServiceImpl;
 import org.velichko.finalproject.logic.utill.RegistrationConfirmatory;
+import org.velichko.finalproject.validator.BaseDataValidator;
 import org.velichko.finalproject.validator.RegistrationDataValidator;
+import org.velichko.finalproject.validator.VerificationDataValidator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,10 +38,13 @@ public class AppContextImpl implements AppContext {
     private Map<Class, Object> map = new HashMap<>();
 
     private AppContextImpl() {
-        map.put(UserService.class, UserServiceImpl.getInstance());
-        map.put(VerificationService.class, VerificationServiceImpl.getInstance());
-        map.put(RegistrationDataValidator.class, RegistrationDataValidator.getInstance());
+        map.put(UserDao.class, new UserDaoImpl());
+        map.put(VerificationDao.class, new VerificationDaoImpl());
+        map.put(UserService.class, new UserServiceImpl(getService(UserDao.class)));
+        map.put(VerificationService.class, new VerificationServiceImpl(getService(VerificationDao.class)));
         map.put(I18nManager.class, new I18nManager());
+        map.put(BaseDataValidator.class, new RegistrationDataValidator(getService(UserService.class), getService(I18nManager.class)));
+        map.put(BaseDataValidator.class, new VerificationDataValidator(getService(UserService.class), getService(I18nManager.class)));
         map.put(EmailService.class, new EmailServiceImpl());
         map.put(RegistrationConfirmatory.class, new RegistrationConfirmatory(getService(EmailService.class)));
         map.put(RegistrationCommand.class, new RegistrationCommand(
@@ -37,9 +57,28 @@ public class AppContextImpl implements AppContext {
                 getService(UserService.class),
                 getService(VerificationService.class),
                 getService(I18nManager.class),
-                getService(EmailService.class)
+                getService(EmailService.class),
+                getService(VerificationDataValidator.class)
         ));
+        map.put(ChangeUserRoleCommand.class, new ChangeUserRoleCommand(getService(UserService.class)));
         map.put(LoginCommand.class, new LoginCommand(getService(UserService.class)));
+        map.put(ShowAllUsersCommand.class, new ShowAllUsersCommand(getService(UserService.class)));
+        map.put(ShowAllVerificationsCommand.class, new ShowAllVerificationsCommand(getService(VerificationService.class)));
+        map.put(ShowAllApprovedProjectsCommand.class, new ShowAllApprovedProjectsCommand(getService(VerificationService.class)));
+        map.put(RegistrationConfirmationCommand.class, new RegistrationConfirmationCommand(getService(UserService.class)));
+        map.put(ShowTrainerInfoCommand.class, new ShowTrainerInfoCommand(getService(UserService.class)));
+        map.put(ShowStudentInfoCommand.class, new ShowStudentInfoCommand(getService(UserService.class)));
+        map.put(ShowVerificationInfoCommand.class, new ShowVerificationInfoCommand(getService(VerificationService.class)));
+        map.put(ChangeFinalStatusCommand.class, new ChangeFinalStatusCommand(getService(VerificationService.class)));
+        map.put(ChangeTrainerScoreCommand.class, new ChangeTrainerScoreCommand(
+                getService(VerificationService.class),
+                getService(UserService.class),
+                getService(EmailService.class)
+                ));
+        map.put(ChangeTrainerVerificationDateCommand.class, new ChangeTrainerVerificationDateCommand(getService(VerificationService.class)));
+        map.put(ChangeExaminerVerificationDateCommand.class, new ChangeExaminerVerificationDateCommand(getService(VerificationService.class)));
+        map.put(ChangeTrainerCharacteristicCommand.class, new ChangeTrainerCharacteristicCommand(getService(VerificationService.class)));
+        map.put(WelcomeStudentCommand.class, new WelcomeStudentCommand(getService(UserService.class)));
     }
 
     @Override

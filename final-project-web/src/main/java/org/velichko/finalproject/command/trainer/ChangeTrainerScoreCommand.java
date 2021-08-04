@@ -18,10 +18,15 @@ import static org.velichko.finalproject.command.ParamName.*;
 
 public class ChangeTrainerScoreCommand implements Command {
     private final Logger logger = LogManager.getLogger();
-    private final VerificationService verificationService = VerificationServiceImpl.getInstance();
-    private final UserService userService = UserServiceImpl.getInstance();
-    private final EmailService emailService = new EmailServiceImpl(); //TODO fix new
+    private final VerificationService verificationService;
+    private final UserService userService;
+    private final EmailService emailService;
 
+    public ChangeTrainerScoreCommand(VerificationService verificationService, UserService userService, EmailService emailService) {
+        this.verificationService = verificationService;
+        this.userService = userService;
+        this.emailService = emailService;
+    }
 
     @Override
     public Router execute(HttpServletRequest request) {
