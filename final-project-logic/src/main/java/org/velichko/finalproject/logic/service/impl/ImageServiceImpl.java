@@ -18,7 +18,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public void upload(String imagePath, InputStream imageContent) throws IOException {
-        Properties properties = null;
+        Properties properties;
         if (IMAGE_PROPERTIES_PATH != null) {
             properties = PropertyLoader.loadPropertiesData(IMAGE_PROPERTIES_PATH);
             final String basePath = properties.getProperty("image.base.url");

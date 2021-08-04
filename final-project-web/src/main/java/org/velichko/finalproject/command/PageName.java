@@ -24,6 +24,8 @@ public class PageName {
     public static final String REDIRECT_STUDENT = "controller?command=redirect_student";
     public static final String REDIRECT_TRAINER = "controller?command=redirect_trainer";
     public static final String REDIRECT_ADMIN = "controller?command=redirect_admin";
+    public static final String VERIFICATION_TRAINER_CONTROL = "/pages/verification_trainer_control.jsp";
+    public static final String VERIFICATION_EXAMINER_CONTROL = "/pages/verification_examiner_control.jsp";
 
 
     private PageName () {

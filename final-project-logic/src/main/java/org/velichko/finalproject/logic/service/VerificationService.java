@@ -26,4 +26,6 @@ public interface VerificationService {
     boolean changeFinalVerificationStatusById(long id, FinalStatus finalStatus) throws ServiceException;
 
     List<Verification> findAllApprovedVerifications(VerificationStatus status);
+
+    boolean changeVerificationStatusById(Long verificationId, VerificationStatus verificationStatus) throws ServiceException;
 }

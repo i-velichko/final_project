@@ -101,13 +101,12 @@ public class StartVerificationCommand implements Command {
                     userService.changeUserGit(login, gitLink);
                     if (trainerEmail != null) {
                         emailService.sendEmail(trainerEmail, SEND_EMAIL_ADDRESS);
-                        //todo status wait for trainer
                     }
                 } catch (ServiceException e) {
                     router.setPagePath(ERROR_PAGE);
                 }
                 Verification verification = new Verification(projectTitle, student, trainer, VerificationStatus.DRAFT, LocalDateTime.now());
-                //todo подтверждение тренера о начале защиты
+                //todo подтверждение тренера о начале защиты и смена статуса
                 try {
                     verificationService.createNewVerification(verification, projectTitle);
                 } catch (ServiceException e) {

@@ -19,9 +19,11 @@ import org.velichko.finalproject.logic.dao.UserDao;
 import org.velichko.finalproject.logic.dao.VerificationDao;
 import org.velichko.finalproject.logic.dao.impl.UserDaoImpl;
 import org.velichko.finalproject.logic.dao.impl.VerificationDaoImpl;
+import org.velichko.finalproject.logic.service.AdmissionScoreCheckService;
 import org.velichko.finalproject.logic.service.EmailService;
 import org.velichko.finalproject.logic.service.UserService;
 import org.velichko.finalproject.logic.service.VerificationService;
+import org.velichko.finalproject.logic.service.impl.AdmissionScoreCheckServiceImpl;
 import org.velichko.finalproject.logic.service.impl.EmailServiceImpl;
 import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
 import org.velichko.finalproject.logic.service.impl.VerificationServiceImpl;
@@ -39,13 +41,15 @@ public class AppContextImpl implements AppContext {
 
     private AppContextImpl() {
         map.put(UserDao.class, new UserDaoImpl());
+        map.put(EmailService.class, new EmailServiceImpl());
+        map.put(AdmissionScoreCheckService.class, new AdmissionScoreCheckServiceImpl());
         map.put(VerificationDao.class, new VerificationDaoImpl());
+        map.put(UserService.class, new UserServiceImpl(getService(UserDao.class)));
         map.put(UserService.class, new UserServiceImpl(getService(UserDao.class)));
         map.put(VerificationService.class, new VerificationServiceImpl(getService(VerificationDao.class)));
         map.put(I18nManager.class, new I18nManager());
         map.put(BaseDataValidator.class, new RegistrationDataValidator(getService(UserService.class), getService(I18nManager.class)));
         map.put(BaseDataValidator.class, new VerificationDataValidator(getService(UserService.class), getService(I18nManager.class)));
-        map.put(EmailService.class, new EmailServiceImpl());
         map.put(RegistrationConfirmatory.class, new RegistrationConfirmatory(getService(EmailService.class)));
         map.put(RegistrationCommand.class, new RegistrationCommand(
                 getService(UserService.class),
@@ -73,7 +77,8 @@ public class AppContextImpl implements AppContext {
         map.put(ChangeTrainerScoreCommand.class, new ChangeTrainerScoreCommand(
                 getService(VerificationService.class),
                 getService(UserService.class),
-                getService(EmailService.class)
+                getService(EmailService.class),
+                getService(AdmissionScoreCheckService.class)
                 ));
         map.put(ChangeTrainerVerificationDateCommand.class, new ChangeTrainerVerificationDateCommand(getService(VerificationService.class)));
         map.put(ChangeExaminerVerificationDateCommand.class, new ChangeExaminerVerificationDateCommand(getService(VerificationService.class)));

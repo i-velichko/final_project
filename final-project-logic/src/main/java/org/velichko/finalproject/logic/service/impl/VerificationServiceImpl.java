@@ -144,7 +144,23 @@ public class VerificationServiceImpl implements VerificationService {
     }
 
     @Override
-    public List<Verification> findAllApprovedVerifications(VerificationStatus status) {
+    public List<Verification> findAllApprovedVerifications(VerificationStatus verificationStatus) {
         return null;
+    }
+
+    @Override
+    public boolean changeVerificationStatusById(Long verificationId, VerificationStatus verificationStatus) throws ServiceException {
+        boolean isChanged = false;
+        try {
+            Optional<Verification> optionalVerification = verificationDao.findEntityById(verificationId);
+            if (optionalVerification.isPresent()) {
+                verificationDao.changeVerificationStatusById(verificationId, verificationStatus);
+                isChanged = true;
+            }
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with changed verification status", e);
+            throw new ServiceException("Impossible change verification status", e);
+        }
+        return isChanged;
     }
 }
