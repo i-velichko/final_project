@@ -13,4 +13,4 @@
     <c:redirect url="/controller?command=login"/>
 </с:if>
 
-<c:redirect url="/pages/login.jsp" />
+<c:redirect url="${abs_path}/controller?command=to_main_page"/>

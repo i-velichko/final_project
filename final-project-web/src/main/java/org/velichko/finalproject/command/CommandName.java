@@ -4,10 +4,7 @@ import org.velichko.finalproject.command.admin.ChangeUserRoleCommand;
 import org.velichko.finalproject.command.admin.ChangeUserStatusCommand;
 import org.velichko.finalproject.command.admin.ShowAllUsersCommand;
 import org.velichko.finalproject.command.admin.ShowAllVerificationsCommand;
-import org.velichko.finalproject.command.common.ChangeLocaleCommand;
-import org.velichko.finalproject.command.common.LoginCommand;
-import org.velichko.finalproject.command.common.LogoutCommand;
-import org.velichko.finalproject.command.common.ShowVerificationInfoCommand;
+import org.velichko.finalproject.command.common.*;
 import org.velichko.finalproject.command.examiner.ChangeExaminerVerificationDateCommand;
 import org.velichko.finalproject.command.examiner.ChangeFinalStatusCommand;
 import org.velichko.finalproject.command.examiner.ShowAllApprovedProjectsCommand;
@@ -22,6 +19,7 @@ public enum CommandName {
 
     CHANGE_LOCALE(new ChangeLocaleCommand()),
     LOGOUT(new LogoutCommand()),
+    TO_MAIN_PAGE(new ToMainPageCommand()),
     REGISTRATION(AppContextImpl.getInstance().getService(RegistrationCommand.class)),
     START_VERIFICATION(AppContextImpl.getInstance().getService(StartVerificationCommand.class)),
     LOGIN(AppContextImpl.getInstance().getService(LoginCommand.class)),
@@ -39,7 +37,9 @@ public enum CommandName {
     CHANGE_TRAINER_VERIFICATION_DATE(AppContextImpl.getInstance().getService(ChangeTrainerVerificationDateCommand.class)),
     CHANGE_EXAMINER_VERIFICATION_DATE(AppContextImpl.getInstance().getService(ChangeExaminerVerificationDateCommand.class)),
     CHANGE_TRAINER_CHARACTERISTIC(AppContextImpl.getInstance().getService(ChangeTrainerCharacteristicCommand.class)),
-    REDIRECT_STUDENT(AppContextImpl.getInstance().getService(WelcomeStudentCommand.class));
+    REDIRECT_STUDENT(AppContextImpl.getInstance().getService(WelcomeStudentCommand.class)),
+    REDIRECT_MAIN(new ToMainPageCommand()),
+    REDIRECT_VERIFICATION_INFO(AppContextImpl.getInstance().getService(ShowVerificationInfoCommand.class));
 
     private Command command;
 

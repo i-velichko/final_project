@@ -22,7 +22,7 @@ public class ConnectionPool {
     private static final long DELAY_UNTIL_CONNECTIONS_NUMBER_CHECK = 1;
     private static final long PERIOD_BETWEEN_CONNECTIONS_NUMBER_CHECK = 1;
     private static int DEFAULT_POOL_SIZE;
-    private static AtomicBoolean isCreatedInstance = new AtomicBoolean(false);
+    private static final AtomicBoolean isCreatedInstance = new AtomicBoolean(false);
     private final URL PROPERTIES_PATH = getClass().getClassLoader().getResource("connection.properties");
     private BlockingQueue<ProxyConnection> freeConnections;
     private BlockingQueue<ProxyConnection> givenAwayConnections;

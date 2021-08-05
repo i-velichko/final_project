@@ -83,7 +83,9 @@ public class AppContextImpl implements AppContext {
         map.put(ChangeTrainerVerificationDateCommand.class, new ChangeTrainerVerificationDateCommand(getService(VerificationService.class)));
         map.put(ChangeExaminerVerificationDateCommand.class, new ChangeExaminerVerificationDateCommand(getService(VerificationService.class)));
         map.put(ChangeTrainerCharacteristicCommand.class, new ChangeTrainerCharacteristicCommand(getService(VerificationService.class)));
-        map.put(WelcomeStudentCommand.class, new WelcomeStudentCommand(getService(UserService.class)));
+        map.put(WelcomeStudentCommand.class, new WelcomeStudentCommand(
+                getService(UserService.class),
+                getService(VerificationService.class)));
     }
 
     @Override

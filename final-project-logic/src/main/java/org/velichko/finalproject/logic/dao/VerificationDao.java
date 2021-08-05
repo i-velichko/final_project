@@ -12,6 +12,8 @@ public interface VerificationDao extends BaseDao<Long, Verification> {
 
     boolean createNewVerification(Verification user, String projectName) throws DaoException;
 
+    Optional<Verification> findVerificationByStudentId(Long id) throws DaoException;
+
     boolean changeTrainerScoreById(long id, double score) throws DaoException;
 
     boolean changeTrainerCharacteristicById(long id, String characteristic) throws DaoException;

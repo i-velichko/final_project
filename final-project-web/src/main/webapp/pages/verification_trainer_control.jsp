@@ -24,7 +24,7 @@
 
                 <div class="col-md-6">
                     <img class="img-fluid rounded rounded-left"
-                         src="http://cr.openjdk.java.net/~jeff/Duke/png/Thumbsup1.png"
+                         src="https://www.oracle.com/a/ocom/img/duke-master-2020-globe.png"
                          alt="project image">
                 </div>
 

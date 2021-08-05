@@ -58,12 +58,13 @@ public class LoginCommand implements Command {
                 request.getSession().setAttribute(USER_PARAM, user);
                 request.setAttribute(USER_PARAM, user);
                 router.setRouterType(Router.RouterType.REDIRECT);
-                switch (user.getRole()) {
-                    case STUDENT -> router.setPagePath(REDIRECT_STUDENT);
-                    case TRAINER -> router.setPagePath(WELCOME_TRAINER);
-                    case ADMIN -> router.setPagePath(WELCOME_ADMIN);
-                    default -> router.setPagePath(LOGIN_PAGE);
-                }
+                router.setPagePath(REDIRECT_MAIN);
+//                switch (user.getRole()) {
+//                    case STUDENT -> router.setPagePath(REDIRECT_STUDENT);
+//                    case TRAINER -> router.setPagePath(WELCOME_TRAINER);
+//                    case ADMIN -> router.setPagePath(WELCOME_ADMIN);
+//                    default -> router.setPagePath(LOGIN_PAGE);
+//                }
             } else {
                 request.setAttribute(USER_NOT_FOUND_PARAM, "User not found. Please, register if you want log in."); //todo констант
                 router.setPagePath(LOGIN_PAGE);

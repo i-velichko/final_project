@@ -24,7 +24,7 @@
 
                 <div class="col-md-6">
                     <img class="img-fluid rounded rounded-left"
-                         src="https://i.ibb.co/mcXV5bL/871030872.jpg"
+                         src="https://web.stanford.edu/class/archive/cs/cs106a/cs106a.1198/images/assignments/java.png"
                          alt="project image">
                 </div>
 

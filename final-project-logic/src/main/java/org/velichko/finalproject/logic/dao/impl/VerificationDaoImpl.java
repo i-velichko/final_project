@@ -26,13 +26,14 @@ public class VerificationDaoImpl implements VerificationDao {
             " st.last_name as student_surname, v.title, tr.first_name as trainer_name, tr.last_name as trainer_surname," +
             " ex.first_name as examiner_name, ex.last_name as examiner_surname," +
             " v.application_date, v.trainer_verification_date, v.trainer_score, v.trainer_characteristic as characteristic, v.examiner_verification_date," +
-            " vs.value as verification_status, fs.value as final_status FROM project_verification as v" +
-            " LEFT JOIN verification_statuses as vs ON v.verification_status_id = vs.id " +
+            " vs.value as verification_status, fs.value as final_status FROM project_verification as v " +
+            "LEFT JOIN verification_statuses as vs ON v.verification_status_id = vs.id " +
             "LEFT JOIN final_statuses as fs ON v.final_status_id = fs.id " +
             "LEFT JOIN users as st ON v.student_id = st.id " +
             "LEFT JOIN users as tr ON v.trainer_id = tr.id " +
             "LEFT JOIN users as ex ON v.examiner_id = ex.id";
     private static final String FIND_VERIFICATION_BY_ID = FIND_ALL_VERIFICATIONS + " WHERE v.id = ?";
+    private static final String FIND_VERIFICATION_BY_STUDENT_ID = FIND_ALL_VERIFICATIONS + " WHERE v.student_id = ?";
     private static final String ADD_NEW_VERIFICATION = "INSERT INTO project_verification (title, student_id, trainer_id," +
             " verification_status_id, application_date) VALUES (?, ?, ?, ?, ?)";
     private static final String CHANGE_TRAINER_SCORE = "UPDATE project_verification SET trainer_score = ? WHERE id = ?";
@@ -96,6 +97,23 @@ public class VerificationDaoImpl implements VerificationDao {
             throw new DaoException("Error with find Verification by id .", e);
         }
 
+        return Optional.ofNullable(verification);
+    }
+
+    @Override
+    public Optional<Verification> findVerificationByStudentId(Long id) throws DaoException {
+        Verification verification = null;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_VERIFICATION_BY_STUDENT_ID)) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                verification = verificationCreator.createVerification(resultSet);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Error with find Verification by student id .", e);
+            throw new DaoException("Error with find Verification by student id .", e);
+        }
         return Optional.ofNullable(verification);
     }
 

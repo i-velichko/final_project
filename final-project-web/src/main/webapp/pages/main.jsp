@@ -11,7 +11,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Material Design for Bootstrap</title>
+    <title>Road to Epam</title>
     <%@include file="/fragment/header.jsp" %>
 </head>
 <body>
@@ -76,7 +76,7 @@
                 <div class="col-lg-4 col-md-12 mb-4">
                     <div class="card">
                         <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                            <img src="https://mdbootstrap.com/img/new/standard/nature/184.jpg" class="img-fluid" />
+                            <img src="https://static.wixstatic.com/media/41e776_ca7d72a49c754163a34bf0eb26ca27ad~mv2.png/v1/fit/w_450%2Ch_209%2Cal_c/file.png" class="img-fluid" />
                             <a href="#!">
                                 <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
                             </a>
@@ -95,7 +95,7 @@
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card">
                         <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                            <img src="https://mdbootstrap.com/img/new/standard/nature/023.jpg" class="img-fluid" />
+                            <img src="https://sun9-51.userapi.com/impg/pheCuXGhXBUKoe-PThlHuS5qks7C7TNKMEBq6A/7Vlc3G1DWwE.jpg?size=604x352&quality=96&sign=cc6a76e83b6479df679819d0097e455a&type=album" class="img-fluid" />
                             <a href="#!">
                                 <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
                             </a>
@@ -114,8 +114,8 @@
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card">
                         <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                            <img src="https://mdbootstrap.com/img/new/standard/nature/111.jpg" class="img-fluid" />
-                            <a href="#!">
+                            <img src="https://habr.com/share/publication/500718/e092a85385b52fa80c50b32a197b9646/" class="img-fluid" />
+                            <a href="https://habr.com/ru/company/epam_systems/blog/500718/">
                                 <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
                             </a>
                         </div>

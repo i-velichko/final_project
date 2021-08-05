@@ -28,4 +28,6 @@ public interface VerificationService {
     List<Verification> findAllApprovedVerifications(VerificationStatus status);
 
     boolean changeVerificationStatusById(Long verificationId, VerificationStatus verificationStatus) throws ServiceException;
+
+    Optional<Verification> findVerificationByStudentId(long id) throws ServiceException;
 }

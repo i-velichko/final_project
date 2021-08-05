@@ -57,8 +57,24 @@ public class VerificationServiceImpl implements VerificationService {
                 verification = optionalVerification.get();
             }
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with find verification by id", e);
+            logger.log(Level.ERROR, "Error with find verification by id " + id, e);
             throw new ServiceException("Error with find verification by ID " + id, e);
+        }
+        return Optional.ofNullable(verification);
+    }
+
+    @Override
+    public Optional<Verification> findVerificationByStudentId(long id) throws ServiceException {
+        Optional<Verification> optionalVerification;
+        Verification verification = null;
+        try {
+            optionalVerification = verificationDao.findVerificationByStudentId(id);
+            if (optionalVerification.isPresent()) {
+                verification = optionalVerification.get();
+            }
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with find verification by student id " + id, e);
+            throw new ServiceException("Error with find verification by student ID " + id, e);
         }
         return Optional.ofNullable(verification);
     }
@@ -163,4 +179,5 @@ public class VerificationServiceImpl implements VerificationService {
         }
         return isChanged;
     }
+
 }
