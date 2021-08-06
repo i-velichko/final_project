@@ -10,7 +10,7 @@ import org.velichko.finalproject.logic.entity.type.UserRole;
 import org.velichko.finalproject.logic.entity.type.UserStatus;
 import org.velichko.finalproject.logic.exception.DaoException;
 import org.velichko.finalproject.logic.pool.ConnectionPool;
-import org.velichko.finalproject.logic.utill.PasswordHashGenerator;
+import org.velichko.finalproject.logic.util.PasswordHashGenerator;
 
 import java.io.InputStream;
 import java.sql.*;

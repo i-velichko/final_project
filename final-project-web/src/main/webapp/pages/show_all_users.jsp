@@ -7,15 +7,15 @@
 </head>
 <body>
 <form>
-    <table class="table table-bordered">
+    <table id="allUsers" class="table table-striped table-bordered table-sm" >
         <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Login</th>
-            <th>Role</th>
-            <th>Status</th>
-            <th>Git Link</th>
-            <th>Show user info</th>
+            <th class="th-sm">First Name</th>
+            <th class="th-sm">Last Name</th>
+            <th class="th-sm">Login</th>
+            <th class="th-sm">Role</th>
+            <th class="th-sm">Status</th>
+            <th class="th-sm">Git Link</th>
+            <th class="th-sm">Show user info</th>
         </tr>
         <%--@elvariable id="users" type="java.util.List"--%>
         <c:forEach items="${users}" var="user">
@@ -69,6 +69,19 @@
             </tr>
         </c:forEach>
     </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
 </form>
 
 </body>

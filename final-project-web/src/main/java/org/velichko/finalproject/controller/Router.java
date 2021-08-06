@@ -1,6 +1,6 @@
 package org.velichko.finalproject.controller;
 
-import org.velichko.finalproject.command.PageName;
+import org.velichko.finalproject.controller.command.PageName;
 
 public class Router {
     public enum RouterType {

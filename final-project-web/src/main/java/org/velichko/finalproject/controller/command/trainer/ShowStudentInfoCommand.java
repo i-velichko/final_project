@@ -1,0 +1,63 @@
+package org.velichko.finalproject.controller.command.trainer;
+
+import jakarta.servlet.http.HttpServletRequest;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.velichko.finalproject.controller.command.Command;
+import org.velichko.finalproject.controller.Router;
+import org.velichko.finalproject.logic.entity.User;
+import org.velichko.finalproject.logic.entity.type.UserRole;
+import org.velichko.finalproject.logic.exception.ServiceException;
+import org.velichko.finalproject.logic.service.UserService;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
+import java.util.Base64;
+import java.util.Optional;
+
+import static org.velichko.finalproject.controller.command.PageName.ERROR_PAGE;
+import static org.velichko.finalproject.controller.command.PageName.STUDENT_INFO;
+import static org.velichko.finalproject.controller.command.ParamName.*;
+import static org.velichko.finalproject.controller.command.ParamName.USER_PARAM;
+
+public class ShowStudentInfoCommand implements Command {
+    private static final Logger logger = LogManager.getLogger();
+    private final UserService userService;
+
+    public ShowStudentInfoCommand(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Override
+    public Router execute(HttpServletRequest request) {
+        Router router = new Router();
+        String userId = request.getParameter(USER_ID_PARAM);
+        User user;
+        Optional<User> currentUser;
+        try {
+            currentUser = userService.findUserById(Long.parseLong(userId));
+            if (currentUser.isPresent()) {
+                user = currentUser.get();
+                UserRole.TRAINER.name();
+
+                byte[] byteImage = user.getImage().getBinaryStream().readAllBytes();
+                if (byteImage != null) {
+                    byte[] encodeBase64 = Base64.getEncoder().encode(byteImage);
+                    String base64DataString = new String(encodeBase64, StandardCharsets.UTF_8);
+                    String src = "data:image/jpeg;base64," + base64DataString;
+                    request.setAttribute("stringImage", src);
+                } else {
+                    //todo отправить картинку с надписью photo
+                }
+                request.setAttribute(USER_PARAM, user);
+                router.setPagePath(STUDENT_INFO);
+            }
+        } catch (ServiceException | SQLException | IOException e) {
+            logger.log(Level.ERROR, "Error with download user page with this user: " + userId);
+            router.setPagePath(ERROR_PAGE);
+        }
+        return router;
+    }
+}

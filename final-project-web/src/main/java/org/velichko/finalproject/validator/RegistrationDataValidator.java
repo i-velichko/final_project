@@ -9,8 +9,8 @@ import org.velichko.finalproject.logic.service.UserService;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.velichko.finalproject.command.MessageNameKey.*;
-import static org.velichko.finalproject.command.ParamName.*;
+import static org.velichko.finalproject.controller.command.MessageNameKey.*;
+import static org.velichko.finalproject.controller.command.ParamName.*;
 import static org.velichko.finalproject.validator.DataUserValidator.*;
 
 public class RegistrationDataValidator implements BaseDataValidator {

@@ -43,14 +43,55 @@
                 </li>
 
 
-                <c:if test="${not empty sessionScope.user}">
+                <c:if test="${sessionScope.user.role == 'STUDENT'}">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown" href="#" id="navbarDarkDropdownMenuLink" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Verification
+                            My Project Verification
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                            <li><a class="dropdown-item" href="${abs_path}/pages/verification_info.jsp">View</a></li>
+                            <li><a class="dropdown-item" href="${abs_path}/controller?command=redirect_student">View</a></li>
+                        </ul>
+                    </li>
+                </c:if>
+
+                <c:if test="${sessionScope.user.role == 'TRAINER'}">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown" href="#" id="navbarDarkDropdownMenuLink2" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Projects for Verification
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink2">
+                            <li><a class="dropdown-item" href="${abs_path}/controller?command=show_all_verifications">All projects</a></li>
+                            <li><a class="dropdown-item" href="">Waiting for my check</a></li>
+                            <li><a class="dropdown-item" href="">Assessed</a></li>
+                        </ul>
+                    </li>
+                </c:if>
+
+                <c:if test="${sessionScope.user.role == 'EXAMINER'}">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown" href="#" id="navbarDarkDropdownMenuLink3" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Projects for Verification
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink3">
+                            <li><a class="dropdown-item" href="${abs_path}/controller?command=show_all_verifications">All projects</a></li>
+                            <li><a class="dropdown-item" href="">Waiting for my check</a></li>
+                            <li><a class="dropdown-item" href="">Assessed</a></li>
+                        </ul>
+                    </li>
+                </c:if>
+
+                <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown" href="#" id="navbarDarkDropdownMenuLink4" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Control panel
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink4">
+                            <li><a class="dropdown-item" href="${abs_path}/controller?command=show_all_users">Users control</a></li>
+                            <li><a class="dropdown-item" href="">Something else</a></li>
                         </ul>
                     </li>
                 </c:if>
@@ -58,7 +99,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown" href="#" id="navbarDarkDropdownMenuLink1" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Products
+                        My profile
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                         <li><a class="dropdown-item" href="#">Action</a></li>
@@ -91,12 +132,6 @@
                     </a>
                         ${user.firstName} ${user.lastName}
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                        <c:if test="${sessionScope.user.role == 'STUDENT'}">
-                            <li>
-                                <a class="dropdown-item" href="${abs_path}/controller?command=redirect_student">Personal
-                                    area</a></li>
-
-                        </c:if>
                         <hr class="dropdown-divider">
                         </li>
                         <li>
