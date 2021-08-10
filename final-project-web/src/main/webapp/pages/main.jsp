@@ -1,3 +1,4 @@
+<%@ taglib prefix="ctg" uri="customtags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Professional
@@ -31,9 +32,7 @@
         }
     </style>
 </header>
-<!--Main Navigation-->
 
-<!--Main layout-->
 <main class="mt-5">
     <div class="container">
         <!--Section: Content-->

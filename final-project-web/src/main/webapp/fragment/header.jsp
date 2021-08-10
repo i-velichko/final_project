@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 <c:set var="abs_path">${pageContext.request.contextPath}</c:set>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="localization"/>
@@ -42,18 +43,19 @@
                 <li><a href="${abs_path}/controller?command=to_main_page" class="nav-link px-2 link-secondary">Home</a>
                 </li>
 
-
-                <c:if test="${sessionScope.user.role == 'STUDENT'}">
+                <ctg:is-student>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown" href="#" id="navbarDarkDropdownMenuLink" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
                             My Project Verification
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                            <li><a class="dropdown-item" href="${abs_path}/controller?command=redirect_student">View</a></li>
+                            <li><a class="dropdown-item" href="${abs_path}/controller?command=redirect_student">View</a>
+                            </li>
                         </ul>
                     </li>
-                </c:if>
+                </ctg:is-student>
+
 
                 <c:if test="${sessionScope.user.role == 'TRAINER'}">
                     <li class="nav-item dropdown">
@@ -62,7 +64,8 @@
                             Projects for Verification
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink2">
-                            <li><a class="dropdown-item" href="${abs_path}/controller?command=show_all_verifications">All projects</a></li>
+                            <li><a class="dropdown-item" href="${abs_path}/controller?command=show_all_verifications">All
+                                projects</a></li>
                             <li><a class="dropdown-item" href="">Waiting for my check</a></li>
                             <li><a class="dropdown-item" href="">Assessed</a></li>
                         </ul>
@@ -76,7 +79,8 @@
                             Projects for Verification
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink3">
-                            <li><a class="dropdown-item" href="${abs_path}/controller?command=show_all_verifications">All projects</a></li>
+                            <li><a class="dropdown-item" href="${abs_path}/controller?command=show_all_verifications">All
+                                projects</a></li>
                             <li><a class="dropdown-item" href="">Waiting for my check</a></li>
                             <li><a class="dropdown-item" href="">Assessed</a></li>
                         </ul>
@@ -90,7 +94,8 @@
                             Control panel
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink4">
-                            <li><a class="dropdown-item" href="${abs_path}/controller?command=show_all_users">Users control</a></li>
+                            <li><a class="dropdown-item" href="${abs_path}/controller?command=show_all_users">Users
+                                control</a></li>
                             <li><a class="dropdown-item" href="">Something else</a></li>
                         </ul>
                     </li>
