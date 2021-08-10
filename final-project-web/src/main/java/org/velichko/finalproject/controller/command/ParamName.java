@@ -2,6 +2,7 @@ package org.velichko.finalproject.controller.command;
 
 public class ParamName {
     public static final String USER_LIST_PARAM = "users";
+    public static final String PAGEABLE = "pageable";
     public static final String COMMAND_PARAM = "command";
     public static final String USER_PARAM = "user";
     public static final String PASSWORD_PARAM = "password";

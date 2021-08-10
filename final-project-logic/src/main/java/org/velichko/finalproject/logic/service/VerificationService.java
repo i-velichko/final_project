@@ -11,6 +11,10 @@ import java.util.Optional;
 public interface VerificationService {
     List<Verification> findAllVerifications() throws ServiceException;
 
+    List<Verification> readByPage(int page) throws ServiceException;
+
+    int getVerificationCount() throws ServiceException;
+
     boolean createNewVerification(Verification verification, String title) throws ServiceException;
 
     Optional<Verification> findVerificationById(long id) throws ServiceException;
@@ -30,4 +34,5 @@ public interface VerificationService {
     boolean changeVerificationStatusById(Long verificationId, VerificationStatus verificationStatus) throws ServiceException;
 
     Optional<Verification> findVerificationByStudentId(long id) throws ServiceException;
+
 }

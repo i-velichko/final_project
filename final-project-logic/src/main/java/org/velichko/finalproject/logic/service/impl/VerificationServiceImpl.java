@@ -35,6 +35,28 @@ public class VerificationServiceImpl implements VerificationService {
     }
 
     @Override
+    public List<Verification> readByPage(int page) throws ServiceException {
+        List<Verification> verifications;
+        try {
+            verifications = verificationDao.findByPage(page);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with find all Verifications .", e);
+            throw new ServiceException("Error with find all Verifications .", e);
+        }
+        return verifications;
+    }
+
+    @Override
+    public int getVerificationCount() throws ServiceException {
+        try {
+            return verificationDao.getVerificationCount();
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with verifications count .", e);
+            throw new ServiceException("Error with verifications count .", e);
+        }
+    }
+
+    @Override
     public boolean createNewVerification(Verification verification, String title) throws ServiceException {
         boolean result;
         try {

@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.util.Optional;
 
 public interface UserDao extends BaseDao<Long, User> {
+    int getUserCount() throws DaoException;
+
     boolean createNewUser(User user, String password, String registrationKey) throws DaoException;
 
     Optional<User> findUserByLoginAndPassword(String login, String password) throws DaoException;

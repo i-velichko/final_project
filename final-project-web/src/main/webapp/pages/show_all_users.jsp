@@ -7,7 +7,7 @@
 </head>
 <body>
 <form>
-    <table id="allUsers" class="table table-striped table-bordered table-sm" >
+    <table id="allUsers" class="table table-striped table-bordered table-sm">
         <tr>
             <th class="th-sm">First Name</th>
             <th class="th-sm">Last Name</th>
@@ -69,16 +69,19 @@
             </tr>
         </c:forEach>
     </table>
-    <nav aria-label="Page navigation example">
+    <nav aria-label="Page navigation area">
         <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            <li class="page-item ${pageable.isFirstPage() ? 'disabled': ''}">
+                <a class="page-link"
+                   href="${abs_path}/controller?command=show_all_users&page=${pageable.currentPage - 1}" tabindex="-1">Previous</a>
             </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
+            <c:forEach var="i" begin="1" end="${pageable.pageCount()}">
+                <li class="page-item ${pageable.currentPage eq i ? 'active': ''}">
+                    <a class="page-link" href="${abs_path}/controller?command=show_all_users&page=${i}">${i}</a></li>
+            </c:forEach>
+            <li class="page-item ${pageable.isLastPage() ? 'disabled': ''}">
+                <a class="page-link"
+                   href="${abs_path}/controller?command=show_all_users&page=${pageable.currentPage + 1}">Next</a>
             </li>
         </ul>
     </nav>

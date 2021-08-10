@@ -37,6 +37,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> readByPage(int page) throws ServiceException {
+        List<User> users;
+        try {
+            users = userDao.findByPage(page);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with find all Users .", e);
+            throw new ServiceException("Error with find all Users .", e);
+        }
+        return users;
+    }
+
+    @Override
+    public int getUserCount() throws ServiceException {
+        try {
+            return userDao.getUserCount();
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with users count .", e);
+            throw new ServiceException("Error with users count .", e);
+        }
+    }
+
+    @Override
     public boolean createNewUser(User user, String password, String registrationKey) throws ServiceException {
         boolean result;
         try {

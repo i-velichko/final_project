@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.logic.dao.VerificationDao;
 import org.velichko.finalproject.logic.dao.creator.VerificationCreator;
+import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.entity.Verification;
 import org.velichko.finalproject.logic.entity.type.FinalStatus;
 import org.velichko.finalproject.logic.entity.type.VerificationStatus;
@@ -42,6 +43,54 @@ public class VerificationDaoImpl implements VerificationDao {
     private static final String CHANGE_FINAL_VERIFICATION_STATUS = "UPDATE project_verification SET final_status_id = ? WHERE id = ?";
     private static final String CHANGE_TRAINER_VERIFICATION_DATE = "UPDATE project_verification SET trainer_verification_date = ? WHERE id = ?";
     private static final String CHANGE_EXAMINER_VERIFICATION_DATE = "UPDATE project_verification SET examiner_verification_date = ? WHERE id = ?";
+    private static final String ORDER_BY = " ORDER BY v.id ";
+
+    @Override
+    public List<Verification> findAll() throws DaoException {
+        return findListByQuery(FIND_ALL_VERIFICATIONS + ORDER_BY);
+    }
+
+    @Override
+    public List<Verification> findByPage(int page) throws DaoException {
+        return findListByQuery(buildPageableQuery(FIND_ALL_VERIFICATIONS + ORDER_BY, page));
+    }
+
+    private List<Verification> findListByQuery(String query) throws DaoException {
+        List<Verification> verifications = new ArrayList<>();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Verification verification = verificationCreator.createVerification(resultSet);
+                verifications.add(verification);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Error with find all Verifications .", e);
+            throw new DaoException("Error with find all Verifications .", e);
+        }
+        return verifications;
+    }
+
+    @Override
+    public int getVerificationCount() throws DaoException {
+        return rowCountByQuery(FIND_ALL_VERIFICATIONS);
+    }
+
+    private int rowCountByQuery(String sourceQuery) throws DaoException {
+        int result = 0;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM (" + sourceQuery + ") as tbl" )
+        ) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                result = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Can't count row count. ", e);
+            throw new DaoException("Can't count row count.", e);
+        }
+        return result;
+    }
 
     @Override
     public boolean createNewVerification(Verification verification, String title) throws DaoException {
@@ -63,24 +112,6 @@ public class VerificationDaoImpl implements VerificationDao {
         }
         return false;
     }
-
-    @Override
-    public List<Verification> findAll() throws DaoException {
-        List<Verification> verifications = new ArrayList<>();
-        try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(FIND_ALL_VERIFICATIONS)) {
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                Verification verification = verificationCreator.createVerification(resultSet);
-                verifications.add(verification);
-            }
-        } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error with find all Verifications .", e);
-            throw new DaoException("Error with find all Verifications .", e);
-        }
-        return verifications;
-    }
-
 
     @Override
     public Optional<Verification> findEntityById(Long id) throws DaoException {

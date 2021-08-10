@@ -10,6 +10,8 @@ import java.util.Optional;
 
 public interface VerificationDao extends BaseDao<Long, Verification> {
 
+    int getVerificationCount() throws DaoException;
+
     boolean createNewVerification(Verification user, String projectName) throws DaoException;
 
     Optional<Verification> findVerificationByStudentId(Long id) throws DaoException;

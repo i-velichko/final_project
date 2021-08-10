@@ -39,12 +39,22 @@ public class UserDaoImpl implements UserDao {
     private static final String CHANGE_USER_IMAGE = "UPDATE users SET image = ? WHERE login = ?";
     private static final String CHANGE_USER_ROLE = "UPDATE users SET role_id = ? WHERE id = ?";
     private static final String CHANGE_USER_STATUS = "UPDATE users SET status_id = ? WHERE id = ?";
+    private static final String ORDER_BY = " ORDER BY u.first_name ";
 
     @Override
     public List<User> findAll() throws DaoException {
+        return findListByQuery(FIND_ALL_USERS + ORDER_BY);
+    }
+
+    @Override
+    public List<User> findByPage(int page) throws DaoException {
+        return findListByQuery(buildPageableQuery(FIND_ALL_USERS + ORDER_BY, page));
+    }
+
+    private List<User> findListByQuery(String query) throws DaoException {
         List<User> users = new ArrayList<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(FIND_ALL_USERS)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 User user = userCreator.createUser(resultSet);
@@ -174,6 +184,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public int getUserCount() throws DaoException {
+        return rowCountByQuery(FIND_ALL_USERS);
+    }
+
+    @Override
     public boolean createNewUser(User user, String password, String registrationKey) throws DaoException {
         if (user != null && password != null) {
             try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -274,7 +289,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean create(User user) throws DaoException {
-        throw new UnsupportedOperationException("This method unsupported");
+        throw new UnsupportedOperationException("This method unsupported" );
     }
 
     @Override
@@ -287,4 +302,19 @@ public class UserDaoImpl implements UserDao {
         UserDao.super.close(connection);
     }
 
+    private int rowCountByQuery(String sourceQuery) throws DaoException {
+        int result = 0;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM (" + sourceQuery + ") as tbl" )
+        ) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                result = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Can't count row count. ", e);
+            throw new DaoException("Can't count row count.", e);
+        }
+        return result;
+    }
 }
