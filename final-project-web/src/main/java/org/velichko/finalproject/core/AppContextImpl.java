@@ -1,6 +1,7 @@
 package org.velichko.finalproject.core;
 
 import org.velichko.finalproject.controller.command.admin.ChangeUserRoleCommand;
+import org.velichko.finalproject.controller.command.admin.ChangeUserStatusCommand;
 import org.velichko.finalproject.controller.command.admin.ShowAllUsersCommand;
 import org.velichko.finalproject.controller.command.admin.ShowAllVerificationsCommand;
 import org.velichko.finalproject.controller.command.common.LoginCommand;
@@ -18,7 +19,10 @@ import org.velichko.finalproject.logic.dao.UserDao;
 import org.velichko.finalproject.logic.dao.VerificationDao;
 import org.velichko.finalproject.logic.dao.impl.UserDaoImpl;
 import org.velichko.finalproject.logic.dao.impl.VerificationDaoImpl;
-import org.velichko.finalproject.logic.service.*;
+import org.velichko.finalproject.logic.service.AdmissionScoreCheckService;
+import org.velichko.finalproject.logic.service.EmailService;
+import org.velichko.finalproject.logic.service.UserService;
+import org.velichko.finalproject.logic.service.VerificationService;
 import org.velichko.finalproject.logic.service.impl.AdmissionScoreCheckServiceImpl;
 import org.velichko.finalproject.logic.service.impl.EmailServiceImpl;
 import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
@@ -42,10 +46,11 @@ public class AppContextImpl implements AppContext {
         map.put(AdmissionScoreCheckService.class, new AdmissionScoreCheckServiceImpl());
         map.put(VerificationDao.class, new VerificationDaoImpl());
         map.put(UserService.class, new UserServiceImpl(getService(UserDao.class)));
-        map.put(UserService.class, new UserServiceImpl(getService(UserDao.class)));
         map.put(VerificationService.class, new VerificationServiceImpl(getService(VerificationDao.class)));
         map.put(VerificationWebFacade.class, new VerificationWebFacade(getService(VerificationService.class)));
         map.put(I18nManager.class, new I18nManager());
+        map.put(RegistrationDataValidator.class, new RegistrationDataValidator(getService(UserService.class), getService(I18nManager.class)));
+        map.put(VerificationDataValidator.class, new VerificationDataValidator(getService(UserService.class), getService(I18nManager.class)));
         map.put(BaseDataValidator.class, new RegistrationDataValidator(getService(UserService.class), getService(I18nManager.class)));
         map.put(BaseDataValidator.class, new VerificationDataValidator(getService(UserService.class), getService(I18nManager.class)));
         map.put(RegistrationConfirmatory.class, new RegistrationConfirmatory(getService(EmailService.class)));
@@ -63,6 +68,7 @@ public class AppContextImpl implements AppContext {
                 getService(VerificationDataValidator.class)
         ));
         map.put(ChangeUserRoleCommand.class, new ChangeUserRoleCommand(getService(UserService.class)));
+        map.put(ChangeUserStatusCommand.class, new ChangeUserStatusCommand(getService(UserService.class)));
         map.put(LoginCommand.class, new LoginCommand(getService(UserService.class)));
         map.put(ShowAllUsersCommand.class, new ShowAllUsersCommand(getService(UserService.class)));
         map.put(ShowAllVerificationsCommand.class, new ShowAllVerificationsCommand(getService(VerificationService.class)));
@@ -77,7 +83,7 @@ public class AppContextImpl implements AppContext {
                 getService(UserService.class),
                 getService(EmailService.class),
                 getService(AdmissionScoreCheckService.class)
-                ));
+        ));
         map.put(ChangeTrainerVerificationDateCommand.class, new ChangeTrainerVerificationDateCommand(getService(VerificationService.class)));
         map.put(ChangeExaminerVerificationDateCommand.class, new ChangeExaminerVerificationDateCommand(getService(VerificationService.class)));
         map.put(ChangeTrainerCharacteristicCommand.class, new ChangeTrainerCharacteristicCommand(getService(VerificationService.class)));

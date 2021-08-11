@@ -34,7 +34,7 @@
                     </div>
                     <div class="col-12">
                         <button type="submit"><fmt:message key="page.login.sign_in"/></button>
-                        <a href="${abs_path}/pages/registration.jsp">
+                        <a href="${abs_path}/controller?command=to_registration_page">
                             <button type="button"><fmt:message key="page.login.register"/></button>
                         </a>
                     </div>

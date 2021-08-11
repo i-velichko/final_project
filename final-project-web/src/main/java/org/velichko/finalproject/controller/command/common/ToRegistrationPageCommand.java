@@ -4,16 +4,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.velichko.finalproject.controller.Router;
 import org.velichko.finalproject.controller.command.Command;
 
-import static org.velichko.finalproject.controller.Router.RouterType.REDIRECT;
-import static org.velichko.finalproject.controller.command.PageName.ERROR_PAGE;
+import static org.velichko.finalproject.controller.command.PageName.REGISTRATION_PAGE;
 
-public class WrongCommand implements Command {
+public class ToRegistrationPageCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
-        router.setPagePath(ERROR_PAGE);
-        router.setRouterType(REDIRECT);
-
+        router.setPagePath(REGISTRATION_PAGE);
         return router;
     }
 }

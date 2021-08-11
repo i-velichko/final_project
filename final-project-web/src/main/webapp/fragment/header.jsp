@@ -152,14 +152,14 @@
 
             <c:if test="${empty sessionScope.user}">
                 <div class="text-end">
-                    <form action="${abs_path}/pages/login.jsp" method="post">
+                    <form action="${abs_path}/controller?command=to_login_page" method="post">
                         <button type="submit" class="btn btn-outline-light me-2">
                             <fmt:message key="page.login.login"/>
                         </button>
                     </form>
                 </div>
                 <div class="text-xxl-end">
-                    <form action="${abs_path}/pages/registration.jsp" method="post">
+                    <form action="${abs_path}/controller?command=to_registration_page" method="post">
                         <button type="submit" class="btn btn-outline-light me-2">
                             <fmt:message key="page.login.register"/>
                         </button>

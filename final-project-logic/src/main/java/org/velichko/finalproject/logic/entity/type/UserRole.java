@@ -5,7 +5,8 @@ public enum UserRole {
     TRAINER(2),
     EXAMINER(3),
     CHIEF(4),
-    STUDENT(5);
+    STUDENT(5),
+    ANONYMOUS(6);
 
     private final int id;
 

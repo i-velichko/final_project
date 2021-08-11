@@ -3,9 +3,9 @@ package org.velichko.finalproject.controller.command.student;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
+import org.velichko.finalproject.controller.Router;
 import org.velichko.finalproject.controller.command.Command;
 import org.velichko.finalproject.controller.command.MessageNameKey;
-import org.velichko.finalproject.controller.Router;
 import org.velichko.finalproject.i18n.I18nManager;
 import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.entity.Verification;
@@ -27,7 +27,8 @@ import static org.velichko.finalproject.controller.command.PageName.*;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
 public class StartVerificationCommand implements Command {
-    private static final String SEND_EMAIL_ADDRESS = "http://localhost:8080/final_project_web_war_exploded/controller?command=start_verification";
+    private static final String MESSAGE_TO_TRAINER = "A new project has appeared for verification. Detailed information can be found in your personal account. " +
+            "<a href=http://localhost:8080/final_project_web_war_exploded/controller?command=show_all_check_waiting_projects>link</a>";
     private final UserService userService;
     private final VerificationService verificationService;
     private final I18nManager i18n;
@@ -100,7 +101,7 @@ public class StartVerificationCommand implements Command {
                 try {
                     userService.changeUserGit(login, gitLink);
                     if (trainerEmail != null) {
-                        emailService.sendEmail(trainerEmail, SEND_EMAIL_ADDRESS);
+                        emailService.sendEmail(trainerEmail, MESSAGE_TO_TRAINER);
                     }
                 } catch (ServiceException e) {
                     router.setPagePath(ERROR_PAGE);

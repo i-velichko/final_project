@@ -27,6 +27,8 @@ public class ShowAllUsersCommand implements Command {
         this.userService = userService;
     }
 
+
+
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();

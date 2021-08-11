@@ -18,13 +18,12 @@ public class EmailServiceImpl implements EmailService {
     private final URL EMAIL_PROPERTIES_PATH = getClass().getClassLoader().getResource("email.properties");
     private static final String USER_KEY = "mail.smtp.user";
     private static final String PASSWORD_KEY = "mail.smtp.password";
-    public static final String EMAIL_CONFIRMATION = "Email Confirmation";
+    public static final String EMAIL_FROM_EPAM_TRAINING_CENTER = "Email from EPAM training center";
     public static final String CONTENT_TYPE = "text/html";
 
     @Override
-    public boolean sendEmail(String emailTo, String key) throws ServiceException {
+    public boolean sendEmail(String emailTo, String messageContent) throws ServiceException {
         Properties properties = null;
-        final String content = "Click to confirm email: <a href=http://localhost:8080/final_project_web_war_exploded/controller?command=registration_confirmation_command&confirm=" + key + ">link</a>";
         if (EMAIL_PROPERTIES_PATH != null) {
             properties = PropertyLoader.loadPropertiesData(EMAIL_PROPERTIES_PATH);
         }
@@ -38,13 +37,12 @@ public class EmailServiceImpl implements EmailService {
             }
         });
         try {
-            boolean isSent = false;
             Message message = new MimeMessage(session);
             if (user != null) {
                 message.setFrom(new InternetAddress(user));
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
-                message.setSubject(EMAIL_CONFIRMATION);
-                message.setContent(content, CONTENT_TYPE);
+                message.setSubject(EMAIL_FROM_EPAM_TRAINING_CENTER);
+                message.setContent(messageContent, CONTENT_TYPE);
                 Transport.send(message);
             }
             return true;

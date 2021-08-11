@@ -4,7 +4,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.velichko.finalproject.logic.entity.type.UserRole;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.velichko.finalproject.controller.command.ParamName.*;
@@ -27,9 +29,9 @@ public class CommandProvider {
         return getCommandName(request).orElseThrow().getCommand();
     }
 
-//    public int getCommandAccessLevel(HttpServletRequest request) {
-//        return getCommandName(request).getAccessLevel();
-//    }  //todo
+    public List<UserRole> getCommandAccessLevel(HttpServletRequest request) {
+        return getCommandName(request).get().getAccessLevel();
+    }
 
     public Optional<CommandName> getCommandName(HttpServletRequest request) {
         String name = request.getParameter(COMMAND_PARAM);

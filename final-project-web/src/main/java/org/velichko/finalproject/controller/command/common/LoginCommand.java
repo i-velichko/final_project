@@ -4,14 +4,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.velichko.finalproject.controller.command.Command;
 import org.velichko.finalproject.controller.Router;
+import org.velichko.finalproject.controller.command.Command;
 import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.exception.ServiceException;
 import org.velichko.finalproject.logic.service.UserService;
 
 import java.util.Optional;
 
+import static org.velichko.finalproject.controller.Router.RouterType.REDIRECT;
 import static org.velichko.finalproject.controller.command.PageName.*;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
@@ -29,7 +30,7 @@ public class LoginCommand implements Command {
         User user = (User) request.getSession().getAttribute(USER_PARAM);
         if (user != null) {
             request.setAttribute(USER_PARAM, user);
-            router.setRouterType(Router.RouterType.REDIRECT);
+            router.setRouterType(REDIRECT);
             switch (user.getRole()) {
                 case STUDENT -> router.setPagePath(REDIRECT_STUDENT);
                 case TRAINER -> router.setPagePath(WELCOME_TRAINER);
@@ -56,14 +57,8 @@ public class LoginCommand implements Command {
                 user = currentUser.get();
                 request.getSession().setAttribute(USER_PARAM, user);
                 request.setAttribute(USER_PARAM, user);
-                router.setRouterType(Router.RouterType.REDIRECT);
+                router.setRouterType(REDIRECT);
                 router.setPagePath(REDIRECT_MAIN);
-//                switch (user.getRole()) {
-//                    case STUDENT -> router.setPagePath(REDIRECT_STUDENT);
-//                    case TRAINER -> router.setPagePath(WELCOME_TRAINER);
-//                    case ADMIN -> router.setPagePath(WELCOME_ADMIN);
-//                    default -> router.setPagePath(LOGIN_PAGE);
-//                }
             } else {
                 request.setAttribute(USER_NOT_FOUND_PARAM, "User not found. Please, register if you want log in."); //todo констант
                 router.setPagePath(LOGIN_PAGE);

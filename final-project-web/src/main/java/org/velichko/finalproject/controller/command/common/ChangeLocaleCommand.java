@@ -2,9 +2,10 @@ package org.velichko.finalproject.controller.command.common;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.velichko.finalproject.controller.command.Command;
 import org.velichko.finalproject.controller.Router;
+import org.velichko.finalproject.controller.command.Command;
 
+import static org.velichko.finalproject.controller.Router.RouterType.REDIRECT;
 import static org.velichko.finalproject.controller.command.PageName.REFERER;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
@@ -13,7 +14,7 @@ public class ChangeLocaleCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
-        router.setRouterType(Router.RouterType.REDIRECT);
+        router.setRouterType(REDIRECT);
         HttpSession session = request.getSession();
         String locale = (String) session.getAttribute(LOCALE_PARAM);
         if (locale == null || RU_LOCALE.equals(locale)) {

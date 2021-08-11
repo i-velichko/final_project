@@ -25,11 +25,11 @@ public class ChangeUserRoleCommand implements Command {
         Router router = new Router();
         String userId = request.getParameter(USER_ID_PARAM);
         String newRole = request.getParameter(NEW_ROLE);
-        UserRole role = UserRole.valueOf(newRole);
-
+        //todo проверка энама на айлегаларгумент
         try {
+            UserRole role = UserRole.valueOf(newRole);
             userService.changeUserRole(Long.parseLong(userId), role);
-        } catch (ServiceException e) {
+        } catch (ServiceException | IllegalArgumentException e) {
             logger.log(Level.DEBUG, "Error. Impossible change role by this " + userId + " user");
 //                    todo error to admin page
         }

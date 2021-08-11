@@ -37,7 +37,7 @@
                                    href="${abs_path}/controller?command=change_user_role&userId=${user.id}&new_role=TRAINER">TRAINER</a>
                             </li>
                             <li><a class="dropdown-item"
-                                   href="${abs_path}/controller?command=change_user_role&userId=${user.id}&new_role=EXAMINER">EXAMINER</a>
+                                   href="${abs_path}/controller?command=change_user_role&userId=${user.id}&new_role=EXAMINERR">EXAMINER</a>
                             </li>
                             <li><a class="dropdown-item"
                                    href="${abs_path}/controller?command=change_user_role&userId=${user.id}&new_role=STUDENT">STUDENT</a>
