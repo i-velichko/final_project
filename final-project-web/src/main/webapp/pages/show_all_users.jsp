@@ -2,8 +2,7 @@
 <head>
 
     <title>All users list</title>
-    <%@include file="/fragment/header.jsp" %>
-
+        <%@include file="/fragment/admin_header.jsp" %>
 </head>
 <body>
 <form>
@@ -65,7 +64,7 @@
                     </div>
                 </td>
                 <td>${user.gitLink}</td>
-                <td><a href="${abs_path}/controller?command=show_student_info&userId=${user.id}">show info</a></td>
+                <td><a href="${abs_path}/controller?command=show_user_info&userId=${user.id}">show info</a></td>
             </tr>
         </c:forEach>
     </table>

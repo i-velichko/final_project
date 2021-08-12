@@ -4,7 +4,6 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.logic.dao.UserDao;
-import org.velichko.finalproject.logic.dao.impl.UserDaoImpl;
 import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.entity.type.UserRole;
 import org.velichko.finalproject.logic.entity.type.UserStatus;
@@ -207,8 +206,14 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public boolean updateUser(UserDaoImpl userDao) {
-        return false;
+    public boolean updateUser(User user) throws ServiceException {
+        boolean result;
+        try {
+            result = userDao.update(user);
+        } catch (DaoException e) {
+            throw new ServiceException("Error. Impossible update user", e);
+        }
+        return result;
     }
 
     @Override

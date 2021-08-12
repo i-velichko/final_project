@@ -15,7 +15,7 @@ public interface UserService {
     List<User> readAll () throws ServiceException;
     List<User> readByPage (int page) throws ServiceException;
     int getUserCount () throws ServiceException;
-    boolean updateUser (UserDaoImpl userDao) throws ServiceException; //todo  реализовать или убрать
+    boolean updateUser (User user) throws ServiceException;
     boolean changeUserImage (String login, InputStream image) throws ServiceException;
     boolean createNewUser (User user, String password, String registrationKey) throws ServiceException;
     boolean changeUserGit (String login, String gitLink) throws ServiceException;

@@ -49,13 +49,13 @@ public class StartVerificationCommand implements Command {
         Router router = new Router();
         String locale = (String) request.getSession().getAttribute(LOCALE_PARAM);
 
-        String gitLink = request.getParameter(GIT_LINK);
+        String gitLink = request.getParameter(GIT_LINK_PARAM);
         String projectTitle = request.getParameter(PROJECT_TITLE_PARAM);
         String trainerId = request.getParameter(TRAINER_ID_PARAM);
         String trainerEmail = null;
 
         Map<String, String> startVerificationData = new HashMap<>();
-        startVerificationData.put(GIT_LINK, gitLink);
+        startVerificationData.put(GIT_LINK_PARAM, gitLink);
         startVerificationData.put(PROJECT_TITLE_PARAM, projectTitle);
 
         String method = request.getMethod();
@@ -113,7 +113,7 @@ public class StartVerificationCommand implements Command {
                 } catch (ServiceException e) {
                     router.setPagePath(ERROR_PAGE);
                 }
-                router.setPagePath(STUDENT_INFO);
+                router.setPagePath(USER_INFO);
 //        router.setPagePath(PageName.VERIFICATION_INFO);
             }
         }

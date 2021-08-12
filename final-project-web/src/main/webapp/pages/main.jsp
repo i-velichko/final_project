@@ -13,10 +13,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>Road to Epam</title>
-    <%@include file="/fragment/header.jsp" %>
+
+    <ctg:is-anonymous>
+        <%@include file="/fragment/header.jsp" %>
+    </ctg:is-anonymous>
+
+    <ctg:is-student>
+        <%@include file="/fragment/student_header.jsp" %>
+    </ctg:is-student>
+
+    <ctg:is-trainer>
+        <%@include file="/fragment/trainer_header.jsp" %>
+    </ctg:is-trainer>
+
+    <ctg:is-examiner>
+        <%@include file="/fragment/examiner_header.jsp" %>
+    </ctg:is-examiner>
+
+    <ctg:is-admin>
+        <%@include file="/fragment/admin_header.jsp" %>
+    </ctg:is-admin>
+
+    <ctg:is-chief>
+        <%@include file="/fragment/chief_header.jsp" %>
+    </ctg:is-chief>
+
 </head>
 <body>
-<!--Main Navigation-->
 <header>
     <style>
         #intro {

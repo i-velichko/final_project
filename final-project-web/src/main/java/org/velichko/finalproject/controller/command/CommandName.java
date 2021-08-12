@@ -12,7 +12,10 @@ import org.velichko.finalproject.controller.command.newuser.RegistrationCommand;
 import org.velichko.finalproject.controller.command.newuser.RegistrationConfirmationCommand;
 import org.velichko.finalproject.controller.command.student.StartVerificationCommand;
 import org.velichko.finalproject.controller.command.student.WelcomeStudentCommand;
-import org.velichko.finalproject.controller.command.trainer.*;
+import org.velichko.finalproject.controller.command.trainer.ChangeTrainerCharacteristicCommand;
+import org.velichko.finalproject.controller.command.trainer.ChangeTrainerScoreCommand;
+import org.velichko.finalproject.controller.command.trainer.ChangeTrainerVerificationDateCommand;
+import org.velichko.finalproject.controller.command.trainer.ShowTrainerInfoCommand;
 import org.velichko.finalproject.core.AppContextImpl;
 import org.velichko.finalproject.logic.entity.type.UserRole;
 
@@ -36,22 +39,25 @@ public enum CommandName {
     SHOW_ALL_APPROVED_PROJECTS(AppContextImpl.getInstance().getService(ShowAllApprovedProjectsCommand.class)),
     REGISTRATION_CONFIRMATION_COMMAND(AppContextImpl.getInstance().getService(RegistrationConfirmationCommand.class)),
     SHOW_TRAINER_INFO(AppContextImpl.getInstance().getService(ShowTrainerInfoCommand.class), Arrays.asList(ADMIN, TRAINER)),
-    SHOW_STUDENT_INFO(AppContextImpl.getInstance().getService(ShowStudentInfoCommand.class),
+    SHOW_USER_INFO(AppContextImpl.getInstance().getService(ShowUserInfoCommand.class),
             Arrays.asList(ADMIN, TRAINER, STUDENT, EXAMINER, CHIEF)),
     SHOW_VERIFICATION_INFO(AppContextImpl.getInstance().getService(ShowVerificationInfoCommand.class),
             Arrays.asList(TRAINER, STUDENT, EXAMINER, CHIEF)),
+    EDIT_USER_DATA(AppContextImpl.getInstance().getService(EditUserDataCommand.class), Arrays.asList(ADMIN, EXAMINER, TRAINER, CHIEF, STUDENT)),
     CHANGE_FINAL_STATUS(AppContextImpl.getInstance().getService(ChangeFinalStatusCommand.class), List.of(EXAMINER)),
     CHANGE_TRAINER_SCORE(AppContextImpl.getInstance().getService(ChangeTrainerScoreCommand.class), List.of(TRAINER)),
     CHANGE_TRAINER_VERIFICATION_DATE(AppContextImpl.getInstance().getService(ChangeTrainerVerificationDateCommand.class), List.of(TRAINER)),
     CHANGE_EXAMINER_VERIFICATION_DATE(AppContextImpl.getInstance().getService(ChangeExaminerVerificationDateCommand.class), List.of(EXAMINER)),
     CHANGE_TRAINER_CHARACTERISTIC(AppContextImpl.getInstance().getService(ChangeTrainerCharacteristicCommand.class), List.of(TRAINER)),
+    CHANGE_USER_IMAGE(AppContextImpl.getInstance().getService(ChangeUserImageCommand.class), Arrays.asList(ADMIN, EXAMINER, TRAINER, CHIEF, STUDENT)),
     REDIRECT_STUDENT(AppContextImpl.getInstance().getService(WelcomeStudentCommand.class)),
     REDIRECT_MAIN(new ToMainPageCommand()),
     REDIRECT_VERIFICATION_INFO(AppContextImpl.getInstance().getService(ShowVerificationInfoCommand.class)),
     WRONG_COMMAND(new WrongCommand()),
     TO_MAIN_PAGE(new ToMainPageCommand()),
     TO_LOGIN_PAGE(new ToLoginPageCommand(), List.of(ANONYMOUS)),
-    TO_REGISTRATION_PAGE(new ToRegistrationPageCommand(), List.of(ANONYMOUS));
+    TO_REGISTRATION_PAGE(new ToRegistrationPageCommand(), List.of(ANONYMOUS)),
+    TO_EDIT_USER_DATA_PAGE(new ToEditUserDataPageCommand(), Arrays.asList(ADMIN, EXAMINER, TRAINER, CHIEF, STUDENT));
 
     private final Command command;
     private final List<UserRole> accessLevel;

@@ -9,10 +9,9 @@
 <html>
 <head>
     <title>Verification trainer</title>
+        <%@include file="/fragment/trainer_header.jsp" %>
 </head>
 <body>
-<%@include file="/fragment/header.jsp" %>
-
 
 <div class="container">
 

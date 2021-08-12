@@ -15,7 +15,7 @@
     <title>Student personal area</title>
 </head>
 <body>
-<%@include file="/fragment/header.jsp" %>
+<%@include file="/fragment/student_header.jsp" %>
 
 <section class="vh-100 gradient-custom">
     <div class="container py-5 h-100">
@@ -91,7 +91,7 @@
                                 </div>
                             </div>
                             <div class="mt-4 pt-2">
-                                <input class="btn btn-primary btn-lg" type="submit"
+                                <input class="btn btn-primary btn-lg"  type="submit"
                                        value="<fmt:message key="page.student.go_to_verification"/>"/>
                             </div>
                         </form>

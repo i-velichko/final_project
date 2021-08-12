@@ -9,10 +9,9 @@
 <html>
 <head>
     <title>Verification examiner</title>
+        <%@include file="/fragment/examiner_header.jsp" %>
 </head>
 <body>
-<%@include file="/fragment/header.jsp" %>
-
 
 <div class="container">
 

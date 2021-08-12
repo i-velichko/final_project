@@ -27,7 +27,7 @@ public class VerificationDataValidator implements BaseDataValidator {
     @Override
     public Map<String, String> checkValues(Map<String, String> verificationData, String locale) {
         Map<String, String> result = new HashMap<>();
-        String gitLink = verificationData.get(GIT_LINK);
+        String gitLink = verificationData.get(GIT_LINK_PARAM);
         String projectTitle = verificationData.get(PROJECT_TITLE_PARAM);
 
         if (gitLink != null && gitLink.matches(URL_REGEXP)) {

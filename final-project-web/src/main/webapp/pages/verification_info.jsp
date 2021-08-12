@@ -6,13 +6,31 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 <html>
 <head>
     <title>Verification info</title>
+    <ctg:is-student>
+        <%@include file="/fragment/student_header.jsp" %>
+    </ctg:is-student>
+
+    <ctg:is-trainer>
+        <%@include file="/fragment/trainer_header.jsp" %>
+    </ctg:is-trainer>
+
+    <ctg:is-examiner>
+        <%@include file="/fragment/examiner_header.jsp" %>
+    </ctg:is-examiner>
+
+    <ctg:is-admin>
+        <%@include file="/fragment/admin_header.jsp" %>
+    </ctg:is-admin>
+
+    <ctg:is-chief>
+        <%@include file="/fragment/chief_header.jsp" %>
+    </ctg:is-chief>
 </head>
 <body>
-<%@include file="/fragment/header.jsp" %>
-
 
 <div class="container">
 

@@ -22,6 +22,7 @@ import java.util.Map;
 import static org.velichko.finalproject.controller.command.MessageNameKey.REGISTRATION_FAILED_KEY;
 import static org.velichko.finalproject.controller.command.MessageNameKey.REGISTRATION_SUCCESSFUL_KEY;
 import static org.velichko.finalproject.controller.command.PageName.LOGIN_PAGE;
+import static org.velichko.finalproject.controller.command.PageName.REGISTRATION_PAGE;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
 
@@ -85,6 +86,8 @@ public class RegistrationCommand implements Command {
                 }
                 router.setPagePath(LOGIN_PAGE);
             }
+        } else {
+            router.setPagePath(REGISTRATION_PAGE);
         }
         return router;
     }

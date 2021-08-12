@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Locale;
 
 @WebFilter("/*")
-public class LocalFilter implements Filter {
+public class LocaleFilter implements Filter {
     private static final String EN_LANG = "en";
     private static final String US_COUNTRY = "US";
 

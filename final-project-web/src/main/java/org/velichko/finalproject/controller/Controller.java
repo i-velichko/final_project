@@ -36,7 +36,9 @@ public class Controller extends HttpServlet {
         if (commandName.isPresent()) {
             Router router = commandName.get().getCommand().execute(request);
             request.setAttribute(REFERER_COMMAND, commandName.get().name());
-            if (router.getRouterType() == Router.RouterType.REDIRECT) {
+            if (router.hasError()) {
+                response.sendError(router.getErrorCode());
+            } else if (router.getRouterType() == Router.RouterType.REDIRECT) {
                 response.sendRedirect(router.getPagePath());
             } else {
                 request.getRequestDispatcher(router.getPagePath()).forward(request, response);

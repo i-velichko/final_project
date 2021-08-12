@@ -1,4 +1,4 @@
-package org.velichko.finalproject.controller.command.trainer;
+package org.velichko.finalproject.controller.command.common;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;
@@ -18,15 +18,16 @@ import java.util.Base64;
 import java.util.Optional;
 
 import static org.velichko.finalproject.controller.command.PageName.ERROR_PAGE;
-import static org.velichko.finalproject.controller.command.PageName.STUDENT_INFO;
+import static org.velichko.finalproject.controller.command.PageName.USER_INFO;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 import static org.velichko.finalproject.controller.command.ParamName.USER_PARAM;
 
-public class ShowStudentInfoCommand implements Command {
+public class ShowUserInfoCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
+    private static final String SRC = "data:image/jpeg;base64,";
     private final UserService userService;
 
-    public ShowStudentInfoCommand(UserService userService) {
+    public ShowUserInfoCommand(UserService userService) {
         this.userService = userService;
     }
 
@@ -41,18 +42,15 @@ public class ShowStudentInfoCommand implements Command {
             if (currentUser.isPresent()) {
                 user = currentUser.get();
                 UserRole.TRAINER.name();
-
-                byte[] byteImage = user.getImage().getBinaryStream().readAllBytes();
-                if (byteImage != null) {
+                if (user.getImage() != null) {
+                    byte[] byteImage = user.getImage().getBinaryStream().readAllBytes();
                     byte[] encodeBase64 = Base64.getEncoder().encode(byteImage);
                     String base64DataString = new String(encodeBase64, StandardCharsets.UTF_8);
-                    String src = "data:image/jpeg;base64," + base64DataString;
-                    request.setAttribute("stringImage", src);
-                } else {
-                    //todo отправить картинку с надписью photo
+                    String source = SRC + base64DataString;
+                    request.setAttribute(STRING_IMAGE_PARAM, source);
                 }
                 request.setAttribute(USER_PARAM, user);
-                router.setPagePath(STUDENT_INFO);
+                router.setPagePath(USER_INFO);
             }
         } catch (ServiceException | SQLException | IOException e) {
             logger.log(Level.ERROR, "Error with download user page with this user: " + userId);

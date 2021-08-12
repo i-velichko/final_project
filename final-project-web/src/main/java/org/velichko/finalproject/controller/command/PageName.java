@@ -15,7 +15,7 @@ public class PageName {
     public static final String WELCOME_ADMIN = "pages/admin.jsp";
 
     public static final String TRAINER_INFO = "/pages/trainer_info.jsp";
-    public static final String STUDENT_INFO = "pages/student_info.jsp";
+    public static final String USER_INFO = "pages/user_info.jsp";
     public static final String VERIFICATION_INFO = "/pages/verification_info.jsp";
 
     public static final String ERROR_PAGE = "/pages/error.jsp";
@@ -29,6 +29,7 @@ public class PageName {
     public static final String VERIFICATION_EXAMINER_CONTROL = "/pages/verification_examiner_control.jsp";
     public static final String MAIN_PAGE = "/pages/main.jsp";
     public static final String REDIRECT_VERIFICATION_INFO = "controller?command=redirect_verification_info";
+    public static final String EDIT_USER_DATA = "/pages/edit_user_data.jsp";
 
 
     private PageName () {

@@ -1,6 +1,7 @@
 package org.velichko.finalproject.controller.command.admin;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,7 +43,8 @@ public class ShowAllUsersCommand implements Command {
             router.setPagePath(SHOW_ALL_USERS);
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Error with loading users from db", e); //todo
-            router.setPagePath(ERROR_PAGE);
+            request.setAttribute(MSG, e.getMessage());//TODO
+            router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         return router;
     }

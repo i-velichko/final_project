@@ -39,6 +39,7 @@ public class UserDaoImpl implements UserDao {
     private static final String CHANGE_USER_IMAGE = "UPDATE users SET image = ? WHERE login = ?";
     private static final String CHANGE_USER_ROLE = "UPDATE users SET role_id = ? WHERE id = ?";
     private static final String CHANGE_USER_STATUS = "UPDATE users SET status_id = ? WHERE id = ?";
+    private static final String UPDATE_USER = "UPDATE users SET first_name=?, last_name=?,  git=?, email=? WHERE id= ?";
     private static final String ORDER_BY = " ORDER BY u.first_name ";
 
     @Override
@@ -283,29 +284,26 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean update(User entity) {
-        return false;
-    }
-
-    @Override
-    public boolean create(User user) throws DaoException {
-        throw new UnsupportedOperationException("This method unsupported" );
-    }
-
-    @Override
-    public void close(Statement statement) {
-        UserDao.super.close(statement);
-    }
-
-    @Override
-    public void close(Connection connection) {
-        UserDao.super.close(connection);
+    public boolean update(User user) throws DaoException {
+        int rowsUpdate;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_USER)) {
+            statement.setString(1, user.getFirstName());
+            statement.setString(2, user.getLastName());
+            statement.setString(3, user.getGitLink());
+            statement.setString(4, user.getEmail());
+            statement.setLong(5, user.getId());
+            rowsUpdate = statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Error with update user.", e);
+        }
+        return rowsUpdate == 1;
     }
 
     private int rowCountByQuery(String sourceQuery) throws DaoException {
         int result = 0;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM (" + sourceQuery + ") as tbl" )
+             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM (" + sourceQuery + ") as tbl")
         ) {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -316,5 +314,20 @@ public class UserDaoImpl implements UserDao {
             throw new DaoException("Can't count row count.", e);
         }
         return result;
+    }
+
+    @Override
+    public boolean create(User user) throws DaoException {
+        throw new UnsupportedOperationException("This method unsupported");
+    }
+
+    @Override
+    public void close(Statement statement) {
+        UserDao.super.close(statement);
+    }
+
+    @Override
+    public void close(Connection connection) {
+        UserDao.super.close(connection);
     }
 }

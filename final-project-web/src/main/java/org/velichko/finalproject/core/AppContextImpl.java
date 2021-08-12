@@ -4,8 +4,7 @@ import org.velichko.finalproject.controller.command.admin.ChangeUserRoleCommand;
 import org.velichko.finalproject.controller.command.admin.ChangeUserStatusCommand;
 import org.velichko.finalproject.controller.command.admin.ShowAllUsersCommand;
 import org.velichko.finalproject.controller.command.admin.ShowAllVerificationsCommand;
-import org.velichko.finalproject.controller.command.common.LoginCommand;
-import org.velichko.finalproject.controller.command.common.ShowVerificationInfoCommand;
+import org.velichko.finalproject.controller.command.common.*;
 import org.velichko.finalproject.controller.command.examiner.ChangeExaminerVerificationDateCommand;
 import org.velichko.finalproject.controller.command.examiner.ChangeFinalStatusCommand;
 import org.velichko.finalproject.controller.command.examiner.ShowAllApprovedProjectsCommand;
@@ -13,7 +12,10 @@ import org.velichko.finalproject.controller.command.newuser.RegistrationCommand;
 import org.velichko.finalproject.controller.command.newuser.RegistrationConfirmationCommand;
 import org.velichko.finalproject.controller.command.student.StartVerificationCommand;
 import org.velichko.finalproject.controller.command.student.WelcomeStudentCommand;
-import org.velichko.finalproject.controller.command.trainer.*;
+import org.velichko.finalproject.controller.command.trainer.ChangeTrainerCharacteristicCommand;
+import org.velichko.finalproject.controller.command.trainer.ChangeTrainerScoreCommand;
+import org.velichko.finalproject.controller.command.trainer.ChangeTrainerVerificationDateCommand;
+import org.velichko.finalproject.controller.command.trainer.ShowTrainerInfoCommand;
 import org.velichko.finalproject.i18n.I18nManager;
 import org.velichko.finalproject.logic.dao.UserDao;
 import org.velichko.finalproject.logic.dao.VerificationDao;
@@ -75,7 +77,7 @@ public class AppContextImpl implements AppContext {
         map.put(ShowAllApprovedProjectsCommand.class, new ShowAllApprovedProjectsCommand(getService(VerificationService.class)));
         map.put(RegistrationConfirmationCommand.class, new RegistrationConfirmationCommand(getService(UserService.class)));
         map.put(ShowTrainerInfoCommand.class, new ShowTrainerInfoCommand(getService(UserService.class)));
-        map.put(ShowStudentInfoCommand.class, new ShowStudentInfoCommand(getService(UserService.class)));
+        map.put(ShowUserInfoCommand.class, new ShowUserInfoCommand(getService(UserService.class)));
         map.put(ShowVerificationInfoCommand.class, new ShowVerificationInfoCommand(getService(VerificationWebFacade.class)));
         map.put(ChangeFinalStatusCommand.class, new ChangeFinalStatusCommand(getService(VerificationService.class)));
         map.put(ChangeTrainerScoreCommand.class, new ChangeTrainerScoreCommand(
@@ -90,7 +92,8 @@ public class AppContextImpl implements AppContext {
         map.put(WelcomeStudentCommand.class, new WelcomeStudentCommand(
                 getService(UserService.class),
                 getService(VerificationWebFacade.class)));
-
+        map.put(ChangeUserImageCommand.class, new ChangeUserImageCommand(getService(UserService.class)));
+        map.put(EditUserDataCommand.class, new EditUserDataCommand(getService(UserService.class), getService(RegistrationDataValidator.class)));
     }
 
     @Override

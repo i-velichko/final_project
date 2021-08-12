@@ -24,7 +24,7 @@ public class ParamName {
     public static final String EMAIL_ERROR_PARAM = "emailError";
     public static final String LOGIN_NOT_UNIQUE_PARAM = "notUniqueLoginError";
     public static final String EMAIL_NOT_UNIQUE_PARAM = "notUniqueEmailError";
-    public static final String GIT_LINK = "gitLink";
+    public static final String GIT_LINK_PARAM = "gitLink";
     public static final String PROJECT_TITLE_PARAM = "title";
     public static final String STUDENT_SKILLS_PARAM = "studentSkills";
     public static final String REFERER = "referer";
@@ -58,4 +58,6 @@ public class ParamName {
     public static final String NEW_FINAL_STATUS_PARAM = "newFinalStatus";
     public static final String NEW_ROLE = "new_role";
     public static final String MESSAGE_PARAM = "message";
+    public static final String MSG = "msg";
+    public static final String STRING_IMAGE_PARAM = "stringImage";
 }

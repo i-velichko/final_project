@@ -26,7 +26,7 @@ public interface BaseDao<K, T extends Entity> {
 
     boolean create(T t) throws DaoException;
 
-    boolean update(T t);
+    boolean update(T t) throws DaoException;
 
     default void close(Statement statement) {
         try {

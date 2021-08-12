@@ -11,6 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-АШИПКА
+<h2>АШИПКА</h2>
+${msg}
 </body>
 </html>
