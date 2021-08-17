@@ -5,6 +5,11 @@ import org.velichko.finalproject.logic.entity.type.UserStatus;
 
 import java.sql.Blob;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type User.
+ */
 public class User extends Entity {
     private long id;
     private String login;
@@ -16,9 +21,22 @@ public class User extends Entity {
     private UserRole role;
     private Blob image;
 
+    /**
+     * Instantiates a new User.
+     */
     public User() {
     }
 
+    /**
+     * Instantiates a new User.
+     *
+     * @param firstName the first name
+     * @param lastName  the last name
+     * @param login     the login
+     * @param email     the email
+     * @param role      the role
+     * @param status    the status
+     */
     public User(String firstName, String lastName, String login,  String email, UserRole role, UserStatus status) {
         this.login = login;
         this.firstName = firstName;
@@ -28,79 +46,175 @@ public class User extends Entity {
         this.role = role;
     }
 
+    /**
+     * Instantiates a new User.
+     *
+     * @param studentName the student name
+     * @param surename    the surename
+     */
     public User(String studentName,String surename) {
         this.firstName = studentName;
         this.lastName = surename;
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public long getId() {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
     public void setId(long id) {
         this.id = id;
     }
 
+    /**
+     * Gets login.
+     *
+     * @return the login
+     */
     public String getLogin() {
         return login;
     }
 
+    /**
+     * Sets login.
+     *
+     * @param login the login
+     */
     public void setLogin(String login) {
         this.login = login;
     }
 
+    /**
+     * Gets first name.
+     *
+     * @return the first name
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     * Sets first name.
+     *
+     * @param firstName the first name
+     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    /**
+     * Gets last name.
+     *
+     * @return the last name
+     */
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     * Sets last name.
+     *
+     * @param lastName the last name
+     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    /**
+     * Gets email.
+     *
+     * @return the email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Sets email.
+     *
+     * @param email the email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Gets git link.
+     *
+     * @return the git link
+     */
     public String getGitLink() {
         return gitLink;
     }
 
+    /**
+     * Sets git link.
+     *
+     * @param gitLink the git link
+     */
     public void setGitLink(String gitLink) {
         this.gitLink = gitLink;
     }
 
+    /**
+     * Gets status.
+     *
+     * @return the status
+     */
     public UserStatus getStatus() {
         return status;
     }
 
+    /**
+     * Sets status.
+     *
+     * @param status the status
+     */
     public void setStatus(UserStatus status) {
         this.status = status;
     }
 
+    /**
+     * Gets role.
+     *
+     * @return the role
+     */
     public UserRole getRole() {
         return role;
     }
 
+    /**
+     * Sets role.
+     *
+     * @param role the role
+     */
     public void setRole(UserRole role) {
         this.role = role;
     }
 
+    /**
+     * Gets image.
+     *
+     * @return the image
+     */
     public Blob getImage() {
         return image;
     }
 
+    /**
+     * Sets image.
+     *
+     * @param image the image
+     */
     public void setImage(Blob image) {
         this.image = image;
     }

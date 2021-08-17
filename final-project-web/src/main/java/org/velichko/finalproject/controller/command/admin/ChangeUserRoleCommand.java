@@ -13,10 +13,20 @@ import org.velichko.finalproject.logic.service.UserService;
 
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type Change user role command.
+ */
 public class ChangeUserRoleCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final UserService userService;
 
+    /**
+     * Instantiates a new Change user role command.
+     *
+     * @param userService the user service
+     */
     public ChangeUserRoleCommand(UserService userService) {
         this.userService = userService;
     }

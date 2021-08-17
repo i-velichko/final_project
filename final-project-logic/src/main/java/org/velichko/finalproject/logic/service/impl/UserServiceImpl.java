@@ -15,36 +15,42 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author Ivan Velichko
+ * <p>
+ * The type User service.
+ */
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger();
     private final UserDao userDao;
 
+    /**
+     * Instantiates a new User service.
+     *
+     * @param userDao the user dao
+     */
     public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
 
     @Override
     public List<User> readAll() throws ServiceException {
-        List<User> users;
         try {
-            users = userDao.findAll();
+            return userDao.findAll();
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error with find all Users .", e);
             throw new ServiceException("Error with find all Users .", e);
         }
-        return users;
     }
 
     @Override
     public List<User> readByPage(int page) throws ServiceException {
-        List<User> users;
         try {
-            users = userDao.findByPage(page);
+            return userDao.findByPage(page);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error with find all Users .", e);
             throw new ServiceException("Error with find all Users .", e);
         }
-        return users;
     }
 
     @Override
@@ -59,15 +65,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean createNewUser(User user, String password, String registrationKey) throws ServiceException {
-        boolean result;
         try {
             userDao.createNewUser(user, password, registrationKey);
-            result = true;
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error with add new User. ", e);
             throw new ServiceException("Error with add new User. ", e);
         }
-        return result;
+        return true;
     }
 
     @Override
@@ -83,79 +87,52 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isLoginUnique(String login) throws ServiceException {
-        boolean isPresent = false;
         try {
-            Optional<User> currentUser = userDao.findUserByLogin(login);
-            if (currentUser.isEmpty()) {
-                isPresent = true;
-            }
+            return userDao.findUserByLogin(login).isEmpty();
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error with find user by login", e);
             throw new ServiceException("Error with find user by login", e);
         }
-        return isPresent;
     }
 
     @Override
     public boolean isEmailUnique(String email) throws ServiceException {
-        boolean isPresent = false;
         try {
-            Optional<User> currentUser = userDao.findUserByEmail(email);
-            if (currentUser.isEmpty()) {
-                isPresent = true;
-            }
+            return userDao.findUserByEmail(email).isEmpty();
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error with find user by email", e);
             throw new ServiceException("Error with find user by login", e);
         }
-        return isPresent;
     }
 
     @Override
     public boolean isGitLinkUnique(String gitLink) throws ServiceException {
-        boolean isPresent = false;
         try {
-            Optional<User> optionalUser = userDao.findUserByGitLink(gitLink);
-            if (optionalUser.isEmpty()) {
-                isPresent = true;
-            }
+            return userDao.findUserByGitLink(gitLink).isEmpty();
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error with find user project by git link", e);
             throw new ServiceException("Error with find user project by git link", e);
         }
-        return isPresent;
     }
 
     @Override
     public Optional<User> findUserByLoginAndPassword(String login, String password) throws ServiceException {
-        Optional<User> currentUser;
-        User user = null;
         try {
-            currentUser = userDao.findUserByLoginAndPassword(login, password);
-            if (currentUser.isPresent()) {
-                user = currentUser.get();
-            }
+            return userDao.findUserByLoginAndPassword(login, password);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error with find user by login and password", e);
             throw new ServiceException("Error with find user by login and password", e);
         }
-        return Optional.ofNullable(user);
     }
 
     @Override
     public Optional<User> findUserById(Long id) throws ServiceException {
-        Optional<User> currentUser;
-        User user = null;
         try {
-            currentUser = userDao.findEntityById(id);
-            if (currentUser.isPresent()) {
-                user = currentUser.get();
-            }
+            return userDao.findEntityById(id);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error with find user by id", e);
             throw new ServiceException("Error with find user by ID " + id, e);
         }
-        return Optional.ofNullable(user);
     }
 
     @Override
@@ -192,28 +169,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getUserByRegistrationKey(String registrationKey) throws ServiceException {
-        Optional<User> optionalUser;
-        User user;
         try {
-            optionalUser = userDao.findUserByRegistrationKey(registrationKey);
-            user = optionalUser.orElse(null);
+            return userDao.findUserByRegistrationKey(registrationKey);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error with get user by registration key", e);
             throw new ServiceException("Impossible get user", e);
         }
-        return Optional.ofNullable(user);
     }
 
 
     @Override
     public boolean updateUser(User user) throws ServiceException {
-        boolean result;
         try {
-            result = userDao.update(user);
+            return userDao.update(user);
         } catch (DaoException e) {
             throw new ServiceException("Error. Impossible update user", e);
         }
-        return result;
     }
 
     @Override

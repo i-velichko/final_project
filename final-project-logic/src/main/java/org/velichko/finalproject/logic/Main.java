@@ -15,12 +15,25 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import static org.velichko.finalproject.logic.dao.BaseDao.logger;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type Main.
+ */
 public class Main {
     private static final String FIND_ALL_USERS = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git, u.image" +
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
             "JOIN user_statuses as us ON u.status_id = us.id";
+
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     * @throws DaoException the dao exception
+     */
     public static void main(String[] args) throws DaoException {
 
         UserCreator userCreator = new UserCreator();
@@ -40,9 +53,21 @@ public class Main {
 
     }
 
+    /**
+     * Build query string.
+     *
+     * @return the string
+     */
     public static String buildQuery() {
         return buildQuery(1);
     }
+
+    /**
+     * Build query string.
+     *
+     * @param pageNumber the page number
+     * @return the string
+     */
     public static String buildQuery(int pageNumber) {
         int limit = 3;
         int offset = (limit * pageNumber) - limit;

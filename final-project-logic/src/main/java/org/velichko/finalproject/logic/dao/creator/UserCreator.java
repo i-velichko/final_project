@@ -11,9 +11,21 @@ import org.velichko.finalproject.logic.exception.DaoException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type User creator.
+ */
 public class UserCreator {
     private static Logger logger = LogManager.getLogger();
 
+    /**
+     * Create User.
+     *
+     * @param resultSet the result set
+     * @return the user
+     * @throws DaoException the dao exception
+     */
     public User createUser(ResultSet resultSet) throws DaoException {
         User user = new User();
         try {

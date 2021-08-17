@@ -18,8 +18,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type Verification dao.
+ */
 public class VerificationDaoImpl implements VerificationDao {
     private static Logger logger = LogManager.getLogger();
+    /**
+     * The constant DATE_PATTERN.
+     */
     public static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
     private final VerificationCreator verificationCreator = new VerificationCreator();
 

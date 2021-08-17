@@ -1,6 +1,6 @@
-package org.velichko.finalproject.validator;
+package org.velichko.finalproject.validator.impl;
 
-public enum DataUserValidator {
+public enum UserDataValidator {
     EMAIL("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$"),
     LOGIN("^[\\w@#$%^&+=]{7,25}$"),
     PASSWORD("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{12,45}$"),
@@ -8,7 +8,7 @@ public enum DataUserValidator {
 
     private String regExp;
 
-    DataUserValidator(String regExp) {
+    UserDataValidator(String regExp) {
         this.regExp = regExp;
     }
 

@@ -1,6 +1,5 @@
 package org.velichko.finalproject.logic.pool;
 
-import org.velichko.finalproject.logic.exception.ConnectionPoolException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,6 +16,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type Connection pool.
+ */
 public class ConnectionPool {
     private static Logger logger = LogManager.getLogger();
     private static final long DELAY_UNTIL_CONNECTIONS_NUMBER_CHECK = 1;
@@ -56,13 +60,26 @@ public class ConnectionPool {
     }
 
     private static class ConnectionPoolHolder {
+        /**
+         * The constant HOLDER_INSTANCE.
+         */
         public static final ConnectionPool HOLDER_INSTANCE = new ConnectionPool();
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static ConnectionPool getInstance() {
         return ConnectionPoolHolder.HOLDER_INSTANCE;
     }
 
+    /**
+     * Gets connection.
+     *
+     * @return the connection
+     */
     public Connection getConnection() {
         ProxyConnection connection = null;
         try {
@@ -81,6 +98,12 @@ public class ConnectionPool {
         return connection;
     }
 
+    /**
+     * Release connection boolean.
+     *
+     * @param connection the connection
+     * @return the boolean
+     */
     public boolean releaseConnection(Connection connection) {
         if (connection.getClass() == ProxyConnection.class) {
             givenAwayConnections.remove(connection);
@@ -97,6 +120,9 @@ public class ConnectionPool {
         return false;
     }
 
+    /**
+     * Destroy pool.
+     */
     public void destroyPool() {
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {
@@ -119,6 +145,11 @@ public class ConnectionPool {
     }
 
 
+    /**
+     * Pool size check boolean.
+     *
+     * @return the boolean
+     */
     public boolean poolSizeCheck() {
         boolean result = false;
         int currentConnectionsCount = 0;
@@ -138,8 +169,7 @@ public class ConnectionPool {
         if (currentConnectionsCount != DEFAULT_POOL_SIZE) {
             int missingConnections = DEFAULT_POOL_SIZE - currentConnectionsCount;
             String url = properties.getProperty("URL");
-            int i = 0;
-            while (i < missingConnections) {
+            for (int i = 0; i < missingConnections; i++) {
                 Connection connection = null;
                 try {
                     connection = DriverManager.getConnection(url, properties);
@@ -147,9 +177,7 @@ public class ConnectionPool {
                     logger.log(Level.ERROR, "Can not creat connection" + e.getMessage());
                 }
                 freeConnections.offer(new ProxyConnection(connection));
-                i++;
             }
-
             result = true;
         }
         return result;

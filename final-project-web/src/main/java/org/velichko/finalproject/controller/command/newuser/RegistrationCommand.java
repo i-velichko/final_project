@@ -78,11 +78,11 @@ public class RegistrationCommand implements Command {
                     String registrationKey = confirmatoryService.setRegistrationToken(email, login);
                     if (userService.createNewUser(user, password, registrationKey)) {
                         request.setAttribute(USER_PARAM, user);
-                        request.setAttribute(ParamName.REGISTRATION_IS_DONE, i18n.getMassage(REGISTRATION_SUCCESSFUL_KEY, locale));
+                        request.setAttribute(REGISTRATION_IS_DONE, i18n.getMassage(REGISTRATION_SUCCESSFUL_KEY, locale));
                     }
                 } catch (ServiceException e) {
                     e.printStackTrace(); //todo
-                    request.setAttribute(ParamName.REGISTRATION_FAILED, i18n.getMassage(REGISTRATION_FAILED_KEY, locale) + e.getLocalizedMessage());
+                    request.setAttribute(REGISTRATION_FAILED, i18n.getMassage(REGISTRATION_FAILED_KEY, locale) + e.getLocalizedMessage());
                 }
                 router.setPagePath(LOGIN_PAGE);
             }
@@ -92,6 +92,6 @@ public class RegistrationCommand implements Command {
         return router;
     }
 }
-//todo редиспатчер на страничку приветствия нового пользователя и там возможно определение его роли
+
 
 

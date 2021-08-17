@@ -14,36 +14,42 @@ import org.velichko.finalproject.logic.service.VerificationService;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type Verification service.
+ */
 public class VerificationServiceImpl implements VerificationService {
     private static final Logger logger = LogManager.getLogger();
     private final VerificationDao verificationDao;
 
+    /**
+     * Instantiates a new Verification service.
+     *
+     * @param verificationDao the verification dao
+     */
     public VerificationServiceImpl(VerificationDao verificationDao) {
         this.verificationDao = verificationDao;
     }
 
     @Override
     public List<Verification> findAllVerifications() throws ServiceException {
-        List<Verification> verifications;
         try {
-            verifications = verificationDao.findAll();
+            return verificationDao.findAll();
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error with find all Verifications .", e);
             throw new ServiceException("Error with find all Verifications .", e);
         }
-        return verifications;
     }
 
     @Override
     public List<Verification> readByPage(int page) throws ServiceException {
-        List<Verification> verifications;
         try {
-            verifications = verificationDao.findByPage(page);
+            return verificationDao.findByPage(page);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error with find all Verifications .", e);
             throw new ServiceException("Error with find all Verifications .", e);
         }
-        return verifications;
     }
 
     @Override
@@ -58,47 +64,33 @@ public class VerificationServiceImpl implements VerificationService {
 
     @Override
     public boolean createNewVerification(Verification verification, String title) throws ServiceException {
-        boolean result;
         try {
             verificationDao.createNewVerification(verification, title);
-            result = true;
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error with create new Verification. ", e);
             throw new ServiceException("Error with create new Verification. ", e);
         }
-        return result;
+        return true;
     }
 
     @Override
     public Optional<Verification> findVerificationById(long id) throws ServiceException {
-        Optional<Verification> optionalVerification;
-        Verification verification = null;
         try {
-            optionalVerification = verificationDao.findEntityById(id);
-            if (optionalVerification.isPresent()) {
-                verification = optionalVerification.get();
-            }
+            return verificationDao.findEntityById(id);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error with find verification by id " + id, e);
             throw new ServiceException("Error with find verification by ID " + id, e);
         }
-        return Optional.ofNullable(verification);
     }
 
     @Override
     public Optional<Verification> findVerificationByStudentId(long id) throws ServiceException {
-        Optional<Verification> optionalVerification;
-        Verification verification = null;
         try {
-            optionalVerification = verificationDao.findVerificationByStudentId(id);
-            if (optionalVerification.isPresent()) {
-                verification = optionalVerification.get();
-            }
+            return verificationDao.findVerificationByStudentId(id);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error with find verification by student id " + id, e);
             throw new ServiceException("Error with find verification by student ID " + id, e);
         }
-        return Optional.ofNullable(verification);
     }
 
     @Override

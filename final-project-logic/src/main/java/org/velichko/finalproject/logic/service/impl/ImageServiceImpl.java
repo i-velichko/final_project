@@ -13,14 +13,18 @@ import java.util.Properties;
 
 import static java.nio.file.StandardOpenOption.*;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type Image service.
+ */
 public class ImageServiceImpl implements ImageService {
     private final URL IMAGE_PROPERTIES_PATH = getClass().getClassLoader().getResource("image.properties");
 
     @Override
     public void upload(String imagePath, InputStream imageContent) throws IOException {
-        Properties properties;
         if (IMAGE_PROPERTIES_PATH != null) {
-            properties = PropertyLoader.loadPropertiesData(IMAGE_PROPERTIES_PATH);
+            Properties properties = PropertyLoader.loadPropertiesData(IMAGE_PROPERTIES_PATH);
             final String basePath = properties.getProperty("image.base.url");
             Path imageFullPath = Path.of(basePath, imagePath);
             try (imageContent) {

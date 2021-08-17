@@ -15,9 +15,21 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type Verification creator.
+ */
 public class VerificationCreator {
     private static Logger logger = LogManager.getLogger();
 
+    /**
+     * Create verification.
+     *
+     * @param resultSet the result set
+     * @return the verification
+     * @throws DaoException the dao exception
+     */
     public Verification createVerification(ResultSet resultSet) throws DaoException {
         Verification verification = new Verification();
         try {

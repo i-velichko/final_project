@@ -13,6 +13,7 @@ public class MessageNameKey {
     public static final String GIT_LINK_NOT_CORRECT_KEY = "error.gitLink.not.correct";
     public static final String PROJECT_TITLE_NOT_CORRECT_KEY = "error.projectTitle.not.correct";
     public static final String IMAGE_NOT_UPLOAD_KEY = "error.upload.image.failed";
+    public static final String NAME_NOT_CORRECT_KEY = "error.name.not.correct";
 
     private MessageNameKey() {
     }

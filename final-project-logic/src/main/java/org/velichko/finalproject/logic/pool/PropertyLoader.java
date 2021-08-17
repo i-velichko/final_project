@@ -9,9 +9,20 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type Property loader.
+ */
 public class PropertyLoader {
     private static Logger logger = LogManager.getLogger();
 
+    /**
+     * Load properties data properties.
+     *
+     * @param url the url
+     * @return the properties
+     */
     public static Properties loadPropertiesData(URL url) {
         Properties properties = new Properties();
         try {

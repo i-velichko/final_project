@@ -31,8 +31,9 @@ import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
 import org.velichko.finalproject.logic.service.impl.VerificationServiceImpl;
 import org.velichko.finalproject.logic.util.RegistrationConfirmatory;
 import org.velichko.finalproject.validator.BaseDataValidator;
-import org.velichko.finalproject.validator.RegistrationDataValidator;
-import org.velichko.finalproject.validator.VerificationDataValidator;
+import org.velichko.finalproject.validator.impl.EditUserDataValidator;
+import org.velichko.finalproject.validator.impl.RegistrationDataValidator;
+import org.velichko.finalproject.validator.impl.VerificationDataValidator;
 import org.velichko.finalproject.webfacade.VerificationWebFacade;
 
 import java.util.HashMap;
@@ -53,8 +54,10 @@ public class AppContextImpl implements AppContext {
         map.put(I18nManager.class, new I18nManager());
         map.put(RegistrationDataValidator.class, new RegistrationDataValidator(getService(UserService.class), getService(I18nManager.class)));
         map.put(VerificationDataValidator.class, new VerificationDataValidator(getService(UserService.class), getService(I18nManager.class)));
-        map.put(BaseDataValidator.class, new RegistrationDataValidator(getService(UserService.class), getService(I18nManager.class)));
-        map.put(BaseDataValidator.class, new VerificationDataValidator(getService(UserService.class), getService(I18nManager.class)));
+        map.put(EditUserDataValidator.class, new EditUserDataValidator(getService(UserService.class), getService(I18nManager.class)));
+//        map.put(BaseDataValidator.class, new RegistrationDataValidator(getService(UserService.class), getService(I18nManager.class)));
+//        map.put(BaseDataValidator.class, new VerificationDataValidator(getService(UserService.class), getService(I18nManager.class)));
+//        map.put(BaseDataValidator.class, new EditUserDataValidator(getService(UserService.class), getService(I18nManager.class)));
         map.put(RegistrationConfirmatory.class, new RegistrationConfirmatory(getService(EmailService.class)));
         map.put(RegistrationCommand.class, new RegistrationCommand(
                 getService(UserService.class),
@@ -71,7 +74,7 @@ public class AppContextImpl implements AppContext {
         ));
         map.put(ChangeUserRoleCommand.class, new ChangeUserRoleCommand(getService(UserService.class)));
         map.put(ChangeUserStatusCommand.class, new ChangeUserStatusCommand(getService(UserService.class)));
-        map.put(LoginCommand.class, new LoginCommand(getService(UserService.class)));
+        map.put(LoginCommand.class, new LoginCommand(getService(UserService.class), getService(I18nManager.class)));
         map.put(ShowAllUsersCommand.class, new ShowAllUsersCommand(getService(UserService.class)));
         map.put(ShowAllVerificationsCommand.class, new ShowAllVerificationsCommand(getService(VerificationService.class)));
         map.put(ShowAllApprovedProjectsCommand.class, new ShowAllApprovedProjectsCommand(getService(VerificationService.class)));
@@ -93,7 +96,7 @@ public class AppContextImpl implements AppContext {
                 getService(UserService.class),
                 getService(VerificationWebFacade.class)));
         map.put(ChangeUserImageCommand.class, new ChangeUserImageCommand(getService(UserService.class)));
-        map.put(EditUserDataCommand.class, new EditUserDataCommand(getService(UserService.class), getService(RegistrationDataValidator.class)));
+        map.put(EditUserDataCommand.class, new EditUserDataCommand(getService(UserService.class), getService(EditUserDataValidator.class)));
     }
 
     @Override

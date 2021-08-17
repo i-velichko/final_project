@@ -32,31 +32,36 @@ public class EditUserDataCommand implements Command {
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
         User user = (User) request.getSession().getAttribute(USER_PARAM);
-        String firstName = request.getParameter(FIRST_NAME_PARAM);
-        String lastName = request.getParameter(LAST_NAME_PARAM);
-        String gitLink = request.getParameter(GIT_LINK_PARAM);
-        String email = request.getParameter(EMAIL_PARAM);
+        String newFirstName = request.getParameter(FIRST_NAME_PARAM);
+        String newLastName = request.getParameter(LAST_NAME_PARAM);
+        String newGitLink = request.getParameter(GIT_LINK_PARAM);
+        String newEmail = request.getParameter(EMAIL_PARAM);
         String locale = (String) request.getSession().getAttribute(LOCALE_PARAM);
 
         Map<String, String> newUserData = new HashMap<>();
-
-        newUserData.put(FIRST_NAME_PARAM, firstName);
-        newUserData.put(LAST_NAME_PARAM, lastName);
-        newUserData.put(GIT_LINK_PARAM, gitLink);
-        newUserData.put(EMAIL_PARAM, email);
+        String currentUserEmail = user.getEmail();
+        String currentUserGitLink = user.getGitLink();
+        if (!currentUserEmail.equals(newEmail)) {
+            newUserData.put(EMAIL_PARAM, newEmail);
+        }
+        if (!currentUserGitLink.equals(newEmail)) {
+            newUserData.put(GIT_LINK_PARAM, newGitLink);
+        }
+        newUserData.put(FIRST_NAME_PARAM, newFirstName);
+        newUserData.put(LAST_NAME_PARAM, newLastName);
 
         String method = request.getMethod();
         if (method.equals(POST_PARAM)) {
             Map<String, String> errors = dataValidator.checkValues(newUserData, locale);
             if (!errors.isEmpty()) {
-                request.setAttribute(CORRECT_REGISTRATION_DATA_PARAM, newUserData);
-                request.setAttribute(ERROR_REGISTRATION_DATA_PARAM, errors);
+                request.setAttribute(CORRECT_EDIT_DATA_PARAM, newUserData);
+                request.setAttribute(ERROR_EDIT_DATA_PARAM, errors);
                 router.setPagePath(EDIT_USER_DATA);
             } else {
-                user.setFirstName(firstName);
-                user.setLastName(lastName);
-                user.setEmail(email);
-                user.setGitLink(gitLink);
+                user.setFirstName(newFirstName);
+                user.setLastName(newLastName);
+                user.setEmail(newEmail);
+                user.setGitLink(newGitLink);
                 router.setPagePath(EDIT_USER_DATA);
                 try {
                     userService.updateUser(user);

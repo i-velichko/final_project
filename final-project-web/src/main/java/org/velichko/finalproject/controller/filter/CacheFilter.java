@@ -6,7 +6,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebFilter("/*")
+/**
+ *
+ */
+@WebFilter("/controller")
 public class CacheFilter implements Filter {
 
     @Override

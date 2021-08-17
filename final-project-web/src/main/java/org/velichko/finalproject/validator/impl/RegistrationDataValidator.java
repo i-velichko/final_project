@@ -1,17 +1,18 @@
-package org.velichko.finalproject.validator;
+package org.velichko.finalproject.validator.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.i18n.I18nManager;
 import org.velichko.finalproject.logic.exception.ServiceException;
 import org.velichko.finalproject.logic.service.UserService;
+import org.velichko.finalproject.validator.BaseDataValidator;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.velichko.finalproject.controller.command.MessageNameKey.*;
 import static org.velichko.finalproject.controller.command.ParamName.*;
-import static org.velichko.finalproject.validator.DataUserValidator.*;
+import static org.velichko.finalproject.validator.impl.UserDataValidator.*;
 
 public class RegistrationDataValidator implements BaseDataValidator {
     private final Logger logger = LogManager.getLogger();

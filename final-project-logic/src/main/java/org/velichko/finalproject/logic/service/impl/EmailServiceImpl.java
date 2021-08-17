@@ -13,12 +13,23 @@ import org.velichko.finalproject.logic.service.EmailService;
 import java.net.URL;
 import java.util.Properties;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type Email service.
+ */
 public class EmailServiceImpl implements EmailService {
     private static final Logger logger = LogManager.getLogger();
     private final URL EMAIL_PROPERTIES_PATH = getClass().getClassLoader().getResource("email.properties");
     private static final String USER_KEY = "mail.smtp.user";
     private static final String PASSWORD_KEY = "mail.smtp.password";
+    /**
+     * The constant EMAIL_FROM_EPAM_TRAINING_CENTER.
+     */
     public static final String EMAIL_FROM_EPAM_TRAINING_CENTER = "Email from EPAM training center";
+    /**
+     * The constant CONTENT_TYPE.
+     */
     public static final String CONTENT_TYPE = "text/html";
 
     @Override

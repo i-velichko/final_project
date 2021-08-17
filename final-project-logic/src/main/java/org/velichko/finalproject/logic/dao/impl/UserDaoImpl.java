@@ -18,6 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type User dao.
+ */
 public class UserDaoImpl implements UserDao {
     private static Logger logger = LogManager.getLogger();
     private final UserCreator userCreator = new UserCreator();

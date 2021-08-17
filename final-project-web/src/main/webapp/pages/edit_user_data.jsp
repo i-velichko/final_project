@@ -45,6 +45,8 @@
                 </span>
             </div>
         </div>
+
+
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -53,22 +55,26 @@
                 <form action="${abs_path}/controller?command=edit_user_data" method="post">
                     <div class="row mt-2">
                         <div class="col-md-6">
-                            <label class="labels">Firs Name:</label>
+                            <label class="labels">First Name:</label>
                             <label class="form-control">
-                                <input type="text" pattern="^[\w@#$%^&+=]{2,30}$" name="nickname" value="${sessionScope.user.firstName}" required></label>
+                                <input type="text" pattern="^[\w@#$%^&+=]{2,30}$" name="firstName" value="${sessionScope.user.firstName}" required></label>
                             <strong>
-                                <p class="text-danger">${errors.firstNameError}</p>
+                                <p class="text-danger">${errors.nameError}</p>
                             </strong>
                         </div>
                         <div class="col-md-6">
-                            <label class="labels">Email:</label>
-                            <label class="form-control">${sessionScope.user.lastName}</label>
+                            <label class="labels">Last Name:</label>
+                            <label class="form-control">
+                                <input type="text" pattern="^[\w@#$%^&+=]{2,30}$" name="lastName" value="${sessionScope.user.lastName}" required></label>
+                            <strong>
+                                <p class="text-danger">${errors.nameError}</p>
+                            </strong>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
-                            <label class="labels">Your id:</label>
-                            <label class="form-control">${sessionScope.user.gitLink}</label>
+                            <label class="labels">Login:</label>
+                            <label class="form-control">${sessionScope.user.login}</label>
                         </div>
                         <div class="col-md-6">
                             <label class="labels">Status:</label>
@@ -76,15 +82,23 @@
                         </div>
                     </div>
                     <div class="row mt-3">
+                        <ctg:is-student>
+                            <div class="col-md-6">
+                                <label class="labels">Git link:</label>
+                                <label class="form-control">
+                                    <input type="text" name="gitLink" value="${sessionScope.user.gitLink}"></label>
+                                <strong>
+                                    <p class="text-danger">${errors.gitLinkError}</p>
+                                </strong>
+                            </div>
+                        </ctg:is-student>
                         <div class="col-md-6">
-                            <label class="labels">Name:</label>
+                            <label class="labels">Email:</label>
                             <label class="form-control">
-                                <input type="text" name="name" value="${sessionScope.user.lastName}"></label>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="labels">Surename:</label>
-                            <label class="form-control">
-                                <input type="text" name="surename" value="${sessionScope.user.email}"></label>
+                                <input type="text" name="email" value="${sessionScope.user.email}"></label>
+                            <strong>
+                                <p class="text-danger">${errors.emailError}</p>
+                            </strong>
                         </div>
                     </div>
 

@@ -1,4 +1,5 @@
 # Road to Epam. Final project - "Final project verification".
+Pagination. Confirm Password.
 Application for verification your project to the EPAM training center.
 User roles: student, trainer, examiner, director.
 Implemented pagination loading of information from the database.

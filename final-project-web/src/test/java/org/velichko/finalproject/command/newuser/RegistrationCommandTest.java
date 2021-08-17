@@ -10,7 +10,7 @@ import org.velichko.finalproject.controller.command.newuser.RegistrationCommand;
 import org.velichko.finalproject.i18n.I18nManager;
 import org.velichko.finalproject.logic.service.UserService;
 import org.velichko.finalproject.logic.util.RegistrationConfirmatory;
-import org.velichko.finalproject.validator.RegistrationDataValidator;
+import org.velichko.finalproject.validator.impl.RegistrationDataValidator;
 
 public class RegistrationCommandTest {
 

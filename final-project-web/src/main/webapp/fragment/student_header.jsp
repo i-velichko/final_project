@@ -92,7 +92,7 @@
                         </li>
                         <hr class="dropdown-divider">
                         <li>
-                            <form action="${abs_path}/controller?command=change_user_data&userId=${user.id}" method="post">
+                            <form action="${abs_path}/controller?command=to_edit_user_data_page" method="post">
                                 <input type="hidden" name="command" value="logout">
                                 <input type="submit" class="dropdown-item" value="Change my data">
                             </form>

@@ -60,4 +60,7 @@ public class ParamName {
     public static final String MESSAGE_PARAM = "message";
     public static final String MSG = "msg";
     public static final String STRING_IMAGE_PARAM = "stringImage";
+    public static final String NAME_ERROR_PARAM = "nameError";
+    public static final String CORRECT_EDIT_DATA_PARAM = "correctEditData";
+    public static final String ERROR_EDIT_DATA_PARAM = "errorEditData";
 }
