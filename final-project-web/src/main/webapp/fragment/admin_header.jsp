@@ -14,9 +14,9 @@
 <fmt:message key="locale.lang" var="curr_lang"/>
 <html>
 <head>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-  </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
 </head>
 <body>
 <%@include file="../fragment/common_imports.jspf" %>
@@ -29,110 +29,110 @@
 
 <header class="p-3 mb-3 border-bottom" style="background-color: #bcc3c9">
 
-  <div class="container">
-    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li>
-          <form action="${abs_path}/controller?command=change_locale" method="post">
-            <input type="hidden" name="command" value="change_locale">
-            <input type="hidden" name="refererCommand" value="${refererCommand}">
-            <input type="submit" class="btn btn-outline-light me-2" value="${curr_lang}">
-          </form>
-        </li>
-        <li><a href="${abs_path}/controller?command=to_main_page" class="nav-link px-2 link-secondary">Home</a>
-        </li>
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li>
+                    <form action="${abs_path}/controller?command=change_locale" method="post">
+                        <input type="hidden" name="command" value="change_locale">
+                        <input type="hidden" name="refererCommand" value="${refererCommand}">
+                        <input type="submit" class="btn btn-outline-light me-2" value="${curr_lang}">
+                    </form>
+                </li>
+                <li><a href="${abs_path}/controller?command=to_main_page"
+                       class="nav-link px-2 link-secondary"><fmt:message key="page.common.header.home"/></a>
+                </li>
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown" href="#" id="navbarDarkDropdownMenuLink4" role="button"
-               data-bs-toggle="dropdown" aria-expanded="false">
-              Control panel
-            </a>
-            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink4">
-              <li><a class="dropdown-item" href="${abs_path}/controller?command=show_all_users">Users
-                control</a></li>
-              <li><a class="dropdown-item" href="">Something else</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown" href="#" id="navbarDarkDropdownMenuLink4" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <fmt:message key="page.admin.header.control.panel"/>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink4">
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=show_all_users"><fmt:message key="page.admin.header.users.control"/></a></li>
+                        <li><a class="dropdown-item" href=""><fmt:message key="page.admin.header.add.user"/></a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown" href="#" id="navbarDarkDropdownMenuLink1" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <fmt:message key="page.common.header.profile"/>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="https://training.by/#!/Home?lang=ru" class="nav-link px-2 link-dark"><fmt:message key="page.common.header.road.to.epam"/></a></li>
             </ul>
-          </li>
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown" href="#" id="navbarDarkDropdownMenuLink1" role="button"
-             data-bs-toggle="dropdown" aria-expanded="false">
-            My profile
-          </a>
-          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
+            <c:if test="${not empty sessionScope.user}">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                        <use xlink:href="#bootstrap"></use>
+                    </svg>
+                </a>
+                <div class="dropdown text-end">
+                    <a href="#"
+                       class="d-block link-dark text-decoration-none dropdown-toggle"
+                       id="dropdownUser1"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        <img src="https://www.pngitem.com/pimgs/m/22-220721_circled-user-male-type-user-colorful-icon-png.png"
+                             alt="mdo"
+                             width="52"
+                             height="52"
+                             class="rounded-circle">
+                    </a>
+                        ${user.firstName} ${user.lastName}
+                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                        <li>
+                            <form action="${abs_path}/controller?command=show_user_info&userId=${user.id}"
+                                  method="post">
+                                <input type="hidden" name="command" value="logout">
+                                <input type="submit" class="dropdown-item" value="<fmt:message key="page.common.header.profile"/>">
+                            </form>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li>
+                            <form action="${abs_path}/controller?command=to_edit_user_data_page" method="post">
+                                <input type="hidden" name="command" value="logout">
+                                <input type="submit" class="dropdown-item" value="<fmt:message key="page.common.header.edit.user.data"/>">
+                            </form>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li>
+                            <form action="${abs_path}/controller" method="post">
+                                <input type="hidden" name="command" value="logout">
+                                <input type="submit" class="dropdown-item" value="<fmt:message
+                                        key="page.header.logout"/>">
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </c:if>
 
-        <li><a href="https://training.by/#!/Home?lang=ru" class="nav-link px-2 link-dark">The road to Epam
-          starts here</a></li>
-      </ul>
-
-      <c:if test="${not empty sessionScope.user}">
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-            <use xlink:href="#bootstrap"></use>
-          </svg>
-        </a>
-        <div class="dropdown text-end">
-          <a href="#"
-             class="d-block link-dark text-decoration-none dropdown-toggle"
-             id="dropdownUser1"
-             data-bs-toggle="dropdown"
-             aria-expanded="false">
-            <img src="https://www.pngitem.com/pimgs/m/22-220721_circled-user-male-type-user-colorful-icon-png.png"
-                 alt="mdo"
-                 width="52"
-                 height="52"
-                 class="rounded-circle">
-          </a>
-            ${user.firstName} ${user.lastName}
-          <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-            <li>
-              <form action="${abs_path}/controller?command=show_user_info&userId=${user.id}" method="post">
-                <input type="hidden" name="command" value="logout">
-                <input type="submit" class="dropdown-item" value="My profile">
-              </form>
-            </li>
-            <hr class="dropdown-divider">
-            <li>
-              <form action="${abs_path}/controller?command=to_edit_user_data_page" method="post">
-                <input type="hidden" name="command" value="logout">
-                <input type="submit" class="dropdown-item" value="Change my data">
-              </form>
-            </li>
-            <hr class="dropdown-divider">
-            <li>
-              <form action="${abs_path}/controller" method="post">
-                <input type="hidden" name="command" value="logout">
-                <input type="submit" class="dropdown-item" value=<fmt:message
-                        key="page.header.logout"/>>
-              </form>
-            </li>
-          </ul>
+            <c:if test="${empty sessionScope.user}">
+                <div class="text-end">
+                    <form action="${abs_path}/controller?command=to_login_page" method="post">
+                        <button type="submit" class="btn btn-outline-light me-2">
+                            <fmt:message key="page.login.login"/>
+                        </button>
+                    </form>
+                </div>
+                <div class="text-xxl-end">
+                    <form action="${abs_path}/controller?command=to_registration_page" method="post">
+                        <button type="submit" class="btn btn-outline-light me-2">
+                            <fmt:message key="page.login.register"/>
+                        </button>
+                    </form>
+                </div>
+            </c:if>
         </div>
-      </c:if>
-
-      <c:if test="${empty sessionScope.user}">
-        <div class="text-end">
-          <form action="${abs_path}/controller?command=to_login_page" method="post">
-            <button type="submit" class="btn btn-outline-light me-2">
-              <fmt:message key="page.login.login"/>
-            </button>
-          </form>
-        </div>
-        <div class="text-xxl-end">
-          <form action="${abs_path}/controller?command=to_registration_page" method="post">
-            <button type="submit" class="btn btn-outline-light me-2">
-              <fmt:message key="page.login.register"/>
-            </button>
-          </form>
-        </div>
-      </c:if>
     </div>
-  </div>
 </header>
 </body>
 </html>

@@ -53,30 +53,34 @@
                         </div>
                         <div class="col-md-8">
                             <div class="card-body p-4">
-                                <h6>User information</h6>
+                                <h6><fmt:message
+                                        key="page.user.info.title"/></h6>
                                 <hr class="mt-0 mb-4">
                                 <div class="row pt-1">
                                     <div class="col-6 mb-3">
-                                        <h6>Email</h6>
+                                        <h6><fmt:message
+                                                key="common.data.email"/></h6>
                                         <p class="text-muted">${user.email}</p>
                                     </div>
                                 </div>
-                                <h6>Projects</h6>
-                                <hr class="mt-0 mb-4">
                                 <div class="row pt-1">
                                     <div class="col-6 mb-3">
-                                        <h6>Role</h6>
+                                        <h6><fmt:message
+                                                key="common.data.role"/></h6>
                                         <p class="text-muted">${user.role}</p>
                                     </div>
                                     <div class="col-6 mb-3">
-                                        <h6>Company</h6>
-                                        <p class="text-muted">Epam Training Center</p>
+                                        <h6><fmt:message
+                                                key="page.user.info.company"/></h6>
+                                        <p class="text-muted"><fmt:message
+                                                key="page.user.info.epam"/></p>
                                     </div>
                                 </div>
                                 <form action="${abs_path}/controller?command=change_user_image&login=${user.login}" method="post"
                                       enctype="multipart/form-data">
                                     <div class="mb-3">
-                                        <label for="imageId" class="form-label">change your photo here</label>
+                                        <label for="imageId" class="form-label"><fmt:message
+                                                key="page.user.info.change.photo"/></label>
                                         <input class="form-control form-control-sm" name="image" id="imageId"
                                                type="file">
                                         <br/>
@@ -84,7 +88,8 @@
                                             <button type="submit"
                                                     class="btn btn-outline-warning btn-rounded"
                                                     data-mdb-ripple-color="dark">
-                                                Upload
+                                                <fmt:message
+                                                        key="page.user.info.upload"/>
                                             </button>
                                         </div>
 

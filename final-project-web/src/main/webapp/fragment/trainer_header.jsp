@@ -46,24 +46,22 @@
                         <input type="submit" class="btn btn-outline-light me-2" value="${curr_lang}">
                     </form>
                 </li>
-                <li><a href="${abs_path}/controller?command=to_main_page" class="nav-link px-2 link-secondary">Home</a>
+                <li><a href="${abs_path}/controller?command=to_main_page" class="nav-link px-2 link-secondary"><fmt:message key="page.common.header.home"/></a>
                 </li>
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown" href="#" id="navbarDarkDropdownMenuLink2" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Projects for Verification
+                            <fmt:message key="page.examiner.header.all.projects"/>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink2">
-                            <li><a class="dropdown-item" href="${abs_path}/controller?command=show_all_verifications">All
-                                projects</a></li>
-                            <li><a class="dropdown-item" href="">Waiting for my check</a></li>
-                            <li><a class="dropdown-item" href="">Assessed</a></li>
+                            <li><a class="dropdown-item" href="${abs_path}/controller?command=show_all_verifications"><fmt:message key="page.trainer.header.all.projects"/></a></li>
+                            <li><a class="dropdown-item" href=""><fmt:message key="page.examiner.header.waiting.projects"/></a></li>
+                            <li><a class="dropdown-item" href=""><fmt:message key="page.examiner.header.checked"/></a></li>
                         </ul>
                     </li>
 
-                <li><a href="https://training.by/#!/Home?lang=ru" class="nav-link px-2 link-dark">The road to Epam
-                    starts here</a></li>
+                <li><a href="https://training.by/#!/Home?lang=ru" class="nav-link px-2 link-dark"><fmt:message key="page.common.header.road.to.epam"/></a></li>
             </ul>
 
             <c:if test="${not empty sessionScope.user}">
@@ -89,14 +87,14 @@
                         <li>
                             <form action="${abs_path}/controller?command=show_user_info&userId=${user.id}" method="post">
                                 <input type="hidden" name="command" value="logout">
-                                <input type="submit" class="dropdown-item" value="My profile">
+                                <input type="submit" class="dropdown-item" value="<fmt:message key="page.common.header.profile"/>">
                             </form>
                         </li>
                         <hr class="dropdown-divider">
                         <li>
                             <form action="${abs_path}/controller?command=change_user_data&userId=${user.id}" method="post">
                                 <input type="hidden" name="command" value="logout">
-                                <input type="submit" class="dropdown-item" value="Change my data">
+                                <input type="submit" class="dropdown-item" value="<fmt:message key="page.common.header.edit.user.data"/>">
                             </form>
                         </li>
                         <hr class="dropdown-divider">

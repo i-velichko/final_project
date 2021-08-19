@@ -40,11 +40,10 @@
                         <input type="submit" class="btn btn-outline-light me-2" value="${curr_lang}">
                     </form>
                 </li>
-                <li><a href="${abs_path}/controller?command=to_main_page" class="nav-link px-2 link-secondary">Home</a>
+                <li><a href="${abs_path}/controller?command=to_main_page" class="nav-link px-2 link-secondary"><fmt:message key="page.common.header.home"/></a>
                 </li>
 
-                <li><a href="https://training.by/#!/Home?lang=ru" class="nav-link px-2 link-dark">The road to Epam
-                    starts here</a></li>
+                <li><a href="https://training.by/#!/Home?lang=ru" class="nav-link px-2 link-dark"><fmt:message key="page.common.header.road.to.epam"/></a></li>
             </ul>
 
             <c:if test="${empty sessionScope.user}">

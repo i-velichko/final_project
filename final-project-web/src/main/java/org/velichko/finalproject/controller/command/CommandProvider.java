@@ -35,12 +35,11 @@ public class CommandProvider {
 
     public Optional<CommandName> getCommandName(HttpServletRequest request) {
         String name = request.getParameter(COMMAND_PARAM);
-        CommandName commandName;
+        CommandName commandName = CommandName.WRONG_COMMAND;
         try {
             commandName = CommandName.valueOf(name.toUpperCase());
         } catch (IllegalArgumentException | NullPointerException e) {
             logger.log(Level.DEBUG, UNKNOWN_COMMAND + name);
-            commandName = CommandName.WRONG_COMMAND;
         }
         return Optional.of(commandName);
     }

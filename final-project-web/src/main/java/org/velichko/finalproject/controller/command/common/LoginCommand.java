@@ -37,7 +37,7 @@ public class LoginCommand implements Command {
             request.setAttribute(USER_PARAM, user);
             router.setRouterType(REDIRECT);
             switch (user.getRole()) {
-                case STUDENT -> router.setPagePath(REDIRECT_STUDENT);
+                case STUDENT -> router.setPagePath(REDIRECT_STUDENT);//TODO to main
                 case TRAINER -> router.setPagePath(WELCOME_TRAINER);
                 case EXAMINER -> router.setPagePath(WELCOME_EXAMINER);
                 case ADMIN -> router.setPagePath(WELCOME_ADMIN);
@@ -53,16 +53,14 @@ public class LoginCommand implements Command {
 
     private void getUserViaDB(HttpServletRequest request, Router router) {
         String locale = (String) request.getSession().getAttribute(LOCALE_PARAM);
-        User user;
         String login = request.getParameter(LOGIN_PARAM);
         String password = request.getParameter(PASSWORD_PARAM);
-        Optional<User> currentUser;
         String method = request.getMethod();
         if (method.equals(POST_PARAM)) {
             try {
-                currentUser = userService.findUserByLoginAndPassword(login, password);
+                Optional<User> currentUser = userService.findUserByLoginAndPassword(login, password);
                 if (currentUser.isPresent()) {
-                    user = currentUser.get();
+                    User user = currentUser.get();
                     request.getSession().setAttribute(USER_PARAM, user);
                     request.setAttribute(USER_PARAM, user);
                     router.setRouterType(REDIRECT);
@@ -71,7 +69,6 @@ public class LoginCommand implements Command {
                     request.setAttribute(USER_NOT_FOUND_PARAM, i18nManager.getMassage(LOGIN_NOT_CORRECT_KEY, locale));
                     router.setPagePath(LOGIN_PAGE);
                 }
-
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, "Error with find user by login: " + login);
             }

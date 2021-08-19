@@ -22,9 +22,8 @@ public class SecurityFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         User user = (User) request.getSession().getAttribute(ParamName.USER_PARAM);
-        UserRole role;
         List<UserRole> commandAccessLevel = CommandProvider.getInstance().getCommandAccessLevel(request);
-        role = user != null ? user.getRole() : ANONYMOUS;
+        UserRole role = user != null ? user.getRole() : ANONYMOUS;
         if (!commandAccessLevel.contains(role)) {
             request.setAttribute("msg", "Время сессии истекло или у вас недостаточно прав для просмотра данной страницы. Вернуться на главную <a href=http://localhost:8080/final_project_web_war_exploded/controller?command=to_main_page>Home</a>");
             ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED);

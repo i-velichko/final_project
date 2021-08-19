@@ -71,17 +71,13 @@
                 </div>
 
                 <div class="col-md-6 gx-5 mb-4">
-                    <h4><strong>Facilis consequatur eligendi</strong></h4>
+                    <h4><strong><fmt:message key="page.main.appeal.to.user"/></strong></h4>
                     <p class="text-muted">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis consequatur
-                        eligendi quisquam doloremque vero ex debitis veritatis placeat unde animi laborum
-                        sapiente illo possimus, commodi dignissimos obcaecati illum maiores corporis.
+                        <fmt:message key="page.main.appeal.to.user.first.paragraph"/>
                     </p>
-                    <p><strong>Doloremque vero ex debitis veritatis?</strong></p>
+                    <p><strong><fmt:message key="page.main.appeal.to.not.scared"/></strong></p>
                     <p class="text-muted">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod itaque voluptate
-                        nesciunt laborum incidunt. Officia, quam consectetur. Earum eligendi aliquam illum
-                        alias, unde optio accusantium soluta, iusto molestiae adipisci et?
+                        <fmt:message key="page.main.appeal.to.user.second.paragraph"/>
                     </p>
                 </div>
             </div>
@@ -92,7 +88,7 @@
 
         <!--Section: Content-->
         <section class="text-center">
-            <h4 class="mb-5"><strong>Facilis consequatur eligendi</strong></h4>
+            <h4 class="mb-5"><strong><fmt:message key="page.main.news"/></strong></h4>
 
             <div class="row">
                 <div class="col-lg-4 col-md-12 mb-4">

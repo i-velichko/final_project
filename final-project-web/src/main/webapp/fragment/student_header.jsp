@@ -46,22 +46,21 @@
                         <input type="submit" class="btn btn-outline-light me-2" value="${curr_lang}">
                     </form>
                 </li>
-                <li><a href="${abs_path}/controller?command=to_main_page" class="nav-link px-2 link-secondary">Home</a>
+                <li><a href="${abs_path}/controller?command=to_main_page" class="nav-link px-2 link-secondary"><fmt:message key="page.common.header.home"/></a>
                 </li>
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown" href="#" id="navbarDarkDropdownMenuLink" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
-                            My Project Verification
+                            <fmt:message key="page.student.header.my.project"/>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                            <li><a class="dropdown-item" href="${abs_path}/controller?command=redirect_student">View</a>
+                            <li><a class="dropdown-item" href="${abs_path}/controller?command=redirect_student"><fmt:message key="page.student.header.view"/></a>
                             </li>
                         </ul>
                     </li>
 
-                <li><a href="https://training.by/#!/Home?lang=ru" class="nav-link px-2 link-dark">The road to Epam
-                    starts here</a></li>
+                <li><a href="https://training.by/#!/Home?lang=ru" class="nav-link px-2 link-dark"><fmt:message key="page.common.header.profile"/></a></li>
             </ul>
 
             <c:if test="${not empty sessionScope.user}">
@@ -87,14 +86,14 @@
                         <li>
                             <form action="${abs_path}/controller?command=show_user_info&userId=${user.id}" method="post">
                                 <input type="hidden" name="command" value="logout">
-                                <input type="submit" class="dropdown-item" value="My profile">
+                                <input type="submit" class="dropdown-item" value="<fmt:message key="page.common.header.profile"/>">
                             </form>
                         </li>
                         <hr class="dropdown-divider">
                         <li>
                             <form action="${abs_path}/controller?command=to_edit_user_data_page" method="post">
                                 <input type="hidden" name="command" value="logout">
-                                <input type="submit" class="dropdown-item" value="Change my data">
+                                <input type="submit" class="dropdown-item" value="<fmt:message key="page.common.header.edit.user.data"/>">
                             </form>
                         </li>
                         <hr class="dropdown-divider">

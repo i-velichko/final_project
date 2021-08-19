@@ -8,13 +8,13 @@
 <form>
     <table id="allUsers" class="table table-striped table-bordered table-sm">
         <tr>
-            <th class="th-sm">First Name</th>
-            <th class="th-sm">Last Name</th>
-            <th class="th-sm">Login</th>
-            <th class="th-sm">Role</th>
-            <th class="th-sm">Status</th>
-            <th class="th-sm">Git Link</th>
-            <th class="th-sm">Show user info</th>
+            <th class="th-sm"><fmt:message key="common.data.first.name"/></th>
+            <th class="th-sm"><fmt:message key="common.data.last.name"/></th>
+            <th class="th-sm"><fmt:message key="common.data.login"/></th>
+            <th class="th-sm"><fmt:message key="common.data.role"/></th>
+            <th class="th-sm"><fmt:message key="common.data.status"/></th>
+            <th class="th-sm"><fmt:message key="common.data.git"/></th>
+            <th class="th-sm"><fmt:message key="page.show.all.users.show.user.info"/></th>
         </tr>
         <%--@elvariable id="users" type="java.util.List"--%>
         <c:forEach items="${users}" var="user">

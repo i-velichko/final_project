@@ -35,13 +35,10 @@ public class ShowUserInfoCommand implements Command {
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
         String userId = request.getParameter(USER_ID_PARAM);
-        User user;
-        Optional<User> currentUser;
         try {
-            currentUser = userService.findUserById(Long.parseLong(userId));
+            Optional<User> currentUser = userService.findUserById(Long.parseLong(userId));
             if (currentUser.isPresent()) {
-                user = currentUser.get();
-                UserRole.TRAINER.name();
+                User user = currentUser.get();
                 if (user.getImage() != null) {
                     byte[] byteImage = user.getImage().getBinaryStream().readAllBytes();
                     byte[] encodeBase64 = Base64.getEncoder().encode(byteImage);

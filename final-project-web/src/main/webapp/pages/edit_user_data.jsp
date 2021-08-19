@@ -50,12 +50,12 @@
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Profile Settings</h4>
+                    <h4 class="text-right"><fmt:message key="page.edit.user.data.title"/></h4>
                 </div>
                 <form action="${abs_path}/controller?command=edit_user_data" method="post">
                     <div class="row mt-2">
                         <div class="col-md-6">
-                            <label class="labels">First Name:</label>
+                            <label class="labels"><fmt:message key="common.data.first.name"/>:</label>
                             <label class="form-control">
                                 <input type="text" pattern="^[\w@#$%^&+=]{2,30}$" name="firstName" value="${sessionScope.user.firstName}" required></label>
                             <strong>
@@ -63,7 +63,7 @@
                             </strong>
                         </div>
                         <div class="col-md-6">
-                            <label class="labels">Last Name:</label>
+                            <label class="labels"><fmt:message key="common.data.last.name"/>:</label>
                             <label class="form-control">
                                 <input type="text" pattern="^[\w@#$%^&+=]{2,30}$" name="lastName" value="${sessionScope.user.lastName}" required></label>
                             <strong>
@@ -73,18 +73,18 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
-                            <label class="labels">Login:</label>
+                            <label class="labels"><fmt:message key="common.data.login"/>:</label>
                             <label class="form-control">${sessionScope.user.login}</label>
                         </div>
                         <div class="col-md-6">
-                            <label class="labels">Status:</label>
+                            <label class="labels"><fmt:message key="common.data.status"/>:</label>
                             <label class="form-control">${sessionScope.user.status}</label>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <ctg:is-student>
                             <div class="col-md-6">
-                                <label class="labels">Git link:</label>
+                                <label class="labels"><fmt:message key="common.data.git"/>:</label>
                                 <label class="form-control">
                                     <input type="text" name="gitLink" value="${sessionScope.user.gitLink}"></label>
                                 <strong>
@@ -93,7 +93,7 @@
                             </div>
                         </ctg:is-student>
                         <div class="col-md-6">
-                            <label class="labels">Email:</label>
+                            <label class="labels"><fmt:message key="common.data.email"/>:</label>
                             <label class="form-control">
                                 <input type="text" name="email" value="${sessionScope.user.email}"></label>
                             <strong>
@@ -103,7 +103,7 @@
                     </div>
 
                     <div class="mt-5 text-center">
-                        <button class="btn btn-success profile-button" type="submit">Update</button>
+                        <button class="btn btn-success profile-button" type="submit"><fmt:message key="page.edit.user.data.update"/></button>
                     </div>
                 </form>
             </div>

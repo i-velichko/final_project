@@ -35,7 +35,7 @@ public class UserDaoImpl implements UserDao {
             "JOIN user_statuses as us ON u.status_id = us.id";
     private static final String FIND_USER_BY_ID = FIND_ALL_USERS + " WHERE u.id = ?";
     private static final String FIND_USER_BY_REGISTRATION_KEY = FIND_ALL_USERS + " WHERE registration_key = ?";
-    private static final String FIND_USER_BY_LOGIN_AND_PASSWORD = FIND_ALL_USERS + " WHERE u.login = ? and u.password = ?";
+    private static final String FIND_USER_BY_LOGIN_AND_PASSWORD = FIND_ALL_USERS + " WHERE u.login = ? and u.password = ? AND u.status_id = ?";
     private static final String FIND_USER_BY_LOGIN = FIND_ALL_USERS + " WHERE u.login = ?";
     private static final String FIND_USER_BY_EMAIL = FIND_ALL_USERS + " WHERE u.email = ?";
     private static final String FIND_USER_BY_GIT_LINK = FIND_ALL_USERS + " WHERE u.git = ?";
@@ -99,6 +99,7 @@ public class UserDaoImpl implements UserDao {
                  PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_LOGIN_AND_PASSWORD)) {
                 statement.setString(1, login);
                 statement.setString(2, PasswordHashGenerator.encodePassword(password));
+                statement.setInt(3, UserStatus.ACTIVE.getId());
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     user = userCreator.createUser(resultSet);

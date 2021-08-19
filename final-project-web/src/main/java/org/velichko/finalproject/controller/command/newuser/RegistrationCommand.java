@@ -3,10 +3,9 @@ package org.velichko.finalproject.controller.command.newuser;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.velichko.finalproject.controller.Router;
 import org.velichko.finalproject.controller.command.Command;
 import org.velichko.finalproject.controller.command.PageName;
-import org.velichko.finalproject.controller.command.ParamName;
-import org.velichko.finalproject.controller.Router;
 import org.velichko.finalproject.i18n.I18nManager;
 import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.entity.type.UserRole;
@@ -21,7 +20,7 @@ import java.util.Map;
 
 import static org.velichko.finalproject.controller.command.MessageNameKey.REGISTRATION_FAILED_KEY;
 import static org.velichko.finalproject.controller.command.MessageNameKey.REGISTRATION_SUCCESSFUL_KEY;
-import static org.velichko.finalproject.controller.command.PageName.LOGIN_PAGE;
+import static org.velichko.finalproject.controller.command.PageName.REDIRECT_TO_LOGIN;
 import static org.velichko.finalproject.controller.command.PageName.REGISTRATION_PAGE;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
@@ -84,7 +83,8 @@ public class RegistrationCommand implements Command {
                     e.printStackTrace(); //todo
                     request.setAttribute(REGISTRATION_FAILED, i18n.getMassage(REGISTRATION_FAILED_KEY, locale) + e.getLocalizedMessage());
                 }
-                router.setPagePath(LOGIN_PAGE);
+                router.setRouterType(Router.RouterType.REDIRECT);
+                router.setPagePath(REDIRECT_TO_LOGIN);
             }
         } else {
             router.setPagePath(REGISTRATION_PAGE);

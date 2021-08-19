@@ -22,17 +22,13 @@ public class ShowTrainerInfoCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         final Router router = new Router();
-        User user = null;
-        Optional<User> currentUser;
         String login = request.getParameter(LOGIN_PARAM);
         String password = request.getParameter(PASSWORD_PARAM);
         try {
-            currentUser = userService.findUserByLoginAndPassword(login, password);
-            if (currentUser.isPresent()) {
-                user = currentUser.get();
+            userService.findUserByLoginAndPassword(login, password).ifPresent(user -> {
                 request.setAttribute(USER_PARAM, user);
                 router.setPagePath(TRAINER_INFO);
-            }
+            });
         } catch (ServiceException e) {
             e.printStackTrace(); //todo
         }

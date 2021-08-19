@@ -71,13 +71,15 @@
                                 <div class="col-md-6 mb-4 pb-2">
                                     <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
                                             name="trainerId">
-                                        <option selected>Choose your trainer here</option>
+                                        <option selected><fmt:message
+                                                key="page.student.choose.trainer"/></option>
                                         <c:forEach items="${trainers}" var="trainer">
                                             <option value="${trainer.id}">${trainer.firstName} ${trainer.lastName}</option>
                                         </c:forEach>
                                         <input type="hidden" id="trainerInfo" name="trainerInfo"/>
                                     </select>
-                                    <label class="form-label select-label"> Your trainer</label>
+                                    <label class="form-label select-label"> <fmt:message
+                                            key="page.student.your.trainer"/></label>
                                 </div>
                             </div>
 
@@ -85,8 +87,8 @@
                                 <div class="col-md-9 pe-5">
                                     <input class="form-control form-control-lg" id="imageId" name="image" type="file"/>
                                     <div style="color: red">${imageError}</div>
-                                    <div class="small text-muted mt-2">Upload your photo.
-                                        Max file size 1 MB
+                                    <div class="small text-muted mt-2"><fmt:message
+                                            key="page.student.upload.photo"/>
                                     </div>
                                 </div>
                             </div>

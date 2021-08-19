@@ -43,7 +43,7 @@ public class WelcomeStudentCommand implements Command {
                 return verificationWebFacade.getVerificationInfoByVerificationIdAndUserRole(
                         verificationIdByStudentId.get(), request, currentUser.getRole());
             } else {
-                List<User> users = userService.readAll();
+                List<User> users = userService.readAll();//TODO readAllByRole
                 List<User> trainers = users.stream()
                         .filter(user -> user.getRole().equals(UserRole.TRAINER))
                         .collect(Collectors.toList());

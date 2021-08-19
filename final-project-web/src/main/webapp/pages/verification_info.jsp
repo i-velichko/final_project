@@ -9,7 +9,7 @@
 <%@ taglib prefix="ctg" uri="customtags" %>
 <html>
 <head>
-    <title>Verification info</title>
+    <title> <fmt:message key="page.verification.info.title"/></title>
     <ctg:is-student>
         <%@include file="/fragment/student_header.jsp" %>
     </ctg:is-student>
@@ -54,16 +54,16 @@
                     <p class="text-muted mb-2" data-mdb-toggle="animation"
                        data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-up"
                        data-mdb-animation-duration="800">
-                    <div>Student - ${verification.student.firstName} ${verification.student.lastName}</div>
-                    <div>Trainer - ${verification.trainer.firstName} ${verification.trainer.lastName}</div>
-                    <div>Examiner - ${verification.examiner.firstName} ${verification.examiner.lastName}</div>
-                    Verification status - ${verification.verificationStatus} </p>
+                    <div><fmt:message key="page.verification.info.student"/> - ${verification.student.firstName} ${verification.student.lastName}</div>
+                    <div><fmt:message key="page.verification.info.trainer"/> - ${verification.trainer.firstName} ${verification.trainer.lastName}</div>
+                    <div><fmt:message key="page.verification.info.examiner"/> - ${verification.examiner.firstName} ${verification.examiner.lastName}</div>
+                    <fmt:message key="page.verification.info.status"/> - ${verification.verificationStatus} </p>
                     <ul class="list-unstyled font-small mt-5 mb-0">
 
                         <li>
                             <p class="text-uppercase mb-2" data-mdb-toggle="animation"
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-down"
-                               data-mdb-animation-duration="1000"><strong>Title</strong></p>
+                               data-mdb-animation-duration="1000"><strong><fmt:message key="page.verification.info.project.title"/></strong></p>
                             <p class="text-muted mb-4" data-mdb-toggle="animation"
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-up"
                                data-mdb-animation-duration="1000">${verification.title}</p>
@@ -76,24 +76,24 @@
                             <p class="text-muted mb-4" data-mdb-toggle="animation"
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-up"
                                data-mdb-animation-duration="1000">
-                            <div>Application date - ${verification.applicationDate}</div>
-                            <div> Trainer verification date - ${verification.trainerVerificationDate}</div>
+                            <div><fmt:message key="page.verification.info.app.date"/> - ${verification.applicationDate}</div>
+                            <div> <fmt:message key="page.verification.info.trainer.check.date"/> - ${verification.trainerVerificationDate}</div>
                             <c:if test="${sessionScope.user.role == 'TRAINER'}">
                                  <span>
                                 <form action="${abs_path}/controller?command=change_trainer_verification_date&verificationId=${verification.id}"
                                       method="post">
-                                    <label for="dateTime"><h6 style="color: #157347">Change date</h6></label>
+                                    <label for="dateTime"><h6 style="color: #157347"><fmt:message key="page.verification.info.trainer.check.date"/></h6></label>
                                     <input id="dateTime" type="datetime-local" name="dateTime">
                                     <input type="submit" value="submit">
                                 </form>
                             </span>
                             </c:if>
-                            <div> Examiner verification date - ${verification.examinerVerificationDate}</div>
+                            <div> <fmt:message key="page.verification.info.examiner.check.date"/> - ${verification.examinerVerificationDate}</div>
                             <c:if test="${sessionScope.user.role == 'EXAMINER'}">
                                  <span>
                                 <form action="${abs_path}/controller?command=change_examiner_verification_date&verificationId=${verification.id}"
                                       method="post">
-                                    <label for="dateTime2"><h6 style="color: #157347">Change date</h6></label>
+                                    <label for="dateTime2"><h6 style="color: #157347"><fmt:message key="page.verification.info.change.exame.date"/></h6></label>
                                     <input id="dateTime2" type="datetime-local" name="dateTime">
                                     <input type="submit" value="submit">
                                 </form>
@@ -107,7 +107,7 @@
                         <li>
                             <p class="text-uppercase mb-2" data-mdb-toggle="animation"
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-down"
-                               data-mdb-animation-duration="1000"><strong>Trainer score</strong></p>
+                               data-mdb-animation-duration="1000"><strong><fmt:message key="page.verification.info.trainer.score"/></strong></p>
                             <p class="text-muted mb-4" data-mdb-toggle="animation"
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-up"
                                data-mdb-animation-duration="1000">${verification.trainerScore}</p>
@@ -117,10 +117,10 @@
                                       action="${abs_path}/controller?command=change_trainer_score&verificationId=${verification.id}"
                                       method="post">
                                     <label class="my-1 mr-2" for="inlineFormCustomSelectPref"><h6
-                                            style="color: #157347">Change score</h6></label>
+                                            style="color: #157347"><fmt:message key="page.verification.info.change.trainer.score"/></h6></label>
                                     <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref"
                                             name="newScore">
-                                        <option selected>scores</option>
+                                        <option selected><fmt:message key="page.verification.info.scores"/></option>
                                         <c:forEach items="${scores}" var="score">
                                             <option value=${score}>${score}</option>
                                         </c:forEach>
@@ -134,7 +134,7 @@
                         <li>
                             <p class="text-uppercase mb-2" data-mdb-toggle="animation"
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-down"
-                               data-mdb-animation-duration="1000"><strong>Student characteristic</strong></p>
+                               data-mdb-animation-duration="1000"><strong><fmt:message key="page.verification.info.characterisitic"/></strong></p>
                             <p class="text-muted mb-4" data-mdb-toggle="animation"
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-up"
                                data-mdb-animation-duration="1000">${verification.trainerCharacteristic}</p>

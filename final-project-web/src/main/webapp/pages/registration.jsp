@@ -29,7 +29,7 @@
                                                    value="${correctRegistrationData.firstName}" class="form-control"/>
                                             <span style="color: red">${errorRegistrationData.firstNameError}</span>
                                             <label class="form-label" for="form3Example1c"><fmt:message
-                                                    key="page.registration.first_name"/></label>
+                                                    key="common.data.first.name"/></label>
                                         </div>
                                     </div>
 
@@ -40,7 +40,7 @@
                                                    value="${correctRegistrationData.lastName}" class="form-control"/>
                                             <span style="color: red">${errorRegistrationData.firstNameError}</span>
                                             <label class="form-label" for="form3Example1c"><fmt:message
-                                                    key="page.registration.last_name"/></label>
+                                                    key="common.data.last.name"/></label>
                                         </div>
                                     </div>
 
@@ -65,7 +65,7 @@
                                                    pattern="^[\w@#$%^&+=]{7,25}$" id="form3Example4c"
                                                    class="form-control"/>
                                             <label class="form-label" for="form3Example4c"><fmt:message
-                                                    key="page.registration.login"/></label>
+                                                    key="common.data.login"/></label>
                                             <span><h9 style="color: forestgreen"><fmt:message
                                                     key="page.registration.login.requirements"/></h9></span>
                                             <span style="color: red">${errorRegistrationData.loginError}</span>

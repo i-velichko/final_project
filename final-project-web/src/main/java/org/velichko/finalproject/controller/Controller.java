@@ -6,6 +6,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.controller.command.CommandName;
 import org.velichko.finalproject.controller.command.CommandProvider;
 
@@ -13,12 +15,19 @@ import java.io.IOException;
 import java.util.Optional;
 
 import static org.velichko.finalproject.controller.command.PageName.ERROR_PAGE;
+import static org.velichko.finalproject.controller.command.ParamName.COMMAND_PARAM;
 import static org.velichko.finalproject.controller.command.ParamName.REFERER_COMMAND;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type Controller.
+ */
 @MultipartConfig(fileSizeThreshold = 1024 * 1024)
 @WebServlet(name = "controller", urlPatterns = "/controller")
 public class Controller extends HttpServlet {
 
+    private static Logger logger = LogManager.getLogger();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -44,6 +53,7 @@ public class Controller extends HttpServlet {
                 request.getRequestDispatcher(router.getPagePath()).forward(request, response);
             }
         } else {
+            logger.error("No such command for name: {}", request.getParameter(COMMAND_PARAM));
             response.sendRedirect(ERROR_PAGE);
         }
     }
