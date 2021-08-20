@@ -75,6 +75,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean createNewUser(User user, String password) throws ServiceException {
+        try {
+            userDao.createNewUser(user, password);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with add new User. ", e);
+            throw new ServiceException("Error with add new User. ", e);
+        }
+        return true;
+    }
+
+    @Override
     public boolean changeUserGit(String login, String gitLink) throws ServiceException {
         try {
             userDao.changeUserGitLinkByLogin(login, gitLink);

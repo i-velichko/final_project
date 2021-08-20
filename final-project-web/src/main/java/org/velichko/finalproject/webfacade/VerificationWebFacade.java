@@ -37,10 +37,10 @@ public class VerificationWebFacade {
                 switch (userRole) {
                     case TRAINER -> router.setPagePath(VERIFICATION_TRAINER_CONTROL);
                     case EXAMINER -> router.setPagePath(VERIFICATION_EXAMINER_CONTROL);
-                    default -> router.setPagePath(PageName.VERIFICATION_INFO);
+                    default -> router.setPagePath(VERIFICATION_INFO);
                 }
             }
-            router.setPagePath(PageName.VERIFICATION_INFO);
+//            router.setPagePath(PageName.VERIFICATION_INFO);
         } else {
             router.setPagePath(ERROR_PAGE);
         }

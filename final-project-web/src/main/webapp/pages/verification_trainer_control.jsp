@@ -53,13 +53,12 @@
                         <li>
                             <p class="text-uppercase mb-2" data-mdb-toggle="animation"
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-down"
-                               data-mdb-animation-duration="1000"><strong>Dates</strong></p>
+                               data-mdb-animation-duration="1000"><strong><fmt:message key="page.verification.info.dates"/></strong></p>
                             <p class="text-muted mb-4" data-mdb-toggle="animation"
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-up"
                                data-mdb-animation-duration="1000">
                             <div><fmt:message key="page.verification.info.app.date"/> - ${verification.applicationDate}</div>
                             <div> <fmt:message key="page.verification.info.trainer.check.date"/> - ${verification.trainerVerificationDate}</div>
-                            <c:if test="${sessionScope.user.role == 'TRAINER'}">
                                  <span>
                                 <form action="${abs_path}/controller?command=change_trainer_verification_date&verificationId=${verification.id}"
                                       method="post">
@@ -68,7 +67,6 @@
                                     <input type="submit" value="submit">
                                 </form>
                             </span>
-                            </c:if>
                             <div> <fmt:message key="page.verification.info.examiner.check.date"/> - ${verification.examinerVerificationDate}</div>
                             </p>
                         </li>
@@ -81,7 +79,6 @@
                             <p class="text-muted mb-4" data-mdb-toggle="animation"
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-up"
                                data-mdb-animation-duration="1000">${verification.trainerScore}</p>
-                            <c:if test="${sessionScope.user.role == 'TRAINER'}">
                                 <p class="text-uppercase mb-2">
                                 <form class="form-inline"
                                       action="${abs_path}/controller?command=change_trainer_score&verificationId=${verification.id}"
@@ -98,7 +95,6 @@
                                     <input type="submit" value="submit">
                                 </form>
                                 </p>
-                            </c:if>
                         </li>
 
                         <li>
@@ -108,7 +104,6 @@
                             <p class="text-muted mb-4" data-mdb-toggle="animation"
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-up"
                                data-mdb-animation-duration="1000">${verification.trainerCharacteristic}</p>
-                            <c:if test="${sessionScope.user.role == 'TRAINER'}">
                                 <div class="mb-3">
                                     <form action="${abs_path}/controller?command=change_trainer_characteristic&verificationId=${verification.id}"
                                           method="post">
@@ -120,7 +115,6 @@
                                                   rows="3"></textarea>
                                         <input type="submit" value="submit"></form>
                                 </div>
-                            </c:if>
                         </li>
 
                         <li>

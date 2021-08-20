@@ -19,15 +19,14 @@ public interface PageName {
 
     String ERROR_PAGE = "/pages/error.jsp";
 
-    String REDIRECT_VERIFICATION = "controller?command=redirect_verification";
     String REDIRECT_STUDENT = "controller?command=redirect_student";
-    String REDIRECT_MAIN = "controller?command=redirect_main";
-    String REDIRECT_TRAINER = "controller?command=redirect_trainer";
-    String REDIRECT_ADMIN = "controller?command=redirect_admin";
-    String REDIRECT_TO_LOGIN = "controller?command=to_login_page";
+    String REDIRECT_TO_MAIN_PAGE = "controller?command=redirect_main";
+    String REDIRECT_TO_LOGIN_PAGE = "controller?command=to_login_page";
+    String REDIRECT_TO_ADD_USER_PAGE = "controller?command=to_add_user_page";
+    String REDIRECT_TO_EDIT_USER_DATA_PAGE = "controller?command=to_edit_user_data_page";
     String VERIFICATION_TRAINER_CONTROL = "/pages/verification_trainer_control.jsp";
     String VERIFICATION_EXAMINER_CONTROL = "/pages/verification_examiner_control.jsp";
     String MAIN_PAGE = "/pages/main.jsp";
-    String REDIRECT_VERIFICATION_INFO = "controller?command=redirect_verification_info";
     String EDIT_USER_DATA = "/pages/edit_user_data.jsp";
+    String ADD_USER_PAGE = "/pages/add_user.jsp";
 }

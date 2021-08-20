@@ -4,8 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.velichko.finalproject.controller.Router;
 import org.velichko.finalproject.controller.command.Command;
 
-import static org.velichko.finalproject.controller.command.PageName.INDEX_PAGE;
-import static org.velichko.finalproject.controller.command.PageName.REDIRECT_MAIN;
+import static org.velichko.finalproject.controller.command.PageName.REDIRECT_TO_MAIN_PAGE;
 
 public class LogoutCommand implements Command {
 
@@ -14,7 +13,7 @@ public class LogoutCommand implements Command {
         Router router = new Router();
         request.getSession().invalidate();
         router.setRouterType(Router.RouterType.REDIRECT);
-        router.setPagePath(REDIRECT_MAIN);
+        router.setPagePath(REDIRECT_TO_MAIN_PAGE);
         return router;
     }
 }

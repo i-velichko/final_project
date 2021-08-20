@@ -52,14 +52,13 @@
                         <li>
                             <p class="text-uppercase mb-2" data-mdb-toggle="animation"
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-down"
-                               data-mdb-animation-duration="1000"><strong>Dates</strong></p>
+                               data-mdb-animation-duration="1000"><strong><strong><fmt:message key="page.verification.info.dates"/></strong></p>
                             <p class="text-muted mb-4" data-mdb-toggle="animation"
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-up"
                                data-mdb-animation-duration="1000">
                             <div> <fmt:message key="page.verification.info.app.date"/> - ${verification.applicationDate}</div>
                             <div>  <fmt:message key="page.verification.info.trainer.check.date"/> - ${verification.trainerVerificationDate}</div>
                             <div>  <fmt:message key="page.verification.info.examiner.check.date"/> - ${verification.examinerVerificationDate}</div>
-                            <c:if test="${sessionScope.user.role == 'EXAMINER'}">
                                  <span>
                                 <form action="${abs_path}/controller?command=change_examiner_verification_date&verificationId=${verification.id}"
                                       method="post">
@@ -68,7 +67,6 @@
                                     <input type="submit" value="submit">
                                 </form>
                             </span>
-                            </c:if>
 
                             </p>
                         </li>
@@ -99,7 +97,6 @@
                             <p class="text-muted mb-4" data-mdb-toggle="animation"
                                data-mdb-animation-start="onLoad" data-mdb-animation="slide-in-up"
                                data-mdb-animation-duration="1000">${verification.finalStatus}</p>
-                            <c:if test="${sessionScope.user.role == 'EXAMINER'}">
                                 <p class="text-uppercase mb-2">
                                 <form class="form-inline"
                                       action="${abs_path}/controller?command=change_final_status&verificationId=${verification.id}"
@@ -117,7 +114,6 @@
                                     <input type="submit" value="submit">
                                 </form>
                                 </p>
-                            </c:if>
                         </li>
 
                     </ul>

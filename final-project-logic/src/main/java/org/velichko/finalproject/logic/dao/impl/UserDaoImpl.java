@@ -20,7 +20,7 @@ import java.util.Optional;
 
 /**
  * @author Ivan Velichko
- *
+ * <p>
  * The type User dao.
  */
 public class UserDaoImpl implements UserDao {
@@ -30,6 +30,9 @@ public class UserDaoImpl implements UserDao {
     private static final String ADD_NEW_USER = "INSERT INTO users" +
             " (first_name, last_name, login, email, role_id, status_id, password, registration_key)" +
             " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String ADD_NEW_USER_BY_ADMIN = "INSERT INTO users" +
+            " (first_name, last_name, login, email, role_id, status_id, password)" +
+            " VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String FIND_ALL_USERS = "SELECT u.id, u.first_name, u.last_name, u.login, u.email, u.git, u.image" +
             ",r.value as role, us.value as status FROM users as u JOIN roles as r ON u.role_id = r.id " +
             "JOIN user_statuses as us ON u.status_id = us.id";
@@ -208,6 +211,28 @@ public class UserDaoImpl implements UserDao {
                 statement.setInt(6, user.getStatus().getId());
                 statement.setString(7, PasswordHashGenerator.encodePassword(password));
                 statement.setString(8, registrationKey);
+                statement.executeUpdate();
+                return true;
+            } catch (SQLException e) {
+                logger.log(Level.ERROR, "Error with add new User. ", e);
+                throw new DaoException("Error with add new User. ", e);
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean createNewUser(User user, String password) throws DaoException {
+        if (user != null && password != null) {
+            try (Connection connection = ConnectionPool.getInstance().getConnection();
+                 PreparedStatement statement = connection.prepareStatement(ADD_NEW_USER_BY_ADMIN)) {
+                statement.setString(1, user.getFirstName());
+                statement.setString(2, user.getLastName());
+                statement.setString(3, user.getLogin());
+                statement.setString(4, user.getEmail());
+                statement.setInt(5, user.getRole().getId());
+                statement.setInt(6, user.getStatus().getId());
+                statement.setString(7, PasswordHashGenerator.encodePassword(password));
                 statement.executeUpdate();
                 return true;
             } catch (SQLException e) {

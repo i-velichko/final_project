@@ -57,17 +57,19 @@
                         <div class="col-md-6">
                             <label class="labels"><fmt:message key="common.data.first.name"/>:</label>
                             <label class="form-control">
-                                <input type="text" pattern="^[\w@#$%^&+=]{2,30}$" name="firstName" value="${sessionScope.user.firstName}" required></label>
+                                <input type="text" pattern="^[\w@#$%^&+=]{2,30}$" name="firstName"
+                                       value="${sessionScope.user.firstName}" required></label>
                             <strong>
-                                <p class="text-danger">${errors.nameError}</p>
+                                <p class="text-danger">${errorEditData.nameError}</p>
                             </strong>
                         </div>
                         <div class="col-md-6">
                             <label class="labels"><fmt:message key="common.data.last.name"/>:</label>
                             <label class="form-control">
-                                <input type="text" pattern="^[\w@#$%^&+=]{2,30}$" name="lastName" value="${sessionScope.user.lastName}" required></label>
+                                <input type="text" pattern="^[\w@#$%^&+=]{2,30}$" name="lastName"
+                                       value="${sessionScope.user.lastName}" required></label>
                             <strong>
-                                <p class="text-danger">${errors.nameError}</p>
+                                <p class="text-danger">${errorEditData.nameError}</p>
                             </strong>
                         </div>
                     </div>
@@ -82,28 +84,51 @@
                         </div>
                     </div>
                     <div class="row mt-3">
+
                         <ctg:is-student>
+
                             <div class="col-md-6">
                                 <label class="labels"><fmt:message key="common.data.git"/>:</label>
                                 <label class="form-control">
-                                    <input type="text" name="gitLink" value="${sessionScope.user.gitLink}"></label>
+                                    <c:if test="${empty correctEditData}">
+                                    <input type="text" name="gitLink"
+                                           pattern="(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})"
+                                           value="${sessionScope.user.gitLink}" required></label>
+                                </c:if>
+                                <c:if test="${not empty correctEditData}">
+                                    <input type="text" name="gitLink"
+                                           pattern="(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})"
+                                           value="${correctEditData.gitLink}" required></label>
+                                </c:if>
                                 <strong>
-                                    <p class="text-danger">${errors.gitLinkError}</p>
+                                    <p class="text-danger">${errorEditData.gitLinkError}</p>
                                 </strong>
                             </div>
                         </ctg:is-student>
+
                         <div class="col-md-6">
                             <label class="labels"><fmt:message key="common.data.email"/>:</label>
                             <label class="form-control">
-                                <input type="text" name="email" value="${sessionScope.user.email}"></label>
+                            <c:if test="${empty correctEditData}">
+                                    <input type="text" name="email"
+                                           pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
+                                           value="${sessionScope.user.email}" required></label>
+                            </c:if>
+                            <c:if test="${not empty correctEditData}">
+                                    <input type="text" name="email"
+                                           pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
+                                           value="${correctEditData.email}" required></label>
+                            </c:if>
                             <strong>
-                                <p class="text-danger">${errors.emailError}</p>
+                                <p class="text-danger">${errorEditData.emailError}</p>
                             </strong>
+
                         </div>
                     </div>
 
                     <div class="mt-5 text-center">
-                        <button class="btn btn-success profile-button" type="submit"><fmt:message key="page.edit.user.data.update"/></button>
+                        <button class="btn btn-success profile-button" type="submit"><fmt:message
+                                key="page.edit.user.data.update"/></button>
                     </div>
                 </form>
             </div>

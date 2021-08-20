@@ -5,7 +5,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.controller.Router;
 import org.velichko.finalproject.controller.command.Command;
-import org.velichko.finalproject.controller.command.PageName;
 import org.velichko.finalproject.i18n.I18nManager;
 import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.entity.type.UserRole;
@@ -20,7 +19,7 @@ import java.util.Map;
 
 import static org.velichko.finalproject.controller.command.MessageNameKey.REGISTRATION_FAILED_KEY;
 import static org.velichko.finalproject.controller.command.MessageNameKey.REGISTRATION_SUCCESSFUL_KEY;
-import static org.velichko.finalproject.controller.command.PageName.REDIRECT_TO_LOGIN;
+import static org.velichko.finalproject.controller.command.PageName.REDIRECT_TO_LOGIN_PAGE;
 import static org.velichko.finalproject.controller.command.PageName.REGISTRATION_PAGE;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
@@ -69,10 +68,9 @@ public class RegistrationCommand implements Command {
             if (!registrationDataCheckResult.isEmpty()) {
                 request.setAttribute(CORRECT_REGISTRATION_DATA_PARAM, registrationData);
                 request.setAttribute(ERROR_REGISTRATION_DATA_PARAM, registrationDataCheckResult);
-                router.setPagePath(PageName.REGISTRATION_PAGE);
+                router.setPagePath(REGISTRATION_PAGE);
             } else {
                 User user = new User(firstName, lastName, login, email, UserRole.STUDENT, UserStatus.WAIT_CONFIRMATION);
-                System.out.println(user);
                 try {
                     String registrationKey = confirmatoryService.setRegistrationToken(email, login);
                     if (userService.createNewUser(user, password, registrationKey)) {
@@ -84,7 +82,7 @@ public class RegistrationCommand implements Command {
                     request.setAttribute(REGISTRATION_FAILED, i18n.getMassage(REGISTRATION_FAILED_KEY, locale) + e.getLocalizedMessage());
                 }
                 router.setRouterType(Router.RouterType.REDIRECT);
-                router.setPagePath(REDIRECT_TO_LOGIN);
+                router.setPagePath(REDIRECT_TO_LOGIN_PAGE);
             }
         } else {
             router.setPagePath(REGISTRATION_PAGE);

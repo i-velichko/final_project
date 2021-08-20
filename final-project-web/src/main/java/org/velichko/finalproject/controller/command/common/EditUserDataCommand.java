@@ -15,7 +15,7 @@ import org.velichko.finalproject.validator.BaseDataValidator;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.velichko.finalproject.controller.command.PageName.EDIT_USER_DATA;
+import static org.velichko.finalproject.controller.command.PageName.*;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
 public class EditUserDataCommand implements Command {
@@ -41,11 +41,16 @@ public class EditUserDataCommand implements Command {
         Map<String, String> newUserData = new HashMap<>();
         String currentUserEmail = user.getEmail();
         String currentUserGitLink = user.getGitLink();
+
         if (!currentUserEmail.equals(newEmail)) {
             newUserData.put(EMAIL_PARAM, newEmail);
+        } else {
+            newUserData.put(OLD_EMAIL, currentUserEmail);
         }
-        if (!currentUserGitLink.equals(newEmail)) {
+        if (!currentUserGitLink.equals(newGitLink)) {
             newUserData.put(GIT_LINK_PARAM, newGitLink);
+        } else {
+            newUserData.put(OLD_GIT_LINK, currentUserGitLink);
         }
         newUserData.put(FIRST_NAME_PARAM, newFirstName);
         newUserData.put(LAST_NAME_PARAM, newLastName);
@@ -70,7 +75,11 @@ public class EditUserDataCommand implements Command {
                     request.setAttribute(MSG, e.getMessage());//TODO
                     router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 }
+                router.setRouterType(Router.RouterType.REDIRECT);
+                router.setPagePath(REDIRECT_TO_EDIT_USER_DATA_PAGE);
             }
+        } else {
+            router.setPagePath(EDIT_USER_DATA);
         }
         return router;
     }

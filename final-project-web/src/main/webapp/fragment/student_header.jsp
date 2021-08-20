@@ -60,7 +60,7 @@
                         </ul>
                     </li>
 
-                <li><a href="https://training.by/#!/Home?lang=ru" class="nav-link px-2 link-dark"><fmt:message key="page.common.header.profile"/></a></li>
+                <li><a href="https://training.by/#!/Home?lang=ru" class="nav-link px-2 link-dark"><fmt:message key="page.common.header.road.to.epam"/></a></li>
             </ul>
 
             <c:if test="${not empty sessionScope.user}">

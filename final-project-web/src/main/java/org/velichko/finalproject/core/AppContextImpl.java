@@ -1,9 +1,6 @@
 package org.velichko.finalproject.core;
 
-import org.velichko.finalproject.controller.command.admin.ChangeUserRoleCommand;
-import org.velichko.finalproject.controller.command.admin.ChangeUserStatusCommand;
-import org.velichko.finalproject.controller.command.admin.ShowAllUsersCommand;
-import org.velichko.finalproject.controller.command.admin.ShowAllVerificationsCommand;
+import org.velichko.finalproject.controller.command.admin.*;
 import org.velichko.finalproject.controller.command.common.*;
 import org.velichko.finalproject.controller.command.examiner.ChangeExaminerVerificationDateCommand;
 import org.velichko.finalproject.controller.command.examiner.ChangeFinalStatusCommand;
@@ -31,6 +28,7 @@ import org.velichko.finalproject.logic.service.impl.UserServiceImpl;
 import org.velichko.finalproject.logic.service.impl.VerificationServiceImpl;
 import org.velichko.finalproject.logic.util.RegistrationConfirmatory;
 import org.velichko.finalproject.validator.impl.EditUserDataValidator;
+import org.velichko.finalproject.validator.impl.RegistrationByAdminValidator;
 import org.velichko.finalproject.validator.impl.RegistrationDataValidator;
 import org.velichko.finalproject.validator.impl.VerificationDataValidator;
 import org.velichko.finalproject.webfacade.VerificationWebFacade;
@@ -55,6 +53,7 @@ public class AppContextImpl implements AppContext {
         map.put(ToLoginPageCommand.class, buildWrapper(ToLoginPageCommand::new));
         map.put(ToRegistrationPageCommand.class, buildWrapper(ToRegistrationPageCommand::new));
         map.put(ToEditUserDataPageCommand.class, buildWrapper(ToEditUserDataPageCommand::new));
+        map.put(ToAddUserPageCommand.class, buildWrapper(ToAddUserPageCommand::new));
         map.put(LogoutCommand.class, buildWrapper(LogoutCommand::new));
         map.put(WrongCommand.class, buildWrapper(WrongCommand::new));
         map.put(UserDao.class, buildWrapper(UserDaoImpl::new));
@@ -65,9 +64,18 @@ public class AppContextImpl implements AppContext {
         map.put(VerificationService.class, buildWrapper(() -> new VerificationServiceImpl(getService(VerificationDao.class))));
         map.put(VerificationWebFacade.class, buildWrapper(() -> new VerificationWebFacade(getService(VerificationService.class))));
         map.put(I18nManager.class, buildWrapper(I18nManager::new));
-        map.put(RegistrationDataValidator.class, buildWrapper(() -> new RegistrationDataValidator(getService(UserService.class), getService(I18nManager.class))));
-        map.put(VerificationDataValidator.class, buildWrapper(() -> new VerificationDataValidator(getService(UserService.class), getService(I18nManager.class))));
-        map.put(EditUserDataValidator.class, buildWrapper(() -> new EditUserDataValidator(getService(UserService.class), getService(I18nManager.class))));
+        map.put(RegistrationDataValidator.class, buildWrapper(() -> new RegistrationDataValidator(
+                getService(UserService.class),
+                getService(I18nManager.class))));
+        map.put(RegistrationByAdminValidator.class, buildWrapper(() -> new RegistrationByAdminValidator(
+                getService(UserService.class),
+                getService(I18nManager.class))));
+        map.put(VerificationDataValidator.class, buildWrapper(() -> new VerificationDataValidator(
+                getService(UserService.class),
+                getService(I18nManager.class))));
+        map.put(EditUserDataValidator.class, buildWrapper(() -> new EditUserDataValidator(
+                getService(UserService.class),
+                getService(I18nManager.class))));
         map.put(RegistrationConfirmatory.class, buildWrapper(() -> new RegistrationConfirmatory(getService(EmailService.class))));
         map.put(RegistrationCommand.class, buildWrapper(() -> new RegistrationCommand(
                 getService(UserService.class),
@@ -107,6 +115,10 @@ public class AppContextImpl implements AppContext {
                 getService(VerificationWebFacade.class))));
         map.put(ChangeUserImageCommand.class, buildWrapper(() -> new ChangeUserImageCommand(getService(UserService.class))));
         map.put(EditUserDataCommand.class, buildWrapper(() -> new EditUserDataCommand(getService(UserService.class), getService(EditUserDataValidator.class))));
+        map.put(AddNewUserCommand.class, buildWrapper(() -> new AddNewUserCommand(
+                getService(UserService.class),
+                getService(RegistrationByAdminValidator.class),
+                getService(I18nManager.class))));
     }
 
 

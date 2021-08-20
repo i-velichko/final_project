@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.controller.Router;
 import org.velichko.finalproject.controller.command.Command;
-import org.velichko.finalproject.controller.command.MessageNameKey;
 import org.velichko.finalproject.i18n.I18nManager;
 import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.exception.ServiceException;
@@ -64,7 +63,7 @@ public class LoginCommand implements Command {
                     request.getSession().setAttribute(USER_PARAM, user);
                     request.setAttribute(USER_PARAM, user);
                     router.setRouterType(REDIRECT);
-                    router.setPagePath(REDIRECT_MAIN);
+                    router.setPagePath(REDIRECT_TO_MAIN_PAGE);
                 } else {
                     request.setAttribute(USER_NOT_FOUND_PARAM, i18nManager.getMassage(LOGIN_NOT_CORRECT_KEY, locale));
                     router.setPagePath(LOGIN_PAGE);

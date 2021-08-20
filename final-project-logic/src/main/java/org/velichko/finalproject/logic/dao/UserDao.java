@@ -9,9 +9,11 @@ import java.io.InputStream;
 import java.util.Optional;
 
 /**
- * @author Ivan Velichko
- *
+ * author Ivan Velichko
+ * <p>
  * The interface User dao.
+ *
+ * @author Ivan Velichko The interface User dao.
  */
 public interface UserDao extends BaseDao<Long, User> {
     /**
@@ -32,6 +34,14 @@ public interface UserDao extends BaseDao<Long, User> {
      * @throws DaoException the dao exception
      */
     boolean createNewUser(User user, String password, String registrationKey) throws DaoException;
+
+    /**
+     * Create new user.
+     *  @param user     the user
+     * @param password the password
+     * @return
+     */
+    boolean createNewUser(User user, String password) throws DaoException;
 
     /**
      * Find user by login and password optional.
@@ -125,4 +135,5 @@ public interface UserDao extends BaseDao<Long, User> {
      * @throws DaoException the dao exception
      */
     Optional<User> findUserByRegistrationKey(String registrationKey) throws DaoException;
+
 }

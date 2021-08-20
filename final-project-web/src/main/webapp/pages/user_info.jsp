@@ -108,13 +108,13 @@
 <style>
     .gradient-custom {
         /* fallback for old browsers */
-        background: #f6d365;
+        background: #6571f6;
 
         /* Chrome 10-25, Safari 5.1-6 */
-        background: -webkit-linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
+        background: -webkit-linear-gradient(to right bottom, rgb(101, 164, 246), rgb(125, 173, 245));
 
         /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-        background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1))
+        background: linear-gradient(to right bottom, rgb(101, 147, 246), rgb(133, 157, 253))
     }
 </style>
 </body>

@@ -63,4 +63,7 @@ public interface ParamName {
     String NAME_ERROR_PARAM = "nameError";
     String CORRECT_EDIT_DATA_PARAM = "correctEditData";
     String ERROR_EDIT_DATA_PARAM = "errorEditData";
+    String OLD_EMAIL = "oldEmail";
+    String OLD_GIT_LINK = "oldGitLink";
+    String ROLE_PARAM = "role";
 }

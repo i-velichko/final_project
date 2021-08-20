@@ -12,9 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @author Ivan Velichko
- *
+ * author Ivan Velichko
+ * <p>
  * The interface User service.
+ *
+ * @author Ivan Velichko The interface User service.
  */
 public interface UserService {
     /**
@@ -71,6 +73,15 @@ public interface UserService {
      * @throws ServiceException the service exception
      */
     boolean createNewUser (User user, String password, String registrationKey) throws ServiceException;
+
+    /**
+     * Create new user boolean.
+     *
+     * @param user     the user
+     * @param password the password
+     * @return the boolean
+     */
+    boolean createNewUser(User user, String password) throws ServiceException;
 
     /**
      * Change user git boolean.
@@ -156,4 +167,5 @@ public interface UserService {
      * @throws ServiceException the service exception
      */
     Optional<User> getUserByRegistrationKey(String confirmationKey) throws ServiceException;
+
 }

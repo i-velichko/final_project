@@ -53,19 +53,6 @@
                         <li><a class="dropdown-item" href=""><fmt:message key="page.admin.header.add.user"/></a></li>
                     </ul>
                 </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown" href="#" id="navbarDarkDropdownMenuLink1" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        <fmt:message key="page.common.header.profile"/>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
-
                 <li><a href="https://training.by/#!/Home?lang=ru" class="nav-link px-2 link-dark"><fmt:message key="page.common.header.road.to.epam"/></a></li>
             </ul>
 

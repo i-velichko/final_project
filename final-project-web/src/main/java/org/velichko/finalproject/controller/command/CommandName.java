@@ -1,9 +1,6 @@
 package org.velichko.finalproject.controller.command;
 
-import org.velichko.finalproject.controller.command.admin.ChangeUserRoleCommand;
-import org.velichko.finalproject.controller.command.admin.ChangeUserStatusCommand;
-import org.velichko.finalproject.controller.command.admin.ShowAllUsersCommand;
-import org.velichko.finalproject.controller.command.admin.ShowAllVerificationsCommand;
+import org.velichko.finalproject.controller.command.admin.*;
 import org.velichko.finalproject.controller.command.common.*;
 import org.velichko.finalproject.controller.command.examiner.ChangeExaminerVerificationDateCommand;
 import org.velichko.finalproject.controller.command.examiner.ChangeFinalStatusCommand;
@@ -29,7 +26,7 @@ import static org.velichko.finalproject.logic.entity.type.UserRole.*;
  *
  * The enum Command name.
  */
-public enum CommandName {//TODO прочитать понять
+public enum CommandName {
 
     CHANGE_LOCALE(ChangeLocaleCommand.class),
     LOGOUT(LogoutCommand.class, Arrays.asList(ADMIN, EXAMINER, TRAINER, CHIEF, STUDENT)),
@@ -52,7 +49,9 @@ public enum CommandName {//TODO прочитать понять
     CHANGE_EXAMINER_VERIFICATION_DATE(ChangeExaminerVerificationDateCommand.class, List.of(EXAMINER)),
     CHANGE_TRAINER_CHARACTERISTIC(ChangeTrainerCharacteristicCommand.class, List.of(TRAINER)),
     CHANGE_USER_IMAGE(ChangeUserImageCommand.class, Arrays.asList(ADMIN, EXAMINER, TRAINER, CHIEF, STUDENT)),
-    REDIRECT_STUDENT(WelcomeStudentCommand.class),
+    ADD_NEW_USER_COMMAND(AddNewUserCommand.class, List.of(ADMIN)),
+    TO_ADD_USER_PAGE_COMMAND(ToAddUserPageCommand.class, List.of(ADMIN)),
+    REDIRECT_STUDENT(WelcomeStudentCommand.class, List.of(STUDENT)),
     REDIRECT_MAIN(ToMainPageCommand.class),
     REDIRECT_VERIFICATION_INFO(ShowVerificationInfoCommand.class),
     WRONG_COMMAND(WrongCommand.class),
