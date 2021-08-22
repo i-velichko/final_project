@@ -26,14 +26,13 @@ public class RegistrationConfirmatory {
      * Sets registration token.
      *
      * @param email the email
-     * @param key   the key
+     * @param login   the login
      * @return the registration token
      * @throws ServiceException the service exception
      */
-    public String sendEmailForConfirmRegistration(String email, String key) throws ServiceException {
-        String registrationKey = PasswordHashGenerator.encodePassword(key);
-        String message = MESSAGE_TO_CONFIRM_REGISTRATION + registrationKey +
-                ">link</a>";
+    public String sendEmailForConfirmRegistration(String email, String login) throws ServiceException {
+        String registrationKey = PasswordHashGenerator.encodePassword(login);
+        String message = MESSAGE_TO_CONFIRM_REGISTRATION + registrationKey + ">link</a>";
         emailService.sendEmail(email, message);
         return registrationKey;
     }

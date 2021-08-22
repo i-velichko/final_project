@@ -24,7 +24,7 @@ public interface BaseDao<K, T extends Entity> {
     /**
      * The constant PAGE_SIZE.
      */
-    int PAGE_SIZE = 10;
+    int PAGE_SIZE = 5;
 
     /**
      * The constant LOGGER.

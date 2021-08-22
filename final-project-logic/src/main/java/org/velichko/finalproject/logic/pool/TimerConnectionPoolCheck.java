@@ -12,6 +12,6 @@ public class TimerConnectionPoolCheck extends TimerTask {
     @Override
     public void run() {
         ConnectionPool pool = ConnectionPool.getInstance();
-        pool.poolSizeCheck();
+        pool.poolSizeCheckAndFix();
     }
 }

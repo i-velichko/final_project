@@ -68,4 +68,5 @@ public interface ParamName {
     String ROLE_PARAM = "role";
     String ROLE_ERROR_PARAM = "roleError";
     String ADD_USER_IS_DONE = "addUserIsDone";
+    String GET_PARAM = "GET";
 }

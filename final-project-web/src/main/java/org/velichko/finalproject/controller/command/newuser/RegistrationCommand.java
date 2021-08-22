@@ -65,10 +65,10 @@ public class RegistrationCommand implements Command {
         String method = request.getMethod();
         if (method.equals(POST_PARAM)) {
             try {
-                Map<String, String> registrationDataCheckResult = registrationDataValidator.checkValues(registrationData, locale);
-                if (!registrationDataCheckResult.isEmpty()) {
+                Map<String, String> errors = registrationDataValidator.checkValues(registrationData, locale);
+                if (!errors.isEmpty()) {
                     request.setAttribute(CORRECT_REGISTRATION_DATA_PARAM, registrationData);
-                    request.setAttribute(ERROR_REGISTRATION_DATA_PARAM, registrationDataCheckResult);
+                    request.setAttribute(ERROR_REGISTRATION_DATA_PARAM, errors);
                     router.setPagePath(REGISTRATION_PAGE);
                 } else {
                     User user = new User(firstName, lastName, login, email, UserRole.STUDENT, UserStatus.WAIT_CONFIRMATION);
