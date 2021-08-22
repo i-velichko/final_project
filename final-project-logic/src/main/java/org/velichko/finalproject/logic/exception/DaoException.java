@@ -5,7 +5,7 @@ package org.velichko.finalproject.logic.exception;
  *
  * The type Dao exception.
  */
-public class DaoException extends Exception{
+public class DaoException extends Exception {
     /**
      * Instantiates a new Dao exception.
      */

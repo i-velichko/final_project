@@ -16,15 +16,11 @@ public class AdmissionScoreCheckServiceImpl implements AdmissionScoreCheckServic
 
     @Override
     public boolean checkScore(double studentScore) {
-        boolean isAdmission = false;
         double admissionScore = 0;
         if (VERIFICATION_PROPERTIES_PATH != null) {
             Properties properties = PropertyLoader.loadPropertiesData(VERIFICATION_PROPERTIES_PATH);
             admissionScore = Double.parseDouble(properties.getProperty("minimal.admission.score"));
         }
-        if (studentScore > admissionScore) {
-            isAdmission = true;
-        }
-        return isAdmission;
+        return studentScore > admissionScore;
     }
 }

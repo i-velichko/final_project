@@ -30,7 +30,7 @@ public class RegistrationConfirmatory {
      * @return the registration token
      * @throws ServiceException the service exception
      */
-    public String setRegistrationToken(String email, String key) throws ServiceException {
+    public String sendEmailForConfirmRegistration(String email, String key) throws ServiceException {
         String registrationKey = PasswordHashGenerator.encodePassword(key);
         String message = MESSAGE_TO_CONFIRM_REGISTRATION + registrationKey +
                 ">link</a>";

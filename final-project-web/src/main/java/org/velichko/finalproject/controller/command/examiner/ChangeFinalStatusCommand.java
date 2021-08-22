@@ -13,7 +13,7 @@ import org.velichko.finalproject.logic.service.VerificationService;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
 public class ChangeFinalStatusCommand implements Command {
-    private final Logger logger = LogManager.getLogger();
+    private final Logger LOGGER = LogManager.getLogger();
     private final VerificationService verificationService;
 
     public ChangeFinalStatusCommand(VerificationService verificationService) {
@@ -30,7 +30,7 @@ public class ChangeFinalStatusCommand implements Command {
         try {
             verificationService.changeFinalVerificationStatusById(Long.parseLong(verificationId), finalStatus);
         } catch (ServiceException e) {
-            logger.log(Level.DEBUG, "Error. Impossible change final status by this " + verificationId + " verification");
+            LOGGER.log(Level.DEBUG, "Error. Impossible change final status by this " + verificationId + " verification");
 //                    todo error to admin page
         }
         router.setRouterType(Router.RouterType.REDIRECT);

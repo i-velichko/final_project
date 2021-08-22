@@ -7,7 +7,7 @@ import org.velichko.finalproject.controller.Router;
 
 public interface Command {
 
-    Logger logger = LogManager.getLogger();
+    Logger LOGGER = LogManager.getLogger();
 
     String PAGE_NUMBER_PARAMETER = "page";
 
@@ -20,7 +20,7 @@ public interface Command {
             try {
                 page = Integer.parseInt(stringPage);
             } catch (NumberFormatException exc) {
-                logger.warn("Cannot parse page number {}, use page - 1", stringPage);
+                LOGGER.warn("Cannot parse page number {}, use page - 1", stringPage);
             }
         }
         return page;

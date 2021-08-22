@@ -20,7 +20,7 @@ import java.util.Optional;
  * The type Verification service.
  */
 public class VerificationServiceImpl implements VerificationService {
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private final VerificationDao verificationDao;
 
     /**
@@ -33,21 +33,11 @@ public class VerificationServiceImpl implements VerificationService {
     }
 
     @Override
-    public List<Verification> findAllVerifications() throws ServiceException {
-        try {
-            return verificationDao.findAll();
-        } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with find all Verifications .", e);
-            throw new ServiceException("Error with find all Verifications .", e);
-        }
-    }
-
-    @Override
     public List<Verification> readByPage(int page) throws ServiceException {
         try {
             return verificationDao.findByPage(page);
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with find all Verifications .", e);
+            LOGGER.log(Level.ERROR, "Error with find all Verifications .", e);
             throw new ServiceException("Error with find all Verifications .", e);
         }
     }
@@ -57,7 +47,7 @@ public class VerificationServiceImpl implements VerificationService {
         try {
             return verificationDao.getVerificationCount();
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with verifications count .", e);
+            LOGGER.log(Level.ERROR, "Error with verifications count .", e);
             throw new ServiceException("Error with verifications count .", e);
         }
     }
@@ -67,7 +57,7 @@ public class VerificationServiceImpl implements VerificationService {
         try {
             verificationDao.createNewVerification(verification, title);
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with create new Verification. ", e);
+            LOGGER.log(Level.ERROR, "Error with create new Verification. ", e);
             throw new ServiceException("Error with create new Verification. ", e);
         }
         return true;
@@ -78,7 +68,7 @@ public class VerificationServiceImpl implements VerificationService {
         try {
             return verificationDao.findEntityById(id);
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with find verification by id " + id, e);
+            LOGGER.log(Level.ERROR, "Error with find verification by id " + id, e);
             throw new ServiceException("Error with find verification by ID " + id, e);
         }
     }
@@ -88,7 +78,7 @@ public class VerificationServiceImpl implements VerificationService {
         try {
             return verificationDao.findVerificationByStudentId(id);
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with find verification by student id " + id, e);
+            LOGGER.log(Level.ERROR, "Error with find verification by student id " + id, e);
             throw new ServiceException("Error with find verification by student ID " + id, e);
         }
     }
@@ -99,11 +89,10 @@ public class VerificationServiceImpl implements VerificationService {
         try {
             Optional<Verification> optionalVerification = verificationDao.findEntityById(verificationId);
             if (optionalVerification.isPresent()) {
-                verificationDao.changeTrainerScoreById(verificationId, newScore);
-                isChanged = true;
+                isChanged = verificationDao.changeTrainerScoreById(verificationId, newScore);
             }
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with changed trainer score", e);
+            LOGGER.log(Level.ERROR, "Error with changed trainer score", e);
             throw new ServiceException("Impossible changed trainer score", e);
         }
         return isChanged;
@@ -115,11 +104,10 @@ public class VerificationServiceImpl implements VerificationService {
         try {
             Optional<Verification> optionalVerification = verificationDao.findEntityById(verificationId);
             if (optionalVerification.isPresent()) {
-                verificationDao.changeTrainerVerificationDateById(verificationId, dateTime);
-                isChanged = true;
+                isChanged = verificationDao.changeTrainerVerificationDateById(verificationId, dateTime);
             }
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with changed trainer verification date", e);
+            LOGGER.log(Level.ERROR, "Error with changed trainer verification date", e);
             throw new ServiceException("Impossible changed trainer verification date", e);
         }
         return isChanged;
@@ -131,11 +119,10 @@ public class VerificationServiceImpl implements VerificationService {
         try {
             Optional<Verification> optionalVerification = verificationDao.findEntityById(verificationId);
             if (optionalVerification.isPresent()) {
-                verificationDao.changeExaminerVerificationDateById(verificationId, dateTime);
-                isChanged = true;
+                isChanged = verificationDao.changeExaminerVerificationDateById(verificationId, dateTime);
             }
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with changed examiner verification date", e);
+            LOGGER.log(Level.ERROR, "Error with changed examiner verification date", e);
             throw new ServiceException("Impossible changed examiner verification date", e);
         }
         return isChanged;
@@ -147,11 +134,10 @@ public class VerificationServiceImpl implements VerificationService {
         try {
             Optional<Verification> optionalVerification = verificationDao.findEntityById(id);
             if (optionalVerification.isPresent()) {
-                verificationDao.changeTrainerCharacteristicById(id, characteristic);
-                isChanged = true;
+                isChanged = verificationDao.changeTrainerCharacteristicById(id, characteristic);
             }
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with changed examiner verification date", e);
+            LOGGER.log(Level.ERROR, "Error with changed examiner verification date", e);
             throw new ServiceException("Impossible change trainer characteristic", e);
         }
         return isChanged;
@@ -163,11 +149,10 @@ public class VerificationServiceImpl implements VerificationService {
         try {
             Optional<Verification> optionalVerification = verificationDao.findEntityById(id);
             if (optionalVerification.isPresent()) {
-                verificationDao.changeFinalVerificationStatusById(id, finalStatus);
-                isChanged = true;
+                isChanged = verificationDao.changeFinalVerificationStatusById(id, finalStatus);
             }
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with changed final status", e);
+            LOGGER.log(Level.ERROR, "Error with changed final status", e);
             throw new ServiceException("Impossible change final status", e);
         }
         return isChanged;
@@ -184,11 +169,10 @@ public class VerificationServiceImpl implements VerificationService {
         try {
             Optional<Verification> optionalVerification = verificationDao.findEntityById(verificationId);
             if (optionalVerification.isPresent()) {
-                verificationDao.changeVerificationStatusById(verificationId, verificationStatus);
-                isChanged = true;
+                isChanged = verificationDao.changeVerificationStatusById(verificationId, verificationStatus);
             }
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with changed verification status", e);
+            LOGGER.log(Level.ERROR, "Error with changed verification status", e);
             throw new ServiceException("Impossible change verification status", e);
         }
         return isChanged;

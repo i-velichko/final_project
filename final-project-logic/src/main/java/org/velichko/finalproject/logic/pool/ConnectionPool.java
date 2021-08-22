@@ -21,8 +21,8 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * The type Connection pool.
  */
-public class ConnectionPool {
-    private static Logger logger = LogManager.getLogger();
+public class ConnectionPool { //TODO
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final long DELAY_UNTIL_CONNECTIONS_NUMBER_CHECK = 1;
     private static final long PERIOD_BETWEEN_CONNECTIONS_NUMBER_CHECK = 1;
     private static int DEFAULT_POOL_SIZE;
@@ -50,7 +50,7 @@ public class ConnectionPool {
                 freeConnections.offer(new ProxyConnection(connection));
             }
         } catch (SQLException | ClassNotFoundException e) {
-            logger.log(Level.FATAL, "Connection pool was not created: " + e.getMessage());
+            LOGGER.log(Level.FATAL, "Connection pool was not created: " + e.getMessage());
             throw new RuntimeException("Connection pool was not created " + e.getMessage());
         }
         Timer timer = new Timer();
@@ -93,7 +93,7 @@ public class ConnectionPool {
             connection = freeConnections.take();
             givenAwayConnections.put(connection);
         } catch (InterruptedException e) {
-            logger.log(Level.ERROR, "Can not getting connection ", e);
+            LOGGER.log(Level.ERROR, "Can not getting connection ", e);
         }
         return connection;
     }
@@ -110,12 +110,12 @@ public class ConnectionPool {
             try {
                 freeConnections.put((ProxyConnection) connection);
             } catch (InterruptedException e) {
-                logger.log(Level.ERROR, "Cannot put connection", e);
+                LOGGER.log(Level.ERROR, "Cannot put connection", e);
                 Thread.currentThread().interrupt();
             }
             return true;
         } else {
-            logger.error("Attention. Attempt to transfer to the Connection Pool rogue connection.");
+            LOGGER.error("Attention. Attempt to transfer to the Connection Pool rogue connection.");
         }
         return false;
     }
@@ -128,7 +128,7 @@ public class ConnectionPool {
             try {
                 freeConnections.take().realClose();
             } catch (InterruptedException | SQLException e) {
-                logger.log(Level.ERROR, "Error with destroying connection pool. ", e);
+                LOGGER.log(Level.ERROR, "Error with destroying connection pool. ", e);
             }
         }
         deregisterDrivers();
@@ -139,7 +139,7 @@ public class ConnectionPool {
             try {
                 DriverManager.deregisterDriver(driver);
             } catch (SQLException e) {
-                logger.log(Level.ERROR, " Deregister driver error" + e.getMessage());
+                LOGGER.log(Level.ERROR, " Deregister driver error" + e.getMessage());
             }
         });
     }
@@ -159,7 +159,7 @@ public class ConnectionPool {
             TimeUnit.MICROSECONDS.sleep(100);
             currentConnectionsCount = givenAwayConnections.size() + freeConnections.size();
         } catch (InterruptedException e) {
-            logger.log(Level.ERROR, "Cannot count connections");
+            LOGGER.log(Level.ERROR, "Cannot count connections");
             Thread.currentThread().interrupt();
         } finally {
             connectionsNumberCheck.set(false);
@@ -174,7 +174,7 @@ public class ConnectionPool {
                 try {
                     connection = DriverManager.getConnection(url, properties);
                 } catch (SQLException e) {
-                    logger.log(Level.ERROR, "Can not creat connection" + e.getMessage());
+                    LOGGER.log(Level.ERROR, "Can not creat connection" + e.getMessage());
                 }
                 freeConnections.offer(new ProxyConnection(connection));
             }

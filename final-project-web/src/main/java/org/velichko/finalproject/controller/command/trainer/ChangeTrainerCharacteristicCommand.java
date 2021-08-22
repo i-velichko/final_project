@@ -12,7 +12,7 @@ import org.velichko.finalproject.logic.service.VerificationService;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
 public class ChangeTrainerCharacteristicCommand implements Command {
-    private final Logger logger = LogManager.getLogger();
+    private final Logger LOGGER = LogManager.getLogger();
     private final VerificationService verificationService;
 
     public ChangeTrainerCharacteristicCommand(VerificationService verificationService) {
@@ -27,7 +27,7 @@ public class ChangeTrainerCharacteristicCommand implements Command {
         try {
             verificationService.changeTrainerCharacteristicById(verificationId, characteristic);
         } catch (ServiceException e) {
-            logger.log(Level.DEBUG, "Error. Impossible change characteristic by this " + verificationId + " verification");
+            LOGGER.log(Level.DEBUG, "Error. Impossible change characteristic by this " + verificationId + " verification");
 //                    todo error to admin page
         }
         router.setRouterType(Router.RouterType.REDIRECT);

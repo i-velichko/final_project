@@ -15,11 +15,12 @@ import org.velichko.finalproject.validator.BaseDataValidator;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.velichko.finalproject.controller.command.PageName.*;
+import static org.velichko.finalproject.controller.command.PageName.EDIT_USER_DATA;
+import static org.velichko.finalproject.controller.command.PageName.REDIRECT_TO_EDIT_USER_DATA_PAGE;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
 public class EditUserDataCommand implements Command {
-    private static Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private final UserService userService;
     private final BaseDataValidator dataValidator;
 
@@ -57,26 +58,26 @@ public class EditUserDataCommand implements Command {
 
         String method = request.getMethod();
         if (method.equals(POST_PARAM)) {
-            Map<String, String> errors = dataValidator.checkValues(newUserData, locale);
-            if (!errors.isEmpty()) {
-                request.setAttribute(CORRECT_EDIT_DATA_PARAM, newUserData);
-                request.setAttribute(ERROR_EDIT_DATA_PARAM, errors);
-                router.setPagePath(EDIT_USER_DATA);
-            } else {
-                user.setFirstName(newFirstName);
-                user.setLastName(newLastName);
-                user.setEmail(newEmail);
-                user.setGitLink(newGitLink);
-                router.setPagePath(EDIT_USER_DATA);
-                try {
+            try {
+                Map<String, String> errors = dataValidator.checkValues(newUserData, locale);
+                if (!errors.isEmpty()) {
+                    request.setAttribute(CORRECT_EDIT_DATA_PARAM, newUserData);
+                    request.setAttribute(ERROR_EDIT_DATA_PARAM, errors);
+                    router.setPagePath(EDIT_USER_DATA);
+                } else {
+                    user.setFirstName(newFirstName);
+                    user.setLastName(newLastName);
+                    user.setEmail(newEmail);
+                    user.setGitLink(newGitLink);
+                    router.setPagePath(EDIT_USER_DATA);
                     userService.updateUser(user);
-                } catch (ServiceException e) {
-                    logger.log(Level.ERROR, "Error with update information, try again", e); //todo
-                    request.setAttribute(MSG, e.getMessage());//TODO
-                    router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    router.setRouterType(Router.RouterType.REDIRECT);
+                    router.setPagePath(REDIRECT_TO_EDIT_USER_DATA_PAGE);
                 }
-                router.setRouterType(Router.RouterType.REDIRECT);
-                router.setPagePath(REDIRECT_TO_EDIT_USER_DATA_PAGE);
+            } catch (ServiceException e) {
+                LOGGER.log(Level.ERROR, "Error with update information, try again", e); //todo
+                request.setAttribute(MSG, e.getMessage());//TODO
+                router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
         } else {
             router.setPagePath(EDIT_USER_DATA);

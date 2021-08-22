@@ -19,14 +19,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.velichko.finalproject.controller.command.MessageNameKey.REGISTRATION_FAILED_KEY;
-import static org.velichko.finalproject.controller.command.MessageNameKey.REGISTRATION_SUCCESSFUL_KEY;
 import static org.velichko.finalproject.controller.command.PageName.REDIRECT_TO_LOGIN_PAGE;
 import static org.velichko.finalproject.controller.command.PageName.REGISTRATION_PAGE;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
 
 public class RegistrationCommand implements Command {
-    private final Logger logger = LogManager.getLogger();
+    private final Logger LOGGER = LogManager.getLogger();
     private final UserService userService;
     private final RegistrationConfirmatory confirmatoryService;
     private final BaseDataValidator registrationDataValidator;
@@ -65,24 +64,26 @@ public class RegistrationCommand implements Command {
 
         String method = request.getMethod();
         if (method.equals(POST_PARAM)) {
-            Map<String, String> registrationDataCheckResult = registrationDataValidator.checkValues(registrationData, locale);
-            if (!registrationDataCheckResult.isEmpty()) {
-                request.setAttribute(CORRECT_REGISTRATION_DATA_PARAM, registrationData);
-                request.setAttribute(ERROR_REGISTRATION_DATA_PARAM, registrationDataCheckResult);
-                router.setPagePath(REGISTRATION_PAGE);
-            } else {
-                User user = new User(firstName, lastName, login, email, UserRole.STUDENT, UserStatus.WAIT_CONFIRMATION);
-                try {
-                    String registrationKey = confirmatoryService.setRegistrationToken(email, login);
+            try {
+                Map<String, String> registrationDataCheckResult = registrationDataValidator.checkValues(registrationData, locale);
+                if (!registrationDataCheckResult.isEmpty()) {
+                    request.setAttribute(CORRECT_REGISTRATION_DATA_PARAM, registrationData);
+                    request.setAttribute(ERROR_REGISTRATION_DATA_PARAM, registrationDataCheckResult);
+                    router.setPagePath(REGISTRATION_PAGE);
+                } else {
+                    User user = new User(firstName, lastName, login, email, UserRole.STUDENT, UserStatus.WAIT_CONFIRMATION);
+
+                    String registrationKey = confirmatoryService.sendEmailForConfirmRegistration(email, login);
                     if (userService.createNewUser(user, password, registrationKey)) {
                         request.setAttribute(USER_PARAM, user);
                     }
-                } catch (ServiceException e) {
-                    logger.log(Level.ERROR, "error registration user", e);
-                    request.setAttribute(REGISTRATION_FAILED, i18n.getMassage(REGISTRATION_FAILED_KEY, locale) + e.getLocalizedMessage());
+
+                    router.setRouterType(Router.RouterType.REDIRECT);
+                    router.setPagePath(REDIRECT_TO_LOGIN_PAGE + "&" + REGISTRATION_IS_DONE);
                 }
-                router.setRouterType(Router.RouterType.REDIRECT);
-                router.setPagePath(REDIRECT_TO_LOGIN_PAGE + "&" + REGISTRATION_IS_DONE);
+            } catch (ServiceException e) {
+                LOGGER.log(Level.ERROR, "error registration user", e);
+                request.setAttribute(REGISTRATION_FAILED, i18n.getMassage(REGISTRATION_FAILED_KEY, locale) + e.getLocalizedMessage());
             }
         } else {
             router.setPagePath(REGISTRATION_PAGE);

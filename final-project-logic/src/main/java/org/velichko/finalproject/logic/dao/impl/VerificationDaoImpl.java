@@ -5,7 +5,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.logic.dao.VerificationDao;
 import org.velichko.finalproject.logic.dao.creator.VerificationCreator;
-import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.entity.Verification;
 import org.velichko.finalproject.logic.entity.type.FinalStatus;
 import org.velichko.finalproject.logic.entity.type.VerificationStatus;
@@ -20,11 +19,11 @@ import java.util.Optional;
 
 /**
  * @author Ivan Velichko
- *
+ * <p>
  * The type Verification dao.
  */
 public class VerificationDaoImpl implements VerificationDao {
-    private static Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     /**
      * The constant DATE_PATTERN.
      */
@@ -73,7 +72,7 @@ public class VerificationDaoImpl implements VerificationDao {
                 verifications.add(verification);
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error with find all Verifications .", e);
+            LOGGER.log(Level.ERROR, "Error with find all Verifications .", e);
             throw new DaoException("Error with find all Verifications .", e);
         }
         return verifications;
@@ -84,21 +83,6 @@ public class VerificationDaoImpl implements VerificationDao {
         return rowCountByQuery(FIND_ALL_VERIFICATIONS);
     }
 
-    private int rowCountByQuery(String sourceQuery) throws DaoException {
-        int result = 0;
-        try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM (" + sourceQuery + ") as tbl" )
-        ) {
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                result = resultSet.getInt(1);
-            }
-        } catch (SQLException e) {
-            logger.log(Level.ERROR, "Can't count row count. ", e);
-            throw new DaoException("Can't count row count.", e);
-        }
-        return result;
-    }
 
     @Override
     public boolean createNewVerification(Verification verification, String title) throws DaoException {
@@ -114,7 +98,7 @@ public class VerificationDaoImpl implements VerificationDao {
                 statement.executeUpdate();
                 return true;
             } catch (SQLException e) {
-                logger.log(Level.ERROR, "Error with create new Verification. ", e);
+                LOGGER.log(Level.ERROR, "Error with create new Verification. ", e);
                 throw new DaoException("Error with create new Verification. ", e);
             }
         }
@@ -128,11 +112,11 @@ public class VerificationDaoImpl implements VerificationDao {
              PreparedStatement statement = connection.prepareStatement(FIND_VERIFICATION_BY_ID)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 verification = verificationCreator.createVerification(resultSet);
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error with find Verification by id .", e);
+            LOGGER.log(Level.ERROR, "Error with find Verification by id .", e);
             throw new DaoException("Error with find Verification by id .", e);
         }
 
@@ -146,11 +130,11 @@ public class VerificationDaoImpl implements VerificationDao {
              PreparedStatement statement = connection.prepareStatement(FIND_VERIFICATION_BY_STUDENT_ID)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 verification = verificationCreator.createVerification(resultSet);
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error with find Verification by student id .", e);
+            LOGGER.log(Level.ERROR, "Error with find Verification by student id .", e);
             throw new DaoException("Error with find Verification by student id .", e);
         }
         return Optional.ofNullable(verification);
@@ -165,7 +149,7 @@ public class VerificationDaoImpl implements VerificationDao {
             statement.setLong(2, id);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error with changing trainer score. ", e);
+            LOGGER.log(Level.ERROR, "Error with changing trainer score. ", e);
             throw new DaoException("Error with changing trainer score. ", e);
         }
         return rowsUpdate == 1;
@@ -180,7 +164,7 @@ public class VerificationDaoImpl implements VerificationDao {
             statement.setLong(2, id);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error with changing trainer characteristic. ", e);
+            LOGGER.log(Level.ERROR, "Error with changing trainer characteristic. ", e);
             throw new DaoException("Error with changing trainer characteristic. ", e);
         }
         return rowsUpdate == 1;
@@ -195,7 +179,7 @@ public class VerificationDaoImpl implements VerificationDao {
             statement.setLong(2, id);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error with changing verification status. ", e);
+            LOGGER.log(Level.ERROR, "Error with changing verification status. ", e);
             throw new DaoException("Error with changing verification status. ", e);
         }
         return rowsUpdate == 1;
@@ -210,7 +194,7 @@ public class VerificationDaoImpl implements VerificationDao {
             statement.setLong(2, id);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error with changing final verification status. ", e);
+            LOGGER.log(Level.ERROR, "Error with changing final verification status. ", e);
             throw new DaoException("Error with changing final verification status. ", e);
         }
         return rowsUpdate == 1;
@@ -225,7 +209,7 @@ public class VerificationDaoImpl implements VerificationDao {
             statement.setLong(2, id);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error with changing trainer verification date. ", e);
+            LOGGER.log(Level.ERROR, "Error with changing trainer verification date. ", e);
             throw new DaoException("Error with changing trainer verification date. ", e);
         }
         return rowsUpdate == 1;
@@ -240,7 +224,7 @@ public class VerificationDaoImpl implements VerificationDao {
             statement.setLong(2, id);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error with changing examiner verification date. ", e);
+            LOGGER.log(Level.ERROR, "Error with changing examiner verification date. ", e);
             throw new DaoException("Error with changing examiner verification date. ", e);
         }
         return rowsUpdate == 1;

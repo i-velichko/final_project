@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Supplier;
 
 public class LazyWrapper {
-    private final Logger logger = LogManager.getLogger();
+    private final Logger LOGGER = LogManager.getLogger();
     private final Lock lock = new ReentrantLock();
     private final Supplier<?> supplier;
     private Object singleton;
@@ -26,7 +26,7 @@ public class LazyWrapper {
             lock.lock();
             if (singleton == null) {
                 singleton = supplier.get();
-                logger.info("Lazy Initialization for {}", singleton);
+                LOGGER.info("Lazy Initialization for {}", singleton);
             }
             lock.unlock();
         }

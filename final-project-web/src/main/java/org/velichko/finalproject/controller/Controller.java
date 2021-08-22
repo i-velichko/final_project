@@ -27,7 +27,7 @@ import static org.velichko.finalproject.controller.command.ParamName.REFERER_COM
 @WebServlet(name = "controller", urlPatterns = "/controller")
 public class Controller extends HttpServlet {
 
-    private static Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -53,8 +53,8 @@ public class Controller extends HttpServlet {
                 request.getRequestDispatcher(router.getPagePath()).forward(request, response);
             }
         } else {
-            logger.error("No such command for name: {}", request.getParameter(COMMAND_PARAM));
-            response.sendRedirect(ERROR_PAGE);
+            LOGGER.error("No such command for name: {}", request.getParameter(COMMAND_PARAM));
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -39,8 +39,8 @@ import java.util.Map;
 import static org.velichko.finalproject.core.LazyWrapper.buildWrapper;
 
 /**
- * author Ivan Velichko
- * .
+ * @author Ivan Velichko
+ * 
  * The type App context.
  */
 public class AppContextImpl implements AppContext {
@@ -124,7 +124,12 @@ public class AppContextImpl implements AppContext {
 
     @Override
     public <T> T getService(Class<T> tClass) {
-        return (T) map.get(tClass).getSingleton();
+        LazyWrapper lazyWrapper = map.get(tClass);
+        if (lazyWrapper == null) {
+            throw new NoSuchSingletonException("Application doesn't have singlton for: " + tClass);
+        } else {
+            return (T) lazyWrapper.getSingleton();
+        }
     }
 
     private static class AppContextImplHolder {

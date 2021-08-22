@@ -21,7 +21,7 @@ import static org.velichko.finalproject.controller.command.PageName.*;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
 /**
- * author Ivan Velichko
+ * @author Ivan Velichko
  * .
  * The type Add new user command.
  */
@@ -65,8 +65,8 @@ public class AddNewUserCommand implements Command {
 
         String method = request.getMethod();
         if (method.equals(POST_PARAM)) {
-            Map<String, String> registrationDataCheckResult = registrationDataValidator.checkValues(registrationData, locale);
             try {
+                Map<String, String> registrationDataCheckResult = registrationDataValidator.checkValues(registrationData, locale);
                 if (!registrationDataCheckResult.isEmpty()) {
                     request.setAttribute(CORRECT_REGISTRATION_DATA_PARAM, registrationData);
                     request.setAttribute(ERROR_REGISTRATION_DATA_PARAM, registrationDataCheckResult);
@@ -76,13 +76,11 @@ public class AddNewUserCommand implements Command {
                     User user = new User(firstName, lastName, login, email, userRole, UserStatus.ACTIVE);
                     if (userService.createNewUser(user, password)) {
                         router.setRouterType(REDIRECT);
-                        router.setPagePath(REDIRECT_TO_ADD_USER_PAGE);
                         router.setPagePath(REDIRECT_TO_ADD_USER_PAGE + "&" + ADD_USER_IS_DONE);
                     }
                 }
             } catch (ServiceException | IllegalArgumentException e) {
-                logger.log(Level.ERROR, "Error user creating", e);
-                e.printStackTrace(); //todo
+                LOGGER.log(Level.ERROR, "Error user creating", e);
                 request.setAttribute(REGISTRATION_FAILED, i18n.getMassage(REGISTRATION_FAILED_KEY, locale) + e.getLocalizedMessage());
             }
         } else {

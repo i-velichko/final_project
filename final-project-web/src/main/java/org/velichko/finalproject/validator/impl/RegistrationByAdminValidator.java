@@ -18,12 +18,12 @@ import static org.velichko.finalproject.validator.impl.UserDataValidator.*;
 
 
 /**
- * author Ivan Velichko
+ * @author Ivan Velichko
  * .
  * The type Registration by admin validator.
  */
 public class RegistrationByAdminValidator implements BaseDataValidator {
-    private final Logger logger = LogManager.getLogger();
+    private final Logger LOGGER = LogManager.getLogger();
     private final UserService service;
     private final I18nManager i18n;
 
@@ -40,7 +40,7 @@ public class RegistrationByAdminValidator implements BaseDataValidator {
     }
 
     @Override
-    public Map<String, String> checkValues(Map<String, String> registrationData, String locale) {
+    public Map<String, String> checkValues(Map<String, String> registrationData, String locale) throws ServiceException {
 
         Map<String, String> result = new HashMap<>();
 
@@ -57,12 +57,8 @@ public class RegistrationByAdminValidator implements BaseDataValidator {
         String login = registrationData.get(LOGIN_PARAM);
 
         if (login != null && login.matches(LOGIN.getRegExp())) {
-            try {
-                if (!service.isLoginUnique(login)) {
-                    result.put(LOGIN_ERROR_PARAM, i18n.getMassage(LOGIN_NOT_UNIQUE_KEY, locale));
-                }
-            } catch (ServiceException e) {
-                e.printStackTrace(); //todo
+            if (!service.isLoginUnique(login)) {
+                result.put(LOGIN_ERROR_PARAM, i18n.getMassage(LOGIN_NOT_UNIQUE_KEY, locale));
             }
         } else {
             result.put(LOGIN_ERROR_PARAM, i18n.getMassage(LOGIN_NOT_CORRECT_KEY, locale));
@@ -76,12 +72,8 @@ public class RegistrationByAdminValidator implements BaseDataValidator {
 
         String email = registrationData.get(EMAIL_PARAM);
         if (email != null && email.matches(EMAIL.getRegExp())) {
-            try {
-                if (!service.isEmailUnique(email)) {
-                    result.put(EMAIL_ERROR_PARAM, i18n.getMassage(EMAIL_NOT_UNIQUE_KEY, locale));
-                }
-            } catch (ServiceException e) {
-                e.printStackTrace();//todo
+            if (!service.isEmailUnique(email)) {
+                result.put(EMAIL_ERROR_PARAM, i18n.getMassage(EMAIL_NOT_UNIQUE_KEY, locale));
             }
         } else {
             result.put(EMAIL_ERROR_PARAM, i18n.getMassage(EMAIL_NOT_CORRECT_KEY, locale));
@@ -91,7 +83,6 @@ public class RegistrationByAdminValidator implements BaseDataValidator {
         if (role == null || isInEnum(role, UserRole.class)) {
             result.put(ROLE_ERROR_PARAM, i18n.getMassage(ROLE_NOT_CORRECT_KEY, locale));
         }
-
 
         return result;
     }

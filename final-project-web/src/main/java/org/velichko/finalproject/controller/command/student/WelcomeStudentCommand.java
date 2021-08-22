@@ -1,6 +1,7 @@
 package org.velichko.finalproject.controller.command.student;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,7 +23,7 @@ import static org.velichko.finalproject.controller.command.ParamName.TRAINER_LIS
 import static org.velichko.finalproject.controller.command.ParamName.USER_PARAM;
 
 public class WelcomeStudentCommand implements Command {
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private final UserService userService;
     private final VerificationWebFacade verificationWebFacade;
 
@@ -52,8 +53,8 @@ public class WelcomeStudentCommand implements Command {
                 router.setPagePath(WELCOME_STUDENT);
             }
         } catch (ServiceException e) {
-            logger.log(Level.ERROR, "Error while client registration data", e); //todo
-            router.setPagePath(ERROR_PAGE);
+            LOGGER.log(Level.ERROR, "Error while client registration data", e); //todo
+            router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         return router;
     }

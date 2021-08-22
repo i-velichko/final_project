@@ -24,7 +24,7 @@ import java.util.Optional;
  * The type User dao.
  */
 public class UserDaoImpl implements UserDao {
-    private static Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private final UserCreator userCreator = new UserCreator();
 
     private static final String ADD_NEW_USER = "INSERT INTO users" +
@@ -70,7 +70,7 @@ public class UserDaoImpl implements UserDao {
                 users.add(user);
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error with find all Users .", e);
+            LOGGER.log(Level.ERROR, "Error with find all Users .", e);
             throw new DaoException("Error with find all Users .", e);
         }
         return users;
@@ -83,11 +83,11 @@ public class UserDaoImpl implements UserDao {
              PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_ID)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 user = userCreator.createUser(resultSet);
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error with find User by id .", e);
+            LOGGER.log(Level.ERROR, "Error with find User by id .", e);
             throw new DaoException("Error with find User by id .", e);
         }
 
@@ -104,11 +104,11 @@ public class UserDaoImpl implements UserDao {
                 statement.setString(2, PasswordHashGenerator.encodePassword(password));
                 statement.setInt(3, UserStatus.ACTIVE.getId());
                 ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
+                if (resultSet.next()) {
                     user = userCreator.createUser(resultSet);
                 }
             } catch (SQLException e) {
-                logger.log(Level.ERROR, "Error with find User by login .", e);
+                LOGGER.log(Level.ERROR, "Error with find User by login .", e);
                 throw new DaoException("Error with find User by login .", e);
             }
         }
@@ -124,11 +124,11 @@ public class UserDaoImpl implements UserDao {
                  PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_LOGIN)) {
                 statement.setString(1, login);
                 ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
+                if (resultSet.next()) {
                     user = userCreator.createUser(resultSet);
                 }
             } catch (SQLException e) {
-                logger.log(Level.ERROR, "Error with find User by login .", e);
+                LOGGER.log(Level.ERROR, "Error with find User by login .", e);
                 throw new DaoException("Error with find User by login .", e);
             }
         }
@@ -144,11 +144,11 @@ public class UserDaoImpl implements UserDao {
                  PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_EMAIL)) {
                 statement.setString(1, email);
                 ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
+                if (resultSet.next()) {
                     user = userCreator.createUser(resultSet);
                 }
             } catch (SQLException e) {
-                logger.log(Level.ERROR, "Error with find User by email .", e);
+                LOGGER.log(Level.ERROR, "Error with find User by email .", e);
                 throw new DaoException("Error with find User by email .", e);
             }
         }
@@ -164,11 +164,11 @@ public class UserDaoImpl implements UserDao {
                  PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_GIT_LINK)) {
                 statement.setString(1, gitLink);
                 ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
+                if (resultSet.next()) {
                     user = userCreator.createUser(resultSet);
                 }
             } catch (SQLException e) {
-                logger.log(Level.ERROR, "Error with find User by git link .", e);
+                LOGGER.log(Level.ERROR, "Error with find User by git link .", e);
                 throw new DaoException("Error with find User by git link .", e);
             }
         }
@@ -183,11 +183,11 @@ public class UserDaoImpl implements UserDao {
              PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_REGISTRATION_KEY)) {
             statement.setString(1, registrationKey);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 user = userCreator.createUser(resultSet);
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error. Impossible get data from data base.", e);
+            LOGGER.log(Level.ERROR, "Error. Impossible get data from data base.", e);
             throw new DaoException("Error. Impossible get data from data base.", e);
         }
         return Optional.ofNullable(user);
@@ -202,7 +202,7 @@ public class UserDaoImpl implements UserDao {
     public boolean createNewUser(User user, String password, String registrationKey) throws DaoException {
         if (user != null && password != null) {
             try (Connection connection = ConnectionPool.getInstance().getConnection();
-                 PreparedStatement statement = connection.prepareStatement(ADD_NEW_USER, Statement.RETURN_GENERATED_KEYS)) {
+                 PreparedStatement statement = connection.prepareStatement(ADD_NEW_USER)) {
                 statement.setString(1, user.getFirstName());
                 statement.setString(2, user.getLastName());
                 statement.setString(3, user.getLogin());
@@ -214,7 +214,7 @@ public class UserDaoImpl implements UserDao {
                 statement.executeUpdate();
                 return true;
             } catch (SQLException e) {
-                logger.log(Level.ERROR, "Error with add new User. ", e);
+                LOGGER.log(Level.ERROR, "Error with add new User. ", e);
                 throw new DaoException("Error with add new User. ", e);
             }
         }
@@ -223,24 +223,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean createNewUser(User user, String password) throws DaoException {
-        if (user != null && password != null) {
-            try (Connection connection = ConnectionPool.getInstance().getConnection();
-                 PreparedStatement statement = connection.prepareStatement(ADD_NEW_USER_BY_ADMIN)) {
-                statement.setString(1, user.getFirstName());
-                statement.setString(2, user.getLastName());
-                statement.setString(3, user.getLogin());
-                statement.setString(4, user.getEmail());
-                statement.setInt(5, user.getRole().getId());
-                statement.setInt(6, user.getStatus().getId());
-                statement.setString(7, PasswordHashGenerator.encodePassword(password));
-                statement.executeUpdate();
-                return true;
-            } catch (SQLException e) {
-                logger.log(Level.ERROR, "Error with add new User. ", e);
-                throw new DaoException("Error with add new User. ", e);
-            }
-        }
-        return false;
+        return createNewUser(user, password, null);
     }
 
     @Override
@@ -251,7 +234,7 @@ public class UserDaoImpl implements UserDao {
             statement.setString(2, login);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error with changing git link. ", e);
+            LOGGER.log(Level.ERROR, "Error with changing git link. ", e);
             throw new DaoException("Error with changing git link. ", e);
         }
     }
@@ -265,7 +248,7 @@ public class UserDaoImpl implements UserDao {
             statement.setLong(2, id);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error with changing user role. ", e);
+            LOGGER.log(Level.ERROR, "Error with changing user role. ", e);
             throw new DaoException("Error with changing user role. ", e);
         }
 
@@ -282,7 +265,7 @@ public class UserDaoImpl implements UserDao {
             statement.setLong(2, id);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error with changing user status. ", e);
+            LOGGER.log(Level.ERROR, "Error with changing user status. ", e);
             throw new DaoException("Error with changing user status. ", e);
         }
         return rowsUpdate == 1;
@@ -296,7 +279,7 @@ public class UserDaoImpl implements UserDao {
             statement.setString(2, login);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error with changing password. ", e);
+            LOGGER.log(Level.ERROR, "Error with changing password. ", e);
             throw new DaoException("Error with changing password. ", e);
         }
     }
@@ -309,7 +292,7 @@ public class UserDaoImpl implements UserDao {
             statement.setString(2, login);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error with changing image. ", e);
+            LOGGER.log(Level.ERROR, "Error with changing image. ", e);
             throw new DaoException("Error with changing image. ", e);
         }
     }
@@ -331,21 +314,6 @@ public class UserDaoImpl implements UserDao {
         return rowsUpdate == 1;
     }
 
-    private int rowCountByQuery(String sourceQuery) throws DaoException {
-        int result = 0;
-        try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM (" + sourceQuery + ") as tbl")
-        ) {
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                result = resultSet.getInt(1);
-            }
-        } catch (SQLException e) {
-            logger.log(Level.ERROR, "Can't count row count. ", e);
-            throw new DaoException("Can't count row count.", e);
-        }
-        return result;
-    }
 
     @Override
     public boolean create(User user) throws DaoException {

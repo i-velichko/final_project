@@ -15,12 +15,12 @@ import static org.velichko.finalproject.controller.command.ParamName.*;
 import static org.velichko.finalproject.validator.impl.UserDataValidator.*;
 
 /**
- * author Ivan Velichko
+ * @author Ivan Velichko
  * .
  * The type Verification data validator.
  */
 public class VerificationDataValidator implements BaseDataValidator {
-    private static final Logger logger = LogManager.getLogger(); //todo
+    private static final Logger LOGGER = LogManager.getLogger(); //todo
     private final UserService userservice;
     private final I18nManager i18n;
 

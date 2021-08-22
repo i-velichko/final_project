@@ -17,7 +17,7 @@ import org.velichko.finalproject.logic.service.VerificationService;
 import static org.velichko.finalproject.logic.entity.type.VerificationStatus.WAIT_FOR_EXAMINER_CHECK;
 
 public class ChangeTrainerScoreCommand implements Command {
-    private final Logger logger = LogManager.getLogger();
+    private final Logger LOGGER = LogManager.getLogger();
     private final VerificationService verificationService;
     private final UserService userService;
     private final EmailService emailService;
@@ -54,7 +54,7 @@ public class ChangeTrainerScoreCommand implements Command {
         try {
             verificationService.changeTrainerScore(verificationId, studentScore);
         } catch (ServiceException e) {
-            logger.log(Level.DEBUG, "Error. Impossible change new score by this " + verificationId + " verification");
+            LOGGER.log(Level.DEBUG, "Error. Impossible change new score by this " + verificationId + " verification");
 //                    todo error to admin page
         }
         router.setRouterType(Router.RouterType.REDIRECT);

@@ -1,14 +1,13 @@
 package org.velichko.finalproject.logic.dao;
 
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.logic.entity.Entity;
 import org.velichko.finalproject.logic.exception.DaoException;
 import org.velichko.finalproject.logic.pool.ConnectionPool;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,9 +27,9 @@ public interface BaseDao<K, T extends Entity> {
     int PAGE_SIZE = 10;
 
     /**
-     * The constant logger.
+     * The constant LOGGER.
      */
-    Logger logger = LogManager.getLogger();
+    Logger LOGGER = LogManager.getLogger();
 
     /**
      * Find all list.
@@ -87,7 +86,7 @@ public interface BaseDao<K, T extends Entity> {
                 statement.close();
             }
         } catch (SQLException ex) {
-            logger.error("Closing statement error ", ex);
+            LOGGER.error("Closing statement error ", ex);
         }
     }
 
@@ -119,5 +118,21 @@ public interface BaseDao<K, T extends Entity> {
         }
         queryBuilder.append(limit);
         return queryBuilder.toString();
+    }
+
+    default int rowCountByQuery(String sourceQuery) throws DaoException {
+        int result = 0;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM (" + sourceQuery + ") as tbl" )
+        ) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                result = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.ERROR, "Can't count row count. ", e);
+            throw new DaoException("Can't count row count.", e);
+        }
+        return result;
     }
 }

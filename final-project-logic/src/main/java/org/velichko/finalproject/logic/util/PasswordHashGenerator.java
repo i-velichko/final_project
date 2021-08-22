@@ -4,7 +4,6 @@ import java.util.Base64;
 
 /**
  * @author Ivan Velichko
- *
  * The type Password hash generator.
  */
 public class PasswordHashGenerator {

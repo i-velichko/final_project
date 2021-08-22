@@ -19,7 +19,7 @@ import static org.velichko.finalproject.controller.command.ParamName.*;
  * The type Change user role command.
  */
 public class ChangeUserRoleCommand implements Command {
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private final UserService userService;
 
     /**
@@ -40,7 +40,7 @@ public class ChangeUserRoleCommand implements Command {
             UserRole role = UserRole.valueOf(newRole);
             userService.changeUserRole(Long.parseLong(userId), role);
         } catch (ServiceException | IllegalArgumentException e) {
-            logger.log(Level.ERROR, "Error. Impossible change role by this" + userId + "user", e); //todo
+            LOGGER.log(Level.ERROR, "Error. Impossible change role by this" + userId + "user", e); //todo
             request.setAttribute(MSG, e.getMessage());//TODO
             router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 

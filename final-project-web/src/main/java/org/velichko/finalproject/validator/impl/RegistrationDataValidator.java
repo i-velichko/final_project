@@ -15,7 +15,7 @@ import static org.velichko.finalproject.controller.command.ParamName.*;
 import static org.velichko.finalproject.validator.impl.UserDataValidator.*;
 
 public class RegistrationDataValidator implements BaseDataValidator {
-    private final Logger logger = LogManager.getLogger();
+    private final Logger LOGGER = LogManager.getLogger();
     private final UserService service;
     private final I18nManager i18n;
 

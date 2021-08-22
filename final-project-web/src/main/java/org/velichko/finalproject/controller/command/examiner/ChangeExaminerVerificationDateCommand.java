@@ -11,7 +11,7 @@ import org.velichko.finalproject.logic.exception.ServiceException;
 import org.velichko.finalproject.logic.service.VerificationService;
 
 public class ChangeExaminerVerificationDateCommand implements Command {
-    private final Logger logger = LogManager.getLogger();
+    private final Logger LOGGER = LogManager.getLogger();
     private final VerificationService verificationService;
 
     public ChangeExaminerVerificationDateCommand(VerificationService verificationService) {
@@ -26,7 +26,7 @@ public class ChangeExaminerVerificationDateCommand implements Command {
         try {
             verificationService.changeExaminerVerificationDateById(verificationId, dateTime);
         } catch (ServiceException e) {
-            logger.log(Level.DEBUG, "Error. Impossible change examiner verification date by this " + verificationId + " verification");
+            LOGGER.log(Level.DEBUG, "Error. Impossible change examiner verification date by this " + verificationId + " verification");
 //                    todo error to admin page
         }
         router.setRouterType(Router.RouterType.REDIRECT);

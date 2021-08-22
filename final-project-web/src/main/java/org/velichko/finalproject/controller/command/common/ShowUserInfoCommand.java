@@ -1,6 +1,7 @@
 package org.velichko.finalproject.controller.command.common;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,7 +24,7 @@ import static org.velichko.finalproject.controller.command.ParamName.*;
 import static org.velichko.finalproject.controller.command.ParamName.USER_PARAM;
 
 public class ShowUserInfoCommand implements Command {
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final String SRC = "data:image/jpeg;base64,";
     private final UserService userService;
 
@@ -50,8 +51,8 @@ public class ShowUserInfoCommand implements Command {
                 router.setPagePath(USER_INFO);
             }
         } catch (ServiceException | SQLException | IOException e) {
-            logger.log(Level.ERROR, "Error with download user page with this user: " + userId);
-            router.setPagePath(ERROR_PAGE);
+            LOGGER.log(Level.ERROR, "Error with download user page with this user: " + userId);
+            router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         return router;
     }

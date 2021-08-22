@@ -14,13 +14,6 @@ import java.util.Optional;
  * The interface Verification service.
  */
 public interface VerificationService {
-    /**
-     * Find all verifications list.
-     *
-     * @return the list
-     * @throws ServiceException the service exception
-     */
-    List<Verification> findAllVerifications() throws ServiceException;
 
     /**
      * Read by page list.
@@ -114,7 +107,7 @@ public interface VerificationService {
      * @param status the status
      * @return the list
      */
-    List<Verification> findAllApprovedVerifications(VerificationStatus status);
+    List<Verification> findAllApprovedVerifications(VerificationStatus status); //todo
 
     /**
      * Change verification status by id boolean.

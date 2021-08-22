@@ -18,13 +18,13 @@ import static org.velichko.finalproject.controller.command.ParamName.USER_PARAM;
 @WebFilter("/pages/*")
 public class UnsafeUserFilter implements Filter {
 
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         User user = (User) ((HttpServletRequest) servletRequest).getSession().getAttribute(USER_PARAM);
         if (user == null || user.getRole() != UserRole.ADMIN) {
-            logger.warn("Unsafe page opening detected. Redirecting to main page from {}", ((HttpServletRequest) servletRequest).getRequestURI());
+            LOGGER.warn("Unsafe page opening detected. Redirecting to main page from {}", ((HttpServletRequest) servletRequest).getRequestURI());
             servletRequest.getRequestDispatcher(MAIN_PAGE).forward(servletRequest, servletResponse);
         }
         filterChain.doFilter(servletRequest, servletResponse);

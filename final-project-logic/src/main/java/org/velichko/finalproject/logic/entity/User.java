@@ -37,7 +37,7 @@ public class User extends Entity {
      * @param role      the role
      * @param status    the status
      */
-    public User(String firstName, String lastName, String login,  String email, UserRole role, UserStatus status) {
+    public User(String firstName, String lastName, String login, String email, UserRole role, UserStatus status) {
         this.login = login;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,7 +52,7 @@ public class User extends Entity {
      * @param studentName the student name
      * @param surename    the surename
      */
-    public User(String studentName,String surename) {
+    public User(String studentName, String surename) {
         this.firstName = studentName;
         this.lastName = surename;
     }

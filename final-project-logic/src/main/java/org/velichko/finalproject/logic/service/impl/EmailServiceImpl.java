@@ -19,7 +19,7 @@ import java.util.Properties;
  * The type Email service.
  */
 public class EmailServiceImpl implements EmailService {
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private final URL EMAIL_PROPERTIES_PATH = getClass().getClassLoader().getResource("email.properties");
     private static final String USER_KEY = "mail.smtp.user";
     private static final String PASSWORD_KEY = "mail.smtp.password";
@@ -58,7 +58,7 @@ public class EmailServiceImpl implements EmailService {
             }
             return true;
         } catch (MessagingException e) {
-            logger.log(Level.ERROR, "Error with sending message: ", e);
+            LOGGER.log(Level.ERROR, "Error with sending message: ", e);
             throw new ServiceException("Can not send message: ", e);
         }
 

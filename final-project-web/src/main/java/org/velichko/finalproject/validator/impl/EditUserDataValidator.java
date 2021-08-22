@@ -24,7 +24,7 @@ public class EditUserDataValidator implements BaseDataValidator {
     }
 
     @Override
-    public Map<String, String> checkValues(Map<String, String> editUserData, String locale) {
+    public Map<String, String> checkValues(Map<String, String> editUserData, String locale) throws ServiceException {
         Map<String, String> result = new HashMap<>();
         String firstName = editUserData.get(FIRST_NAME_PARAM);
         String lastName = editUserData.get(LAST_NAME_PARAM);
@@ -36,12 +36,8 @@ public class EditUserDataValidator implements BaseDataValidator {
 
         if (oldGitLinK == null) {
             if (gitLink != null && gitLink.matches(URL_REGEXP)) {
-                try {
-                    if (!userservice.isGitLinkUnique(gitLink)) {
-                        result.put(GIT_LINK_ERROR_PARAM, i18n.getMassage(GIT_LINK_NOT_UNIQUE_KEY, locale));
-                    }
-                } catch (ServiceException e) {
-                    e.printStackTrace(); //todo
+                if (!userservice.isGitLinkUnique(gitLink)) {
+                    result.put(GIT_LINK_ERROR_PARAM, i18n.getMassage(GIT_LINK_NOT_UNIQUE_KEY, locale));
                 }
             } else {
                 result.put(GIT_LINK_ERROR_PARAM, i18n.getMassage(GIT_LINK_NOT_CORRECT_KEY, locale));
@@ -50,12 +46,8 @@ public class EditUserDataValidator implements BaseDataValidator {
 
         if (oldEmail == null) {
             if (email != null && email.matches(EMAIL.getRegExp())) {
-                try {
-                    if (!userservice.isEmailUnique(email)) {
-                        result.put(EMAIL_ERROR_PARAM, i18n.getMassage(EMAIL_NOT_UNIQUE_KEY, locale));
-                    }
-                } catch (ServiceException e) {
-                    e.printStackTrace();//todo
+                if (!userservice.isEmailUnique(email)) {
+                    result.put(EMAIL_ERROR_PARAM, i18n.getMassage(EMAIL_NOT_UNIQUE_KEY, locale));
                 }
             } else {
                 result.put(EMAIL_ERROR_PARAM, i18n.getMassage(EMAIL_NOT_CORRECT_KEY, locale));

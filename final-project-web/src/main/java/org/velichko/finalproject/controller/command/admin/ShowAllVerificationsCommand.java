@@ -1,6 +1,7 @@
 package org.velichko.finalproject.controller.command.admin;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,7 +22,7 @@ import static org.velichko.finalproject.controller.command.ParamName.VERIFICATIO
 import static org.velichko.finalproject.logic.dao.BaseDao.PAGE_SIZE;
 
 public class ShowAllVerificationsCommand implements Command {
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private final VerificationService verificationService;
 
     public ShowAllVerificationsCommand(VerificationService verificationService) {
@@ -40,8 +41,8 @@ public class ShowAllVerificationsCommand implements Command {
             request.setAttribute(PAGEABLE, new Page(verificationCount, pageToDisplay, PAGE_SIZE));
             router.setPagePath(SHOW_ALL_VERIFICATIONS);
         } catch (ServiceException e) {
-            logger.log(Level.ERROR, "Error with loading verifications from db", e); //todo
-            router.setPagePath(ERROR_PAGE);
+            LOGGER.log(Level.ERROR, "Error with loading verifications from db", e); //todo
+            router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         return router;
 

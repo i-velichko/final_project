@@ -9,8 +9,8 @@ import java.io.InputStream;
 import java.util.Optional;
 
 /**
- * author Ivan Velichko
- * <p>
+ * @author Ivan Velichko
+ * 
  * The interface User dao.
  *
  * @author Ivan Velichko The interface User dao.

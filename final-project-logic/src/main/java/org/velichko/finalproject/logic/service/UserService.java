@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * author Ivan Velichko
- * <p>
+ * @author Ivan Velichko
+ * 
  * The interface User service.
  *
  * @author Ivan Velichko The interface User service.

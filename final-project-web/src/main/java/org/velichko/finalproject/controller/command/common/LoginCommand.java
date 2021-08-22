@@ -19,7 +19,7 @@ import static org.velichko.finalproject.controller.command.PageName.*;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
 public class LoginCommand implements Command {
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private final UserService userService;
     private final I18nManager i18nManager;
 
@@ -62,7 +62,7 @@ public class LoginCommand implements Command {
                     router.setPagePath(LOGIN_PAGE);
                 }
             } catch (ServiceException e) {
-                logger.log(Level.ERROR, "Error with find user by login: " + login);
+                LOGGER.log(Level.ERROR, "Error with find user by login: " + login);
             }
         } else {
             router.setPagePath(LOGIN_PAGE);

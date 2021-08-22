@@ -14,7 +14,7 @@ import org.velichko.finalproject.logic.service.UserService;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
 public class ChangeUserStatusCommand implements Command {
-    private final Logger logger = LogManager.getLogger();
+    private final Logger LOGGER = LogManager.getLogger();
     private final UserService userService;
 
 
@@ -31,7 +31,7 @@ public class ChangeUserStatusCommand implements Command {
             UserStatus status = UserStatus.valueOf(newStatus);
             userService.changeUserStatus(Long.parseLong(userId), status);
         } catch (ServiceException | IllegalArgumentException e) {
-            logger.log(Level.ERROR, "Error. Impossible change status by this " + userId + " user", e); //todo
+            LOGGER.log(Level.ERROR, "Error. Impossible change status by this " + userId + " user", e); //todo
             request.setAttribute(MSG, e.getMessage());//TODO
             router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }

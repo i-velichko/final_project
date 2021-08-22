@@ -2,6 +2,7 @@ package org.velichko.finalproject.controller.command.student;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import org.velichko.finalproject.controller.Router;
 import org.velichko.finalproject.controller.command.Command;
@@ -97,7 +98,7 @@ public class StartVerificationCommand implements Command {
                     router.setPagePath(USER_INFO);
                 }
             } catch (ServiceException | IOException | ServletException e) {
-                router.setPagePath(ERROR_PAGE);
+                router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
         }
         return router;

@@ -19,7 +19,7 @@ import java.io.InputStream;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
 public class ChangeUserImageCommand implements Command {
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private final UserService userService;
 
     public ChangeUserImageCommand(UserService userService) {
@@ -35,7 +35,7 @@ public class ChangeUserImageCommand implements Command {
             InputStream inputStream = image.getInputStream();
             userService.changeUserImage(login, inputStream);
         } catch (ServiceException | ServletException | IOException e) {
-            logger.log(Level.ERROR, "Error with upload image, try again", e); //todo
+            LOGGER.log(Level.ERROR, "Error with upload image, try again", e); //todo
             request.setAttribute(MSG, e.getMessage());//TODO
             router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }

@@ -17,11 +17,11 @@ import java.util.Optional;
 
 /**
  * @author Ivan Velichko
- * <p>
+ *
  * The type User service.
  */
 public class UserServiceImpl implements UserService {
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private final UserDao userDao;
 
     /**
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.findAll();
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with find all Users .", e);
+            LOGGER.log(Level.ERROR, "Error with find all Users .", e);
             throw new ServiceException("Error with find all Users .", e);
         }
     }
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.findByPage(page);
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with find all Users .", e);
+            LOGGER.log(Level.ERROR, "Error with find all Users .", e);
             throw new ServiceException("Error with find all Users .", e);
         }
     }
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.getUserCount();
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with users count .", e);
+            LOGGER.log(Level.ERROR, "Error with users count .", e);
             throw new ServiceException("Error with users count .", e);
         }
     }
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
         try {
             userDao.createNewUser(user, password, registrationKey);
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with add new User. ", e);
+            LOGGER.log(Level.ERROR, "Error with add new User. ", e);
             throw new ServiceException("Error with add new User. ", e);
         }
         return true;
@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
         try {
             userDao.createNewUser(user, password);
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with add new User. ", e);
+            LOGGER.log(Level.ERROR, "Error with add new User. ", e);
             throw new ServiceException("Error with add new User. ", e);
         }
         return true;
@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
         try {
             userDao.changeUserGitLinkByLogin(login, gitLink);
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with changed user gitLink", e);
+            LOGGER.log(Level.ERROR, "Error with changed user gitLink", e);
             throw new ServiceException("Impossible change gitLink for user", e);
         }
         return true;
@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.findUserByLogin(login).isEmpty();
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with find user by login", e);
+            LOGGER.log(Level.ERROR, "Error with find user by login", e);
             throw new ServiceException("Error with find user by login", e);
         }
     }
@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.findUserByEmail(email).isEmpty();
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with find user by email", e);
+            LOGGER.log(Level.ERROR, "Error with find user by email", e);
             throw new ServiceException("Error with find user by login", e);
         }
     }
@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.findUserByGitLink(gitLink).isEmpty();
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with find user project by git link", e);
+            LOGGER.log(Level.ERROR, "Error with find user project by git link", e);
             throw new ServiceException("Error with find user project by git link", e);
         }
     }
@@ -131,7 +131,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.findUserByLoginAndPassword(login, password);
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with find user by login and password", e);
+            LOGGER.log(Level.ERROR, "Error with find user by login and password", e);
             throw new ServiceException("Error with find user by login and password", e);
         }
     }
@@ -141,7 +141,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.findEntityById(id);
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with find user by id", e);
+            LOGGER.log(Level.ERROR, "Error with find user by id", e);
             throw new ServiceException("Error with find user by ID " + id, e);
         }
     }
@@ -152,11 +152,10 @@ public class UserServiceImpl implements UserService {
         try {
             Optional<User> optionalUser = userDao.findEntityById(id);
             if (optionalUser.isPresent()) {
-                userDao.changeUserRoleById(id, role);
-                isChanged = true;
+                isChanged = userDao.changeUserRoleById(id, role);
             }
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with changed user role", e);
+            LOGGER.log(Level.ERROR, "Error with changed user role", e);
             throw new ServiceException("Impossible change role for user", e);
         }
         return isChanged;
@@ -168,11 +167,10 @@ public class UserServiceImpl implements UserService {
         try {
             Optional<User> optionalUser = userDao.findEntityById(id);
             if (optionalUser.isPresent()) {
-                userDao.changeUserStatusById(id, status);
-                isChanged = true;
+                isChanged = userDao.changeUserStatusById(id, status);
             }
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with changed user status", e);
+            LOGGER.log(Level.ERROR, "Error with changed user status", e);
             throw new ServiceException("Impossible change status for user", e);
         }
         return isChanged;
@@ -183,7 +181,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.findUserByRegistrationKey(registrationKey);
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with get user by registration key", e);
+            LOGGER.log(Level.ERROR, "Error with get user by registration key", e);
             throw new ServiceException("Impossible get user", e);
         }
     }
@@ -203,7 +201,7 @@ public class UserServiceImpl implements UserService {
         try {
             userDao.changeUserImage(login, image);
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error with changed user image", e);
+            LOGGER.log(Level.ERROR, "Error with changed user image", e);
             throw new ServiceException("Impossible change image for user", e);
         }
         return true;

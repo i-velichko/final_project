@@ -5,7 +5,7 @@ package org.velichko.finalproject.logic.exception;
  *
  * The type Service exception.
  */
-public class ServiceException extends Exception{
+public class ServiceException extends Exception {
     /**
      * Instantiates a new Service exception.
      */

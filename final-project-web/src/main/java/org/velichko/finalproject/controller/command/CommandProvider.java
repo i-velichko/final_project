@@ -12,7 +12,7 @@ import java.util.Optional;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
 public class CommandProvider {
-    private static Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private static final String UNKNOWN_COMMAND = "Unknown command: ";
 
@@ -39,7 +39,7 @@ public class CommandProvider {
         try {
             commandName = CommandName.valueOf(name.toUpperCase());
         } catch (IllegalArgumentException | NullPointerException e) {
-            logger.log(Level.DEBUG, UNKNOWN_COMMAND + name);
+            LOGGER.log(Level.DEBUG, UNKNOWN_COMMAND + name);
         }
         return Optional.of(commandName);
     }

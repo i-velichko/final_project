@@ -17,7 +17,7 @@ import java.sql.SQLException;
  * The type User creator.
  */
 public class UserCreator {
-    private static Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     /**
      * Create User.
@@ -40,7 +40,7 @@ public class UserCreator {
             user.setImage(resultSet.getBlob("image"));
 
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Create user error. " + e.getMessage());
+            LOGGER.log(Level.ERROR, "Create user error. " + e.getMessage());
             throw new DaoException("Create user error. " + e.getMessage());
         }
         return user;

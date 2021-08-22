@@ -1,6 +1,7 @@
 package org.velichko.finalproject.controller.command.common;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,7 +17,7 @@ import static org.velichko.finalproject.controller.command.ParamName.USER_PARAM;
 import static org.velichko.finalproject.controller.command.ParamName.VERIFICATION_ID_PARAM;
 
 public class ShowVerificationInfoCommand implements Command {
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private final VerificationWebFacade verificationWebFacade;
 
     public ShowVerificationInfoCommand(VerificationWebFacade verificationWebFacade) {
@@ -33,10 +34,10 @@ public class ShowVerificationInfoCommand implements Command {
             try {
                 router = verificationWebFacade.getVerificationInfoByVerificationIdAndUserRole(verificationId, request, userRole);
             } catch (ServiceException e) {
-                logger.log(Level.ERROR, "Error with download verification page. ");
+                LOGGER.log(Level.ERROR, "Error with download verification page. ");
             }
         } else {
-            router.setPagePath(ERROR_PAGE);
+            router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
         return router;

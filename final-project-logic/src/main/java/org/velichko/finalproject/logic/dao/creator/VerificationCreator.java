@@ -11,17 +11,16 @@ import org.velichko.finalproject.logic.exception.DaoException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
+import static org.velichko.finalproject.logic.util.DateTimeUtil.timestampToLocalDateTime;
 
 /**
  * @author Ivan Velichko
- *
+ * 
  * The type Verification creator.
  */
 public class VerificationCreator {
-    private static Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     /**
      * Create verification.
@@ -42,26 +41,20 @@ public class VerificationCreator {
             verification.setExaminer(new User(
                     resultSet.getString("examiner_name"), resultSet.getString("examiner_surname")));
             verification.setVerificationStatus(VerificationStatus.valueOf(resultSet.getString("verification_status")));
-            verification.setApplicationDate(parseToLocalDateTime(resultSet.getString("application_date")));
+            verification.setApplicationDate(timestampToLocalDateTime(resultSet.getTimestamp("application_date")));
             verification.setTrainerScore(resultSet.getDouble("trainer_score"));
             verification.setTrainerCharacteristic((resultSet.getString("characteristic")));
-            verification.setTrainerVerificationDate(parseToLocalDateTime(resultSet.getString("trainer_verification_date")));
-            verification.setExaminerVerificationDate(parseToLocalDateTime(resultSet.getString("examiner_verification_date")));
+            verification.setTrainerVerificationDate(timestampToLocalDateTime(resultSet.getTimestamp("trainer_verification_date")));
+            verification.setExaminerVerificationDate(timestampToLocalDateTime(resultSet.getTimestamp("examiner_verification_date")));
             verification.setFinalStatus(FinalStatus.valueOf(resultSet.getString("final_status")));
 
+            resultSet.getTimestamp("application_date").toLocalDateTime();
+
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Create verification error. " + e.getMessage());
-            throw new DaoException("Create user error. " + e.getMessage());
+            LOGGER.log(Level.ERROR, "Create verification error. ", e);
+            throw new DaoException("Create user error. ", e);
         }
         return verification;
     }
 
-    private LocalDateTime parseToLocalDateTime(String dateTime) throws SQLException {
-        LocalDateTime parse = null;
-        if (dateTime != null) {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            parse = LocalDateTime.parse(dateTime, dtf);
-        }
-        return parse;
-    }
 }

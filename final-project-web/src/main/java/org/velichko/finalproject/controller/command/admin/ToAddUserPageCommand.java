@@ -13,7 +13,7 @@ import static org.velichko.finalproject.controller.command.ParamName.*;
 
 
 /**
- * author Ivan Velichko
+ * @author Ivan Velichko
  * .
  * The type To add user page command.
  */
