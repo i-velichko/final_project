@@ -17,8 +17,7 @@ import java.util.Map;
 
 import static org.velichko.finalproject.controller.Router.RouterType.REDIRECT;
 import static org.velichko.finalproject.controller.command.MessageNameKey.REGISTRATION_FAILED_KEY;
-import static org.velichko.finalproject.controller.command.PageName.ADD_USER_PAGE;
-import static org.velichko.finalproject.controller.command.PageName.REDIRECT_TO_ADD_USER_PAGE;
+import static org.velichko.finalproject.controller.command.PageName.*;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
 /**
@@ -78,6 +77,7 @@ public class AddNewUserCommand implements Command {
                     if (userService.createNewUser(user, password)) {
                         router.setRouterType(REDIRECT);
                         router.setPagePath(REDIRECT_TO_ADD_USER_PAGE);
+                        router.setPagePath(REDIRECT_TO_ADD_USER_PAGE + "&" + ADD_USER_IS_DONE);
                     }
                 }
             } catch (ServiceException | IllegalArgumentException e) {

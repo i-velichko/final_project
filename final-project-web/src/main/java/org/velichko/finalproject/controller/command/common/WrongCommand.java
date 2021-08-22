@@ -11,8 +11,9 @@ public class WrongCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
-        router.setPagePath(ERROR_PAGE);
         router.setRouterType(REDIRECT);
+        router.setPagePath(ERROR_PAGE);
+
 
         return router;
     }

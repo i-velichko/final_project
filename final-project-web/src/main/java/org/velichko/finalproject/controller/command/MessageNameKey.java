@@ -14,5 +14,6 @@ public interface MessageNameKey {
     String PROJECT_TITLE_NOT_CORRECT_KEY = "error.projectTitle.not.correct";
     String IMAGE_NOT_UPLOAD_KEY = "error.upload.image.failed";
     String NAME_NOT_CORRECT_KEY = "error.name.not.correct";
-
+    String ROLE_NOT_CORRECT_KEY = "error.role.not.correct";
+    String ADD_USER_SUCCESSFUL_KEY = "add.user.is.done";
 }

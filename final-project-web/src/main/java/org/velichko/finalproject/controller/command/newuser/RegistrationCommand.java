@@ -1,6 +1,7 @@
 package org.velichko.finalproject.controller.command.newuser;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.controller.Router;
@@ -75,14 +76,13 @@ public class RegistrationCommand implements Command {
                     String registrationKey = confirmatoryService.setRegistrationToken(email, login);
                     if (userService.createNewUser(user, password, registrationKey)) {
                         request.setAttribute(USER_PARAM, user);
-                        request.setAttribute(REGISTRATION_IS_DONE, i18n.getMassage(REGISTRATION_SUCCESSFUL_KEY, locale));
                     }
                 } catch (ServiceException e) {
-                    e.printStackTrace(); //todo
+                    logger.log(Level.ERROR, "error registration user", e);
                     request.setAttribute(REGISTRATION_FAILED, i18n.getMassage(REGISTRATION_FAILED_KEY, locale) + e.getLocalizedMessage());
                 }
                 router.setRouterType(Router.RouterType.REDIRECT);
-                router.setPagePath(REDIRECT_TO_LOGIN_PAGE);
+                router.setPagePath(REDIRECT_TO_LOGIN_PAGE + "&" + REGISTRATION_IS_DONE);
             }
         } else {
             router.setPagePath(REGISTRATION_PAGE);

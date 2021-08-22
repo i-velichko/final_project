@@ -50,7 +50,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink4">
                         <li><a class="dropdown-item" href="${abs_path}/controller?command=show_all_users"><fmt:message key="page.admin.header.users.control"/></a></li>
-                        <li><a class="dropdown-item" href=""><fmt:message key="page.admin.header.add.user"/></a></li>
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=to_add_user_page_command"><fmt:message key="page.admin.header.add.user"/></a></li>
                     </ul>
                 </li>
                 <li><a href="https://training.by/#!/Home?lang=ru" class="nav-link px-2 link-dark"><fmt:message key="page.common.header.road.to.epam"/></a></li>

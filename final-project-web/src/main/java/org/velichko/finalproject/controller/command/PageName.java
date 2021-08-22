@@ -22,7 +22,7 @@ public interface PageName {
     String REDIRECT_STUDENT = "controller?command=redirect_student";
     String REDIRECT_TO_MAIN_PAGE = "controller?command=redirect_main";
     String REDIRECT_TO_LOGIN_PAGE = "controller?command=to_login_page";
-    String REDIRECT_TO_ADD_USER_PAGE = "controller?command=to_add_user_page";
+    String REDIRECT_TO_ADD_USER_PAGE = "controller?command=to_add_user_page_command";
     String REDIRECT_TO_EDIT_USER_DATA_PAGE = "controller?command=to_edit_user_data_page";
     String VERIFICATION_TRAINER_CONTROL = "/pages/verification_trainer_control.jsp";
     String VERIFICATION_EXAMINER_CONTROL = "/pages/verification_examiner_control.jsp";

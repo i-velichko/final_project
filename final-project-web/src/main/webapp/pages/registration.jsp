@@ -26,8 +26,9 @@
                                         <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
                                             <input type="text" id="form3Example1c" name="firstName"
-                                                   value="${correctRegistrationData.firstName}" class="form-control"/>
-                                            <span style="color: red">${errorRegistrationData.firstNameError}</span>
+                                                   value="${correctRegistrationData.firstName}"
+                                                   pattern="[a-zA-Zа-яА-ЯЁё]{3,30}" class="form-control" required/>
+                                            <span style="color: red">${errorRegistrationData.nameError}</span>
                                             <label class="form-label" for="form3Example1c"><fmt:message
                                                     key="common.data.first.name"/></label>
                                         </div>
@@ -37,8 +38,9 @@
                                         <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
                                             <input type="text" id="form3Example2c" name="lastName"
-                                                   value="${correctRegistrationData.lastName}" class="form-control"/>
-                                            <span style="color: red">${errorRegistrationData.firstNameError}</span>
+                                                   value="${correctRegistrationData.lastName}"
+                                                   pattern="[a-zA-Zа-яА-ЯЁё]{3,30}" class="form-control" required/>
+                                            <span style="color: red">${errorRegistrationData.nameError}</span>
                                             <label class="form-label" for="form3Example1c"><fmt:message
                                                     key="common.data.last.name"/></label>
                                         </div>

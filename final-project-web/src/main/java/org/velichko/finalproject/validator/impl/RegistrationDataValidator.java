@@ -29,6 +29,16 @@ public class RegistrationDataValidator implements BaseDataValidator {
 
         Map<String, String> result = new HashMap<>();
 
+        String firstName = registrationData.get(FIRST_NAME_PARAM);
+        if (firstName == null || !firstName.matches(FIRST_NAME.getRegExp())) {
+            result.put(NAME_ERROR_PARAM, i18n.getMassage(NAME_NOT_CORRECT_KEY, locale));
+        }
+
+        String lastName = registrationData.get(LAST_NAME_PARAM);
+        if (lastName == null || !lastName.matches(LAST_NAME.getRegExp())) {
+            result.put(NAME_ERROR_PARAM, i18n.getMassage(NAME_NOT_CORRECT_KEY, locale));
+        }
+
         String login = registrationData.get(LOGIN_PARAM);
 
         if (login != null && login.matches(LOGIN.getRegExp())) {

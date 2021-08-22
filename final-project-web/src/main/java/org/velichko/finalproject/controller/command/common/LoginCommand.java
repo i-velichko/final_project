@@ -35,14 +35,7 @@ public class LoginCommand implements Command {
         if (user != null) {
             request.setAttribute(USER_PARAM, user);
             router.setRouterType(REDIRECT);
-            switch (user.getRole()) {
-                case STUDENT -> router.setPagePath(REDIRECT_STUDENT);//TODO to main
-                case TRAINER -> router.setPagePath(WELCOME_TRAINER);
-                case EXAMINER -> router.setPagePath(WELCOME_EXAMINER);
-                case ADMIN -> router.setPagePath(WELCOME_ADMIN);
-                default -> router.setPagePath(LOGIN_PAGE);
-            }
-
+            router.setPagePath(MAIN_PAGE);
         } else {
             getUserViaDB(request, router);
         }

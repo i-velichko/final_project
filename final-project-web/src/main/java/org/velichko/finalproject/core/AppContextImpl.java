@@ -50,10 +50,8 @@ public class AppContextImpl implements AppContext {
     private AppContextImpl() {
         map.put(ChangeLocaleCommand.class, buildWrapper(ChangeLocaleCommand::new));
         map.put(ToMainPageCommand.class, buildWrapper(ToMainPageCommand::new));
-        map.put(ToLoginPageCommand.class, buildWrapper(ToLoginPageCommand::new));
         map.put(ToRegistrationPageCommand.class, buildWrapper(ToRegistrationPageCommand::new));
         map.put(ToEditUserDataPageCommand.class, buildWrapper(ToEditUserDataPageCommand::new));
-        map.put(ToAddUserPageCommand.class, buildWrapper(ToAddUserPageCommand::new));
         map.put(LogoutCommand.class, buildWrapper(LogoutCommand::new));
         map.put(WrongCommand.class, buildWrapper(WrongCommand::new));
         map.put(UserDao.class, buildWrapper(UserDaoImpl::new));
@@ -64,6 +62,8 @@ public class AppContextImpl implements AppContext {
         map.put(VerificationService.class, buildWrapper(() -> new VerificationServiceImpl(getService(VerificationDao.class))));
         map.put(VerificationWebFacade.class, buildWrapper(() -> new VerificationWebFacade(getService(VerificationService.class))));
         map.put(I18nManager.class, buildWrapper(I18nManager::new));
+        map.put(ToAddUserPageCommand.class, buildWrapper(() -> new ToAddUserPageCommand(getService(I18nManager.class))));
+        map.put(ToLoginPageCommand.class, buildWrapper(() -> new ToLoginPageCommand(getService(I18nManager.class))));
         map.put(RegistrationDataValidator.class, buildWrapper(() -> new RegistrationDataValidator(
                 getService(UserService.class),
                 getService(I18nManager.class))));

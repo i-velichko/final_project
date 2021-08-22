@@ -66,4 +66,6 @@ public interface ParamName {
     String OLD_EMAIL = "oldEmail";
     String OLD_GIT_LINK = "oldGitLink";
     String ROLE_PARAM = "role";
+    String ROLE_ERROR_PARAM = "roleError";
+    String ADD_USER_IS_DONE = "addUserIsDone";
 }
