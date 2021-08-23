@@ -15,7 +15,7 @@ import java.util.Properties;
 
 /**
  * @author Ivan Velichko
- *
+ * <p>
  * The type Email service.
  */
 public class EmailServiceImpl implements EmailService {
@@ -49,18 +49,18 @@ public class EmailServiceImpl implements EmailService {
         });
         try {
             Message message = new MimeMessage(session);
-            if (user != null) {
+            if (user != null && emailTo != null) {
                 message.setFrom(new InternetAddress(user));
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
                 message.setSubject(EMAIL_FROM_EPAM_TRAINING_CENTER);
                 message.setContent(messageContent, CONTENT_TYPE);
                 Transport.send(message);
+                return true;
             }
-            return true;
         } catch (MessagingException e) {
             LOGGER.log(Level.ERROR, "Error with sending message: ", e);
             throw new ServiceException("Can not send message: ", e);
         }
-
+        return false;
     }
 }
