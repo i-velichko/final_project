@@ -1,7 +1,6 @@
 package org.velichko.finalproject.controller.command.admin;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +10,7 @@ import org.velichko.finalproject.logic.entity.type.UserRole;
 import org.velichko.finalproject.logic.exception.ServiceException;
 import org.velichko.finalproject.logic.service.UserService;
 
+import static jakarta.servlet.http.HttpServletResponse.*;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
 /**
@@ -40,10 +40,9 @@ public class ChangeUserRoleCommand implements Command {
             UserRole role = UserRole.valueOf(newRole);
             userService.changeUserRole(Long.parseLong(userId), role);
         } catch (ServiceException | IllegalArgumentException e) {
-            LOGGER.log(Level.ERROR, "Error. Impossible change role by this" + userId + "user", e); //todo
-            request.setAttribute(MSG, e.getMessage());//TODO
-            router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-
+            LOGGER.log(Level.ERROR, "Error. Impossible change role by this" + userId + "user", e);
+            request.setAttribute(ERROR_MESSAGE, e.getMessage());
+            router.setErrorCode(SC_INTERNAL_SERVER_ERROR);
         }
         router.setRouterType(Router.RouterType.REDIRECT);
         router.setPagePath(request.getHeader(REFERER));

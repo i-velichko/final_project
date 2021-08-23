@@ -1,5 +1,10 @@
 package org.velichko.finalproject.controller.command;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The interface Page name.
+ */
 public interface PageName {
     String INDEX_PAGE = "index.jsp";
     String REFERER = "referer";

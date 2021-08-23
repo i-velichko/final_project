@@ -19,6 +19,7 @@
                 <div class="login-form bg-light mt-4 p-4">
                     <strong>
                         <p class="text-success">${addUserIsDone}</p>
+                        <p class="text-warning">${registrationFailed}</p>
                     </strong>
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form1Example1"><fmt:message key="common.data.first.name"/></label>

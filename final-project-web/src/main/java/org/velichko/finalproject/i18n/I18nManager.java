@@ -5,10 +5,11 @@ import org.velichko.finalproject.logic.pool.PropertyLoader;
 import java.net.URL;
 import java.util.*;
 
+
 /**
  * @author Ivan Velichko
  *
- * The type I18n Manager.
+ * The type 18 n manager.
  */
 public class I18nManager {
 
@@ -16,6 +17,9 @@ public class I18nManager {
     private static final String DEFAULT_LOCALE = "ru-RU";
     private final Map<String, ResourceBundle> bundleMap = new HashMap<>();
 
+    /**
+     * Instantiates a new 18 n manager.
+     */
     public I18nManager() {
         List<String> localeList = getAllLocales();
 
@@ -37,6 +41,13 @@ public class I18nManager {
         return result;
     }
 
+    /**
+     * Gets massage.
+     *
+     * @param key    the key
+     * @param locale the locale
+     * @return the massage
+     */
     public String getMassage(String key, String locale) {
         if (locale == null) {
             locale = DEFAULT_LOCALE;

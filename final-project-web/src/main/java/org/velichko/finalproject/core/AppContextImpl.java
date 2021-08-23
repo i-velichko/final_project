@@ -4,7 +4,6 @@ import org.velichko.finalproject.controller.command.admin.*;
 import org.velichko.finalproject.controller.command.common.*;
 import org.velichko.finalproject.controller.command.examiner.ChangeExaminerVerificationDateCommand;
 import org.velichko.finalproject.controller.command.examiner.ChangeFinalStatusCommand;
-import org.velichko.finalproject.controller.command.examiner.ShowAllApprovedProjectsCommand;
 import org.velichko.finalproject.controller.command.newuser.RegistrationCommand;
 import org.velichko.finalproject.controller.command.newuser.RegistrationConfirmationCommand;
 import org.velichko.finalproject.controller.command.student.StartVerificationCommand;
@@ -32,6 +31,7 @@ import org.velichko.finalproject.validator.impl.RegistrationByAdminValidator;
 import org.velichko.finalproject.validator.impl.RegistrationDataValidator;
 import org.velichko.finalproject.validator.impl.VerificationDataValidator;
 import org.velichko.finalproject.webfacade.VerificationWebFacade;
+import org.velichko.finalproject.webfacade.impl.VerificationWebFacadeImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +40,7 @@ import static org.velichko.finalproject.core.LazyWrapper.buildWrapper;
 
 /**
  * @author Ivan Velichko
- * 
+ *
  * The type App context.
  */
 public class AppContextImpl implements AppContext {
@@ -60,7 +60,7 @@ public class AppContextImpl implements AppContext {
         map.put(VerificationDao.class, buildWrapper(VerificationDaoImpl::new));
         map.put(UserService.class, buildWrapper(() -> new UserServiceImpl(getService(UserDao.class))));
         map.put(VerificationService.class, buildWrapper(() -> new VerificationServiceImpl(getService(VerificationDao.class))));
-        map.put(VerificationWebFacade.class, buildWrapper(() -> new VerificationWebFacade(getService(VerificationService.class))));
+        map.put(VerificationWebFacade.class, buildWrapper(() -> new VerificationWebFacadeImpl(getService(VerificationService.class))));
         map.put(I18nManager.class, buildWrapper(I18nManager::new));
         map.put(ToAddUserPageCommand.class, buildWrapper(() -> new ToAddUserPageCommand(getService(I18nManager.class))));
         map.put(ToLoginPageCommand.class, buildWrapper(() -> new ToLoginPageCommand(getService(I18nManager.class))));
@@ -80,9 +80,8 @@ public class AppContextImpl implements AppContext {
         map.put(RegistrationCommand.class, buildWrapper(() -> new RegistrationCommand(
                 getService(UserService.class),
                 getService(RegistrationConfirmatory.class),
-                getService(RegistrationDataValidator.class),
-                getService(I18nManager.class)
-        )));
+                getService(RegistrationDataValidator.class))
+        ));
         map.put(StartVerificationCommand.class, buildWrapper(() -> new StartVerificationCommand(
                 getService(UserService.class),
                 getService(VerificationService.class),
@@ -95,7 +94,6 @@ public class AppContextImpl implements AppContext {
         map.put(LoginCommand.class, buildWrapper(() -> new LoginCommand(getService(UserService.class), getService(I18nManager.class))));
         map.put(ShowAllUsersCommand.class, buildWrapper(() -> new ShowAllUsersCommand(getService(UserService.class))));
         map.put(ShowAllVerificationsCommand.class, buildWrapper(() -> new ShowAllVerificationsCommand(getService(VerificationService.class))));
-        map.put(ShowAllApprovedProjectsCommand.class, buildWrapper(() -> new ShowAllApprovedProjectsCommand(getService(VerificationService.class))));
         map.put(RegistrationConfirmationCommand.class, buildWrapper(() -> new RegistrationConfirmationCommand(getService(UserService.class))));
         map.put(ShowTrainerInfoCommand.class, buildWrapper(() -> new ShowTrainerInfoCommand(getService(UserService.class))));
         map.put(ShowUserInfoCommand.class, buildWrapper(() -> new ShowUserInfoCommand(getService(UserService.class))));

@@ -48,8 +48,8 @@ public class ShowAllUsersCommand implements Command {
             request.setAttribute(PAGEABLE, new Page(userCount, pageToDisplay, PAGE_SIZE));
             router.setPagePath(SHOW_ALL_USERS);
         } catch (ServiceException e) {
-            LOGGER.log(Level.ERROR, "Error with loading users from db", e); //todo
-            request.setAttribute(MSG, e.getMessage());//TODO
+            LOGGER.log(Level.ERROR, "Error with loading users from db", e);
+            request.setAttribute(ERROR_MESSAGE, e.getMessage());
             router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         return router;

@@ -15,6 +15,11 @@ import java.io.IOException;
 import static org.velichko.finalproject.controller.command.PageName.MAIN_PAGE;
 import static org.velichko.finalproject.controller.command.ParamName.USER_PARAM;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type Unsafe user filter.
+ */
 @WebFilter("/pages/*")
 public class UnsafeUserFilter implements Filter {
 
@@ -30,13 +35,4 @@ public class UnsafeUserFilter implements Filter {
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        Filter.super.init(filterConfig);
-    }
-
-    @Override
-    public void destroy() {
-        Filter.super.destroy();
-    }
 }

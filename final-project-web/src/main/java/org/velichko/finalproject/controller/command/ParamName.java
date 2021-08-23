@@ -1,10 +1,16 @@
 package org.velichko.finalproject.controller.command;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The interface Param name.
+ */
 public interface ParamName {
     String USER_LIST_PARAM = "users";
     String PAGEABLE = "pageable";
     String COMMAND_PARAM = "command";
     String USER_PARAM = "user";
+    String USER_INFO_PARAM = "userInfo";
     String PASSWORD_PARAM = "password";
 
     String PASSWORD_ERROR_PARAM = "passwordError";
@@ -58,7 +64,7 @@ public interface ParamName {
     String NEW_FINAL_STATUS_PARAM = "newFinalStatus";
     String NEW_ROLE = "new_role";
     String MESSAGE_PARAM = "message";
-    String MSG = "msg";
+    String ERROR_MESSAGE = "msg";
     String STRING_IMAGE_PARAM = "stringImage";
     String NAME_ERROR_PARAM = "nameError";
     String CORRECT_EDIT_DATA_PARAM = "correctEditData";

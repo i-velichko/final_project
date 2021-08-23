@@ -3,6 +3,11 @@ package org.velichko.finalproject.tag;
 import jakarta.servlet.jsp.tagext.TagSupport;
 import org.velichko.finalproject.logic.entity.User;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type Anonymous role tag.
+ */
 public class AnonymousRoleTag extends TagSupport {
     private static final String USER_PARAM = "user";
 

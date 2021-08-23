@@ -1,14 +1,9 @@
 package org.velichko.finalproject.logic.service.impl;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.velichko.finalproject.logic.dao.UserDao;
 import org.velichko.finalproject.logic.dao.impl.UserDaoImpl;
 import org.velichko.finalproject.logic.entity.User;
 import org.velichko.finalproject.logic.entity.type.UserRole;
@@ -19,8 +14,10 @@ import org.velichko.finalproject.logic.service.UserService;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.when;
 
 
 class UserServiceImplTest {
@@ -73,59 +70,4 @@ class UserServiceImplTest {
         assertEquals(expectedSize, actualSize);
     }
 
-    @Test
-    void getUserCount() {
-    }
-
-    @Test
-    void createNewUser() {
-    }
-
-    @Test
-    void testCreateNewUser() {
-    }
-
-    @Test
-    void changeUserGit() {
-    }
-
-    @Test
-    void isLoginUnique() {
-    }
-
-    @Test
-    void isEmailUnique() {
-    }
-
-    @Test
-    void isGitLinkUnique() {
-    }
-
-    @Test
-    void findUserByLoginAndPassword() {
-    }
-
-    @Test
-    void findUserById() {
-    }
-
-    @Test
-    void changeUserRole() {
-    }
-
-    @Test
-    void changeUserStatus() {
-    }
-
-    @Test
-    void getUserByRegistrationKey() {
-    }
-
-    @Test
-    void updateUser() {
-    }
-
-    @Test
-    void changeUserImage() {
-    }
 }

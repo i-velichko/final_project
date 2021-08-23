@@ -6,6 +6,11 @@ import org.velichko.finalproject.controller.command.Command;
 
 import static org.velichko.finalproject.controller.command.PageName.EDIT_USER_DATA;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type To edit user data page command.
+ */
 public class ToEditUserDataPageCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {

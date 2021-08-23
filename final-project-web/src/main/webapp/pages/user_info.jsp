@@ -48,7 +48,7 @@
                                     class="img-fluid my-5"
                                     style="width: 170px;"
                             />
-                            <h5>${user.firstName} ${user.lastName}</h5>
+                            <h5>${userInfo.firstName} ${userInfo.lastName}</h5>
                             <i class="far fa-edit mb-5"></i>
                         </div>
                         <div class="col-md-8">
@@ -60,14 +60,14 @@
                                     <div class="col-6 mb-3">
                                         <h6><fmt:message
                                                 key="common.data.email"/></h6>
-                                        <p class="text-muted">${user.email}</p>
+                                        <p class="text-muted">${userInfo.email}</p>
                                     </div>
                                 </div>
                                 <div class="row pt-1">
                                     <div class="col-6 mb-3">
                                         <h6><fmt:message
                                                 key="common.data.role"/></h6>
-                                        <p class="text-muted">${user.role}</p>
+                                        <p class="text-muted">${userInfo.role}</p>
                                     </div>
                                     <div class="col-6 mb-3">
                                         <h6><fmt:message
@@ -76,7 +76,7 @@
                                                 key="page.user.info.epam"/></p>
                                     </div>
                                 </div>
-                                <form action="${abs_path}/controller?command=change_user_image&login=${user.login}" method="post"
+                                <form action="${abs_path}/controller?command=change_user_image&login=${userInfo.login}" method="post"
                                       enctype="multipart/form-data">
                                     <div class="mb-3">
                                         <label for="imageId" class="form-label"><fmt:message

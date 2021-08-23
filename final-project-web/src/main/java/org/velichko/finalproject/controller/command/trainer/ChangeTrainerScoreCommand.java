@@ -2,10 +2,8 @@ package org.velichko.finalproject.controller.command.trainer;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.velichko.finalproject.controller.command.Command;
 import org.velichko.finalproject.controller.Router;
+import org.velichko.finalproject.controller.command.Command;
 import org.velichko.finalproject.controller.command.PageName;
 import org.velichko.finalproject.controller.command.ParamName;
 import org.velichko.finalproject.logic.exception.ServiceException;
@@ -14,10 +12,12 @@ import org.velichko.finalproject.logic.service.EmailService;
 import org.velichko.finalproject.logic.service.UserService;
 import org.velichko.finalproject.logic.service.VerificationService;
 
+import static jakarta.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+import static org.velichko.finalproject.controller.command.ParamName.ERROR_MESSAGE;
 import static org.velichko.finalproject.logic.entity.type.VerificationStatus.WAIT_FOR_EXAMINER_CHECK;
 
 public class ChangeTrainerScoreCommand implements Command {
-    private final Logger LOGGER = LogManager.getLogger();
+
     private final VerificationService verificationService;
     private final UserService userService;
     private final EmailService emailService;
@@ -31,7 +31,7 @@ public class ChangeTrainerScoreCommand implements Command {
     }
 
     @Override
-    public Router execute(HttpServletRequest request) {
+    public Router execute(HttpServletRequest request) { //TODO ДОПИСАТЬ
         Router router = new Router();
         Long verificationId = Long.parseLong(request.getParameter(ParamName.VERIFICATION_ID_PARAM));
         String newScore = request.getParameter(ParamName.NEW_SCORE_PARAM);
@@ -40,7 +40,8 @@ public class ChangeTrainerScoreCommand implements Command {
             try {
                 verificationService.changeVerificationStatusById(verificationId, WAIT_FOR_EXAMINER_CHECK);
             } catch (ServiceException e) {
-                router.setPagePath(PageName.ERROR_PAGE);
+                request.setAttribute(ERROR_MESSAGE, e.getMessage());
+                router.setErrorCode(SC_INTERNAL_SERVER_ERROR);
             }
         } else {
             //todo status на гамон и скорбное письмо
@@ -55,7 +56,8 @@ public class ChangeTrainerScoreCommand implements Command {
             verificationService.changeTrainerScore(verificationId, studentScore);
         } catch (ServiceException e) {
             LOGGER.log(Level.DEBUG, "Error. Impossible change new score by this " + verificationId + " verification");
-//                    todo error to admin page
+            request.setAttribute(ERROR_MESSAGE, e.getMessage());
+            router.setErrorCode(SC_INTERNAL_SERVER_ERROR);
         }
         router.setRouterType(Router.RouterType.REDIRECT);
         router.setPagePath(request.getHeader(PageName.REFERER));

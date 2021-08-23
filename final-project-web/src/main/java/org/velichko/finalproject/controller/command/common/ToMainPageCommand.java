@@ -6,6 +6,11 @@ import org.velichko.finalproject.controller.command.Command;
 
 import static org.velichko.finalproject.controller.command.PageName.MAIN_PAGE;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type To main page command.
+ */
 public class ToMainPageCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {

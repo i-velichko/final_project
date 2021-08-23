@@ -7,7 +7,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * @author Ivan Velichko
  *
+ * The type Cache filter.
  */
 @WebFilter("/controller")
 public class CacheFilter implements Filter {

@@ -1,5 +1,11 @@
 package org.velichko.finalproject.controller.command;
 
+
+/**
+ * @author Ivan Velichko
+ *
+ * The interface Message name key.
+ */
 public interface MessageNameKey {
 
     String LOGIN_NOT_UNIQUE_KEY = "error.login.not.unique";

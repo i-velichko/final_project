@@ -6,6 +6,11 @@ import org.velichko.finalproject.controller.command.Command;
 
 import static org.velichko.finalproject.controller.command.PageName.REGISTRATION_PAGE;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type To registration page command.
+ */
 public class ToRegistrationPageCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {

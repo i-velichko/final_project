@@ -33,7 +33,6 @@ public class ConnectionPool {
 
     private ConnectionPool() {
         try {
-
             URL PROPERTIES_PATH = getClass().getClassLoader().getResource("connection.properties");
             if (PROPERTIES_PATH != null) {
                 properties = PropertyLoader.loadPropertiesData(PROPERTIES_PATH);
@@ -46,8 +45,8 @@ public class ConnectionPool {
                 createConnection();
             }
         } catch (ClassNotFoundException e) {
-            LOGGER.log(Level.FATAL, "Connection pool was not created: " + e.getMessage());
-            throw new RuntimeException("Connection pool was not created " + e.getMessage());
+            LOGGER.log(Level.FATAL, "Connection pool was not created: ", e);
+            throw new RuntimeException("Connection pool was not created ", e);
         }
         Timer timer = new Timer();
         timer.schedule(new TimerConnectionPoolCheck()

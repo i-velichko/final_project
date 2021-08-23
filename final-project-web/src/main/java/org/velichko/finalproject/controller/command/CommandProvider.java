@@ -9,8 +9,13 @@ import org.velichko.finalproject.logic.entity.type.UserRole;
 import java.util.List;
 import java.util.Optional;
 
-import static org.velichko.finalproject.controller.command.ParamName.*;
+import static org.velichko.finalproject.controller.command.ParamName.COMMAND_PARAM;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type Command provider.
+ */
 public class CommandProvider {
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -21,18 +26,41 @@ public class CommandProvider {
     private CommandProvider() {
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static CommandProvider getInstance() {
         return instance;
     }
 
+    /**
+     * Gets command.
+     *
+     * @param request the request
+     * @return the command
+     */
     public Command getCommand(HttpServletRequest request) {
         return getCommandName(request).orElseThrow().getCommand();
     }
 
+    /**
+     * Gets command access level.
+     *
+     * @param request the request
+     * @return the command access level
+     */
     public List<UserRole> getCommandAccessLevel(HttpServletRequest request) {
         return getCommandName(request).get().getAccessLevel();
     }
 
+    /**
+     * Gets command name.
+     *
+     * @param request the request
+     * @return the command name
+     */
     public Optional<CommandName> getCommandName(HttpServletRequest request) {
         String name = request.getParameter(COMMAND_PARAM);
         CommandName commandName = CommandName.WRONG_COMMAND;

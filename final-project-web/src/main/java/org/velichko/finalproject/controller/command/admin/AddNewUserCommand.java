@@ -17,12 +17,13 @@ import java.util.Map;
 
 import static org.velichko.finalproject.controller.Router.RouterType.REDIRECT;
 import static org.velichko.finalproject.controller.command.MessageNameKey.REGISTRATION_FAILED_KEY;
-import static org.velichko.finalproject.controller.command.PageName.*;
+import static org.velichko.finalproject.controller.command.PageName.ADD_USER_PAGE;
+import static org.velichko.finalproject.controller.command.PageName.REDIRECT_TO_ADD_USER_PAGE;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
 /**
  * @author Ivan Velichko
- * .
+ *
  * The type Add new user command.
  */
 public class AddNewUserCommand implements Command {
@@ -64,13 +65,13 @@ public class AddNewUserCommand implements Command {
         registrationData.put(ROLE_PARAM, role);
 
         String method = request.getMethod();
+        router.setPagePath(ADD_USER_PAGE);
         if (method.equals(POST_PARAM)) {
             try {
                 Map<String, String> registrationDataCheckResult = registrationDataValidator.checkValues(registrationData, locale);
                 if (!registrationDataCheckResult.isEmpty()) {
                     request.setAttribute(CORRECT_REGISTRATION_DATA_PARAM, registrationData);
                     request.setAttribute(ERROR_REGISTRATION_DATA_PARAM, registrationDataCheckResult);
-                    router.setPagePath(ADD_USER_PAGE);
                 } else {
                     UserRole userRole = UserRole.valueOf(role);
                     User user = new User(firstName, lastName, login, email, userRole, UserStatus.ACTIVE);
@@ -83,8 +84,6 @@ public class AddNewUserCommand implements Command {
                 LOGGER.log(Level.ERROR, "Error user creating", e);
                 request.setAttribute(REGISTRATION_FAILED, i18n.getMassage(REGISTRATION_FAILED_KEY, locale) + e.getLocalizedMessage());
             }
-        } else {
-            router.setPagePath(ADD_USER_PAGE);
         }
         return router;
     }

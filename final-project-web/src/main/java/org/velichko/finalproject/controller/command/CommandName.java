@@ -4,7 +4,6 @@ import org.velichko.finalproject.controller.command.admin.*;
 import org.velichko.finalproject.controller.command.common.*;
 import org.velichko.finalproject.controller.command.examiner.ChangeExaminerVerificationDateCommand;
 import org.velichko.finalproject.controller.command.examiner.ChangeFinalStatusCommand;
-import org.velichko.finalproject.controller.command.examiner.ShowAllApprovedProjectsCommand;
 import org.velichko.finalproject.controller.command.newuser.RegistrationCommand;
 import org.velichko.finalproject.controller.command.newuser.RegistrationConfirmationCommand;
 import org.velichko.finalproject.controller.command.student.StartVerificationCommand;
@@ -37,7 +36,6 @@ public enum CommandName {
     CHANGE_USER_STATUS(ChangeUserStatusCommand.class, List.of(ADMIN)),
     SHOW_ALL_USERS(ShowAllUsersCommand.class, List.of(ADMIN)),
     SHOW_ALL_VERIFICATIONS(ShowAllVerificationsCommand.class, Arrays.asList(ADMIN, TRAINER, EXAMINER, CHIEF)),
-    SHOW_ALL_APPROVED_PROJECTS(ShowAllApprovedProjectsCommand.class),
     REGISTRATION_CONFIRMATION_COMMAND(RegistrationConfirmationCommand.class),
     SHOW_TRAINER_INFO(ShowTrainerInfoCommand.class, Arrays.asList(ADMIN, TRAINER)),
     SHOW_USER_INFO(ShowUserInfoCommand.class, Arrays.asList(ADMIN, TRAINER, STUDENT, EXAMINER, CHIEF)),
@@ -73,10 +71,20 @@ public enum CommandName {
         this.accessLevel = accessLevel;
     }
 
+    /**
+     * Gets command.
+     *
+     * @return the command
+     */
     public Command getCommand() {
         return AppContextImpl.getInstance().getService(commandClass);
     }
 
+    /**
+     * Gets access level.
+     *
+     * @return the access level
+     */
     public List<UserRole> getAccessLevel() {
         return accessLevel;
     }

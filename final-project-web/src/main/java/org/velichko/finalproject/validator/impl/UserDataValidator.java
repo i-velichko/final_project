@@ -1,5 +1,10 @@
 package org.velichko.finalproject.validator.impl;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The enum User data validator.
+ */
 public enum UserDataValidator {
     EMAIL("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$"),
     LOGIN("^[\\w@#$%^&+=]{7,30}$"),

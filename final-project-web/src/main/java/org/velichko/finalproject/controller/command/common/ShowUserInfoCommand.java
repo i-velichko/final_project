@@ -5,10 +5,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.velichko.finalproject.controller.command.Command;
 import org.velichko.finalproject.controller.Router;
+import org.velichko.finalproject.controller.command.Command;
 import org.velichko.finalproject.logic.entity.User;
-import org.velichko.finalproject.logic.entity.type.UserRole;
 import org.velichko.finalproject.logic.exception.ServiceException;
 import org.velichko.finalproject.logic.service.UserService;
 
@@ -18,16 +17,25 @@ import java.sql.SQLException;
 import java.util.Base64;
 import java.util.Optional;
 
-import static org.velichko.finalproject.controller.command.PageName.ERROR_PAGE;
+import static jakarta.servlet.http.HttpServletResponse.*;
 import static org.velichko.finalproject.controller.command.PageName.USER_INFO;
 import static org.velichko.finalproject.controller.command.ParamName.*;
-import static org.velichko.finalproject.controller.command.ParamName.USER_PARAM;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type Show user info command.
+ */
 public class ShowUserInfoCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String SRC = "data:image/jpeg;base64,";
     private final UserService userService;
 
+    /**
+     * Instantiates a new Show user info command.
+     *
+     * @param userService the user service
+     */
     public ShowUserInfoCommand(UserService userService) {
         this.userService = userService;
     }
@@ -47,12 +55,13 @@ public class ShowUserInfoCommand implements Command {
                     String source = SRC + base64DataString;
                     request.setAttribute(STRING_IMAGE_PARAM, source);
                 }
-                request.setAttribute(USER_PARAM, user);
+                request.setAttribute(USER_INFO_PARAM, user);
                 router.setPagePath(USER_INFO);
             }
         } catch (ServiceException | SQLException | IOException e) {
             LOGGER.log(Level.ERROR, "Error with download user page with this user: " + userId);
-            router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            request.setAttribute(ERROR_MESSAGE, e.getMessage());
+            router.setErrorCode(SC_INTERNAL_SERVER_ERROR);
         }
         return router;
     }

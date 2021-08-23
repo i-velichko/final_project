@@ -19,11 +19,22 @@ import static org.velichko.finalproject.controller.command.PageName.EDIT_USER_DA
 import static org.velichko.finalproject.controller.command.PageName.REDIRECT_TO_EDIT_USER_DATA_PAGE;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type Edit user data command.
+ */
 public class EditUserDataCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final UserService userService;
     private final BaseDataValidator dataValidator;
 
+    /**
+     * Instantiates a new Edit user data command.
+     *
+     * @param userService   the user service
+     * @param dataValidator the data validator
+     */
     public EditUserDataCommand(UserService userService, BaseDataValidator dataValidator) {
         this.userService = userService;
         this.dataValidator = dataValidator;
@@ -60,11 +71,7 @@ public class EditUserDataCommand implements Command {
         if (method.equals(POST_PARAM)) {
             try {
                 Map<String, String> errors = dataValidator.checkValues(newUserData, locale);
-                if (!errors.isEmpty()) {
-                    request.setAttribute(CORRECT_EDIT_DATA_PARAM, newUserData);
-                    request.setAttribute(ERROR_EDIT_DATA_PARAM, errors);
-                    router.setPagePath(EDIT_USER_DATA);
-                } else {
+                if (errors.isEmpty()) {
                     user.setFirstName(newFirstName);
                     user.setLastName(newLastName);
                     user.setEmail(newEmail);
@@ -73,10 +80,14 @@ public class EditUserDataCommand implements Command {
                     userService.updateUser(user);
                     router.setRouterType(Router.RouterType.REDIRECT);
                     router.setPagePath(REDIRECT_TO_EDIT_USER_DATA_PAGE);
+                } else {
+                    request.setAttribute(CORRECT_EDIT_DATA_PARAM, newUserData);
+                    request.setAttribute(ERROR_EDIT_DATA_PARAM, errors);
+                    router.setPagePath(EDIT_USER_DATA);
                 }
             } catch (ServiceException e) {
-                LOGGER.log(Level.ERROR, "Error with update information, try again", e); //todo
-                request.setAttribute(MSG, e.getMessage());//TODO
+                LOGGER.log(Level.ERROR, "Error with update information, try again", e);
+                request.setAttribute(ERROR_MESSAGE, e.getMessage());
                 router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
         } else {

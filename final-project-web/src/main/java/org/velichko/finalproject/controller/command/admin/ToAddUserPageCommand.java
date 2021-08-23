@@ -3,25 +3,24 @@ package org.velichko.finalproject.controller.command.admin;
 import jakarta.servlet.http.HttpServletRequest;
 import org.velichko.finalproject.controller.Router;
 import org.velichko.finalproject.controller.command.Command;
-import org.velichko.finalproject.controller.command.MessageNameKey;
 import org.velichko.finalproject.i18n.I18nManager;
 
-import static org.velichko.finalproject.controller.command.MessageNameKey.*;
-import static org.velichko.finalproject.controller.command.MessageNameKey.REGISTRATION_SUCCESSFUL_KEY;
+import static org.velichko.finalproject.controller.command.MessageNameKey.ADD_USER_SUCCESSFUL_KEY;
 import static org.velichko.finalproject.controller.command.PageName.ADD_USER_PAGE;
-import static org.velichko.finalproject.controller.command.ParamName.*;
+import static org.velichko.finalproject.controller.command.ParamName.ADD_USER_IS_DONE;
+import static org.velichko.finalproject.controller.command.ParamName.LOCALE_PARAM;
 
 
 /**
  * @author Ivan Velichko
- * .
+ *
  * The type To add user page command.
  */
 public class ToAddUserPageCommand implements Command {
     /**
      * The 18 n.
      */
-    I18nManager i18n;
+    private final I18nManager i18n;
 
     /**
      * Instantiates a new To add user page command.

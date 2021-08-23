@@ -9,6 +9,11 @@ import static org.velichko.finalproject.controller.Router.RouterType.REDIRECT;
 import static org.velichko.finalproject.controller.command.PageName.REFERER;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type Change locale command.
+ */
 public class ChangeLocaleCommand implements Command {
 
     @Override
@@ -16,7 +21,7 @@ public class ChangeLocaleCommand implements Command {
         Router router = new Router();
         router.setRouterType(REDIRECT);
         HttpSession session = request.getSession();
-        String locale = (String) session.getAttribute(LOCALE_PARAM);
+        String locale = (String) request.getAttribute(LOCALE_PARAM);
         if (locale == null || RU_LOCALE.equals(locale)) {
             locale = EN_LOCALE;
         } else {

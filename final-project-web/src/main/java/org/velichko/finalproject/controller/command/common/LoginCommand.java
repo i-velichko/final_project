@@ -14,15 +14,26 @@ import org.velichko.finalproject.logic.service.UserService;
 import java.util.Optional;
 
 import static org.velichko.finalproject.controller.Router.RouterType.REDIRECT;
-import static org.velichko.finalproject.controller.command.MessageNameKey.*;
+import static org.velichko.finalproject.controller.command.MessageNameKey.LOGIN_NOT_CORRECT_KEY;
 import static org.velichko.finalproject.controller.command.PageName.*;
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type Login command.
+ */
 public class LoginCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final UserService userService;
     private final I18nManager i18nManager;
 
+    /**
+     * Instantiates a new Login command.
+     *
+     * @param userService the user service
+     * @param i18nManager the 18 n manager
+     */
     public LoginCommand(UserService userService, I18nManager i18nManager) {
         this.userService = userService;
         this.i18nManager = i18nManager;

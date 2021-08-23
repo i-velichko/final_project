@@ -10,9 +10,19 @@ import static org.velichko.finalproject.controller.command.PageName.LOGIN_PAGE;
 import static org.velichko.finalproject.controller.command.ParamName.LOCALE_PARAM;
 import static org.velichko.finalproject.controller.command.ParamName.REGISTRATION_IS_DONE;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type To login page command.
+ */
 public class ToLoginPageCommand implements Command {
     private final I18nManager i18n;
 
+    /**
+     * Instantiates a new To login page command.
+     *
+     * @param i18n the 18 n
+     */
     public ToLoginPageCommand(I18nManager i18n) {
         this.i18n = i18n;
     }

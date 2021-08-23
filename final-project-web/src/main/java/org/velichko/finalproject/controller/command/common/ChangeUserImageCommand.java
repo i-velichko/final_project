@@ -18,10 +18,20 @@ import java.io.InputStream;
 
 import static org.velichko.finalproject.controller.command.ParamName.*;
 
+/**
+ * @author Ivan Velichko
+ *
+ * The type Change user image command.
+ */
 public class ChangeUserImageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final UserService userService;
 
+    /**
+     * Instantiates a new Change user image command.
+     *
+     * @param userService the user service
+     */
     public ChangeUserImageCommand(UserService userService) {
         this.userService = userService;
     }
@@ -35,8 +45,8 @@ public class ChangeUserImageCommand implements Command {
             InputStream inputStream = image.getInputStream();
             userService.changeUserImage(login, inputStream);
         } catch (ServiceException | ServletException | IOException e) {
-            LOGGER.log(Level.ERROR, "Error with upload image, try again", e); //todo
-            request.setAttribute(MSG, e.getMessage());//TODO
+            LOGGER.log(Level.ERROR, "Error with upload image, try again", e);
+            request.setAttribute(ERROR_MESSAGE, e.getMessage());
             router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         router.setRouterType(Router.RouterType.REDIRECT);

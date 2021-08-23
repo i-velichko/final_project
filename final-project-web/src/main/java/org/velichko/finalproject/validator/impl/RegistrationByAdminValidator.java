@@ -1,7 +1,5 @@
 package org.velichko.finalproject.validator.impl;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.velichko.finalproject.i18n.I18nManager;
 import org.velichko.finalproject.logic.entity.type.UserRole;
 import org.velichko.finalproject.logic.exception.ServiceException;
@@ -19,11 +17,10 @@ import static org.velichko.finalproject.validator.impl.UserDataValidator.*;
 
 /**
  * @author Ivan Velichko
- * .
+ *
  * The type Registration by admin validator.
  */
 public class RegistrationByAdminValidator implements BaseDataValidator {
-    private final Logger LOGGER = LogManager.getLogger();
     private final UserService service;
     private final I18nManager i18n;
 
@@ -65,8 +62,7 @@ public class RegistrationByAdminValidator implements BaseDataValidator {
         }
 
         String password = registrationData.get(PASSWORD_PARAM);
-        if (password != null && password.matches(PASSWORD.getRegExp())) {
-        } else {
+        if (password == null || !password.matches(PASSWORD.getRegExp())) {
             result.put(PASSWORD_ERROR_PARAM, i18n.getMassage(PASSWORD_NOT_CORRECT_KEY, locale));
         }
 
@@ -80,14 +76,14 @@ public class RegistrationByAdminValidator implements BaseDataValidator {
         }
 
         String role = registrationData.get(ROLE_PARAM);
-        if (role == null || isInEnum(role, UserRole.class)) {
+        if (role == null || !isInEnum(role)) {
             result.put(ROLE_ERROR_PARAM, i18n.getMassage(ROLE_NOT_CORRECT_KEY, locale));
         }
 
         return result;
     }
 
-    private boolean isInEnum(String role, Class userRoleEnum) {
-        return Arrays.stream(userRoleEnum.getEnumConstants()).anyMatch(e -> e.equals(role));
+    private boolean isInEnum(String role) {
+        return Arrays.asList(UserRole.class.getEnumConstants()).contains(UserRole.valueOf(role));
     }
 }
