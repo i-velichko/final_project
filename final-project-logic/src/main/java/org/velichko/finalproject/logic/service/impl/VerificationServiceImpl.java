@@ -159,11 +159,6 @@ public class VerificationServiceImpl implements VerificationService {
     }
 
     @Override
-    public List<Verification> findAllApprovedVerifications(VerificationStatus verificationStatus) {
-        return null;
-    }
-
-    @Override
     public boolean changeVerificationStatusById(Long verificationId, VerificationStatus verificationStatus) throws ServiceException {
         boolean isChanged = false;
         try {

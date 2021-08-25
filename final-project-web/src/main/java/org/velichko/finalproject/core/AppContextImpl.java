@@ -44,8 +44,7 @@ import static org.velichko.finalproject.core.LazyWrapper.buildWrapper;
  * The type App context.
  */
 public class AppContextImpl implements AppContext {
-
-    private Map<Class, LazyWrapper> map = new HashMap<>();
+    private final Map<Class<?>, LazyWrapper> map = new HashMap<>();
 
     private AppContextImpl() {
         map.put(ChangeLocaleCommand.class, buildWrapper(ChangeLocaleCommand::new));
@@ -85,7 +84,6 @@ public class AppContextImpl implements AppContext {
         map.put(StartVerificationCommand.class, buildWrapper(() -> new StartVerificationCommand(
                 getService(UserService.class),
                 getService(VerificationService.class),
-                getService(I18nManager.class),
                 getService(EmailService.class),
                 getService(VerificationDataValidator.class)
         )));

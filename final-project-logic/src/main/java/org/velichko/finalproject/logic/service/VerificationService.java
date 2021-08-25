@@ -102,14 +102,6 @@ public interface VerificationService {
     boolean changeFinalVerificationStatusById(long id, FinalStatus finalStatus) throws ServiceException;
 
     /**
-     * Find all approved verifications list.
-     *
-     * @param status the status
-     * @return the list
-     */
-    List<Verification> findAllApprovedVerifications(VerificationStatus status); //todo
-
-    /**
      * Change verification status by id boolean.
      *
      * @param verificationId     the verification id

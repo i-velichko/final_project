@@ -7,32 +7,32 @@
     <uri>customtags</uri>
     <tag>
         <name>is-student</name>
-        <tag-class>org.velichko.finalproject.tag.StudentRoleTag</tag-class>
+        <tag-class>org.velichko.finalproject.controller.tag.StudentRoleTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
         <name>is-trainer</name>
-        <tag-class>org.velichko.finalproject.tag.TrainerRoleTag</tag-class>
+        <tag-class>org.velichko.finalproject.controller.tag.TrainerRoleTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
         <name>is-examiner</name>
-        <tag-class>org.velichko.finalproject.tag.ExaminerRoleTag</tag-class>
+        <tag-class>org.velichko.finalproject.controller.tag.ExaminerRoleTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
         <name>is-chief</name>
-        <tag-class>org.velichko.finalproject.tag.ChiefRoleTag</tag-class>
+        <tag-class>org.velichko.finalproject.controller.tag.ChiefRoleTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
         <name>is-admin</name>
-        <tag-class>org.velichko.finalproject.tag.AdminRoleTag</tag-class>
+        <tag-class>org.velichko.finalproject.controller.tag.AdminRoleTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
     <tag>
         <name>is-anonymous</name>
-        <tag-class>org.velichko.finalproject.tag.AnonymousRoleTag</tag-class>
+        <tag-class>org.velichko.finalproject.controller.tag.AnonymousRoleTag</tag-class>
         <body-content>JSP</body-content>
     </tag>
 </taglib>

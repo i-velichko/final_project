@@ -14,10 +14,6 @@ public interface PageName {
     String REGISTRATION_PAGE = "pages/registration.jsp";
     String WELCOME_STUDENT = "pages/student.jsp";
 
-    String WELCOME_TRAINER = "pages/trainer.jsp";
-    String WELCOME_EXAMINER = "pages/examiner.jsp";
-    String WELCOME_ADMIN = "pages/admin.jsp";
-
     String TRAINER_INFO = "/pages/trainer_info.jsp";
     String USER_INFO = "pages/user_info.jsp";
     String VERIFICATION_INFO = "/pages/verification_info.jsp";
@@ -34,4 +30,5 @@ public interface PageName {
     String MAIN_PAGE = "/pages/main.jsp";
     String EDIT_USER_DATA = "/pages/edit_user_data.jsp";
     String ADD_USER_PAGE = "/pages/add_user.jsp";
+    String REDIRECT_USER_INFO = "controller?command=show_user_info";
 }

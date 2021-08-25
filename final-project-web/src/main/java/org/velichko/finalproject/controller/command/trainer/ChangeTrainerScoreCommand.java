@@ -18,6 +18,7 @@ import static org.velichko.finalproject.logic.entity.type.VerificationStatus.WAI
 
 public class ChangeTrainerScoreCommand implements Command {
 
+    private static final double ADMISSION_SCORE = 5d;
     private final VerificationService verificationService;
     private final UserService userService;
     private final EmailService emailService;
@@ -31,11 +32,11 @@ public class ChangeTrainerScoreCommand implements Command {
     }
 
     @Override
-    public Router execute(HttpServletRequest request) { //TODO ДОПИСАТЬ
+    public Router execute(HttpServletRequest request) {
         Router router = new Router();
         Long verificationId = Long.parseLong(request.getParameter(ParamName.VERIFICATION_ID_PARAM));
         String newScore = request.getParameter(ParamName.NEW_SCORE_PARAM);
-        Double studentScore = Double.parseDouble(newScore);
+        double studentScore = Double.parseDouble(newScore);
         if (admissionScoreCheckService.checkScore(studentScore)) {
             try {
                 verificationService.changeVerificationStatusById(verificationId, WAIT_FOR_EXAMINER_CHECK);
@@ -47,7 +48,7 @@ public class ChangeTrainerScoreCommand implements Command {
             //todo status на гамон и скорбное письмо
         }
 
-        if (studentScore >= 5) {
+        if (studentScore >= ADMISSION_SCORE) {
 
             //todo письмо рандомному экзаминатору
         }
